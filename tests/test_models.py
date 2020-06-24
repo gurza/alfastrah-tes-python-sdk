@@ -10,6 +10,7 @@ from tes import (
 class TestAPIResponseHandling:
     @pytest.mark.parametrize(
         'fn', (
+            'errors/401_unauthorized.json',
             'errors/500_internal_error.json',
         ))
     def test_init_apiproblem(self, fn):
