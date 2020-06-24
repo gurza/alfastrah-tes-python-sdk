@@ -46,7 +46,7 @@ class AlfaInsTESClient:
         url = '{api_host}{base_path}{path}'.format(api_host=self.api_host, base_path=self.base_path, path=path)
         r = requests.request(method, url,
                              headers=headers, data=self.req, verify=self.verify_ssl)
-        self.resp = r.json()
+        self.status_code, self.resp = r.status_code, r.json()
         self.raise_for_error()
         return self.resp
 
