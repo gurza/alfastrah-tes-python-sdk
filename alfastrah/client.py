@@ -25,7 +25,7 @@ class AlfaStrahClient:
         :rtype: object
         """
         headers = {
-            'api_key': self.api_key,
+            'X-API-Key': self.api_key,
         }
         payload = json.dumps(data, cls=MultiJSONEncoder)
         url = '{api_host}{endpoint}'.format(api_host=self.API_HOST, endpoint=endpoint)
