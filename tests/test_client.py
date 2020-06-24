@@ -15,4 +15,5 @@ class TestBasic:
         assert client
 
     def test_api_access(self):
-        assert False
+        resp = client.request('GET', '/products')
+        assert resp
