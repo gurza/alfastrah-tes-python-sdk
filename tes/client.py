@@ -22,7 +22,7 @@ class AlfaInsTESClient:
         """Raises stored :class:`TESException`, if one occurred."""
         if self.status_code is None or self.status_code == 200:
             return
-        api_problem = ApiProblem(**self.resp)
+        api_problem = ApiProblem(**self.resp) if self.resp is not None else ApiProblem()
         if self.status_code == 401:
             raise AuthErrorException(api_problem.detail or 'Unauthorized')
         else:
@@ -40,14 +40,19 @@ class AlfaInsTESClient:
         :return: JSON API response.
         :rtype: object
         """
+        self.req = json.dumps(data, cls=MultiJSONEncoder) if data is not None else None
+        self.resp = None
+        url = '{api_host}{base_path}{path}'.format(api_host=self.api_host, base_path=self.base_path, path=path)
         headers = {
             'X-API-Key': self.api_key,
         }
-        self.req = json.dumps(data, cls=MultiJSONEncoder)
-        url = '{api_host}{base_path}{path}'.format(api_host=self.api_host, base_path=self.base_path, path=path)
         r = requests.request(method, url,
                              headers=headers, data=self.req, verify=self.verify_ssl)
-        self.status_code, self.resp = r.status_code, r.json()
+        try:
+            self.resp = r.json()
+        except ValueError:
+            self.resp = None
+        self.status_code = r.status_code
         self.raise_for_error()
         return self.resp
 
