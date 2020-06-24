@@ -16,8 +16,8 @@ class TestBasic:
         assert client
 
     def test_api_access(self):
-        resp = client.request('GET', '/products')
-        assert resp
+        products = client.get_products()
+        assert products
 
     def test_nonjson_response(self):
         with pytest.raises(TESException):
