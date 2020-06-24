@@ -28,7 +28,7 @@ class AlfaStrahClient:
             'api_key': self.api_key,
         }
         payload = json.dumps(data, cls=MultiJSONEncoder)
-        url = '{api_host}/{endpoint}'.format(api_host=self.API_HOST, endpoint=endpoint)
+        url = '{api_host}{endpoint}'.format(api_host=self.API_HOST, endpoint=endpoint)
         r = requests.request(method, url,
                              headers=headers, data=payload, verify=self.verify_ssl)
         self.resp = r.json()
