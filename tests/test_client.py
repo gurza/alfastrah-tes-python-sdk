@@ -7,6 +7,7 @@ from tes import AlfaInsTESClient
 
 api_key = os.getenv('ALFASTRAH_KEY')
 client = AlfaInsTESClient(api_key)
+client.api_host = 'https://uat-tes.alfastrah.ru'
 
 
 class TestBasic:
