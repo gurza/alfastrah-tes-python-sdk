@@ -19,6 +19,7 @@ class AlfaInsTESClient:
         self.req = self.resp = self.status_code = None
 
     def raise_for_error(self):
+        """Raises stored :class:`TESException`, if one occurred."""
         if self.status_code is None or self.status_code == 200:
             return
         api_problem = ApiProblem(**self.resp)
