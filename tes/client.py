@@ -4,7 +4,7 @@ import json
 import requests
 
 
-class AlfaStrahClient:
+class AlfaInsTESClient:
     API_HOST = ''
 
     def __init__(self, api_key, verify_ssl=True):

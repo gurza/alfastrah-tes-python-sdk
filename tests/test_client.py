@@ -3,10 +3,10 @@ import os
 
 import pytest
 
-from tes import AlfaStrahClient
+from tes import AlfaInsTESClient
 
 api_key = os.getenv('ALFASTRAH_KEY')
-client = AlfaStrahClient(api_key)
+client = AlfaInsTESClient(api_key)
 
 
 class TestBasic:
