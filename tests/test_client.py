@@ -11,7 +11,7 @@ client = AlfaInsTESClient(api_key)
 
 class TestBasic:
     def test_client_create(self):
-        assert client is not None
+        assert client
 
     def test_api_access(self):
         assert False
