@@ -4,7 +4,7 @@ import json
 import requests
 
 from .models import (
-    ApiProblem,
+    ApiProblem, InsuranceProduct,
 )
 from .exceptions import TESException, AuthErrorException
 
@@ -55,6 +55,25 @@ class AlfaInsTESClient:
         self.status_code = r.status_code
         self.raise_for_error()
         return self.resp
+
+    def get_products(self, product_type=None):
+        """Returns list of available insurance products.
+
+        :param product_type: (optional) returns list of insurance products of the given type, if specified,
+            e.g. 'FLIGHT'.
+        :type product_type: str
+        :returns: list of available insurance products.
+        :rtype: list[InsuranceProduct]
+        """
+        if product_type:
+            path = '/products/{type}'.format(type=product_type)
+        else:
+            path = '/products'
+        resp = self.request('GET', path)
+        if isinstance(resp, list):
+            return [InsuranceProduct(**product) for product in resp]
+        else:
+            raise TESException('Unexpected response format')
 
 
 class MultiJSONEncoder(json.JSONEncoder):
