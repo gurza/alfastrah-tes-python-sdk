@@ -3,7 +3,7 @@ import pytest
 
 from .utils import load_response
 from tes import (
-    ApiProblem,
+    ApiProblem, InsuranceProduct
 )
 
 
@@ -16,3 +16,12 @@ class TestAPIResponseHandling:
     def test_init_api_problem(self, fn):
         api_problem = ApiProblem(**load_response(fn))
         assert api_problem
+
+    @pytest.mark.parametrize(
+        'fn', (
+            'products.json',
+        ))
+    def test_init_insurance_product(self, fn):
+        resp = load_response(fn)
+        insurance_products = [InsuranceProduct(**product) for product in resp]
+        assert insurance_products
