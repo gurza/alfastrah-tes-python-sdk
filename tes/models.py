@@ -15,11 +15,12 @@ class ApiProblem:
     def __init__(self, title=None, status=None, detail=None):
         """Init.
 
-        :param title: short error description, e.g. 'POLICY_NOT_FOUND'.
+        :param title: (optional) short error description, e.g. 'POLICY_NOT_FOUND'.
         :type title: str or None
-        :param status: status code, e.g. 'PNF_002'.
+        :param status: (optional) status code, e.g. 'PNF_002'.
         :type status: str or None
-        :param detail: full error description, e.g. 'Policy with id 12345 not found or does not belong to agent'.
+        :param detail: (optional) full error description,
+            e.g. 'Policy with id 12345 not found or does not belong to agent'.
         :type detail: str or None
         """
         self.title = title
