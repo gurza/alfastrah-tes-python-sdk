@@ -13,6 +13,6 @@ class TestAPIResponseHandling:
             'errors/401_unauthorized.json',
             'errors/500_internal_error.json',
         ))
-    def test_init_apiproblem(self, fn):
+    def test_init_api_problem(self, fn):
         api_problem = ApiProblem(**load_response(fn))
         assert api_problem
