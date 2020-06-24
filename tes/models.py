@@ -32,7 +32,7 @@ class InsuranceProduct:
     """Insurance product."""
 
     def __init__(self, code, type, description, currency):
-        """
+        """Init.
 
         :param code: Code of insurance product, e.g. 'TEST_FLIGHT_PRODUCT'.
         :type code: str
