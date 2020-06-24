@@ -8,6 +8,9 @@ from .client import AlfaInsTESClient
 from .models import (
     ApiProblem, InsuranceProduct,
 )
+from .exceptions import (
+    TESException, AuthErrorException,
+)
 
 # Set default logging handler to avoid "No handler found" warnings.
 import logging
