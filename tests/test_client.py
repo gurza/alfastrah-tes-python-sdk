@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
+import os
+
 import pytest
 
 from alfastrah import AlfaStrahClient
 
-client = AlfaStrahClient()
+api_key = os.getenv('ALFASTRAH_KEY')
+client = AlfaStrahClient(api_key)
 
 
 class TestBasic:
