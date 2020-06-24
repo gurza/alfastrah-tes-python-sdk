@@ -1,0 +1,8 @@
+__title__ = 'alfastrah'
+__description__ = 'AlfaStrah API v2 Python SDK'
+__url__ = ''
+__version__ = '0.0.1'
+__author__ = 'Sergey Popinevskiy'
+__author_email__ = 'sergey.popinevskiy@gmail.com'
+__license__ = 'MIT'
+__copyright__ = 'Copyright 2020 Sergey Popinevskiy'
