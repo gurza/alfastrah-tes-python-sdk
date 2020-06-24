@@ -36,11 +36,11 @@ class InsuranceProduct:
 
         :param code: Code of insurance product, e.g. 'TEST_FLIGHT_PRODUCT'.
         :type code: str
-        :param type: Type of insurance product, one of POSSIBLE_PRODUCT_TYPES.
+        :param type: Type of insurance product, one of ``POSSIBLE_PRODUCT_TYPES``, e.g. 'FLIGHT_TRAVEL'.
         :type type: str
         :param description: Description of insurance product, e.g. 'Страховка от риска медицинских расходов'.
         :type description: str
-        :param currency:
+        :param currency: (obsolete) Currency code of the product, ISO 4217, e.g. 'RUB'.
         :type currency: str
         """
         self.code = code
