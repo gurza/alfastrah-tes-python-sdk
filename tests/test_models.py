@@ -10,7 +10,7 @@ from tes import (
 class TestAPIResponseHandling:
     @pytest.mark.parametrize(
         'fn', (
-            'errors/500_transport_error.json',
+            'errors/500_internal_error.json',
         ))
     def test_init_apiproblem(self, fn):
         api_problem = ApiProblem(**load_response(fn))
