@@ -12,15 +12,15 @@ PRODUCT_TYPES = ['FLIGHT', 'FLIGHT_TRAVEL', 'TRAVEL', 'RAILWAY', 'PROPERTY', 'EV
 class ApiProblem:
     """Description of the error that occurred while handling your request."""
 
-    def __init__(self, title, status, detail):
+    def __init__(self, title=None, status=None, detail=None):
         """Init.
 
         :param title: short error description, e.g. 'POLICY_NOT_FOUND'.
-        :type title: str
+        :type title: str or None
         :param status: status code, e.g. 'PNF_002'.
-        :type status: str
+        :type status: str or None
         :param detail: full error description, e.g. 'Policy with id 12345 not found or does not belong to agent'.
-        :type detail: str
+        :type detail: str or None
         """
         self.title = title
         self.status = status
