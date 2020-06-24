@@ -36,8 +36,8 @@ class AlfaInsTESClient:
         :type path: str
         :param data: (optional) dictionary of parameters to send in the query.
         :param data: dict or None
-        :return: main content of the response API.
-        :rtype: object
+        :return: JSON API response.
+        :rtype: dict
         """
         headers = {
             'X-API-Key': self.api_key,
