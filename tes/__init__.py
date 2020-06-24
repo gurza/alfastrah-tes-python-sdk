@@ -5,6 +5,9 @@ from .__version__ import (
 )
 
 from .client import AlfaInsTESClient
+from .models import (
+    ApiProblem, InsuranceProduct,
+)
 
 # Set default logging handler to avoid "No handler found" warnings.
 import logging
