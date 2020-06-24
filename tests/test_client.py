@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from alfastrah import AlfaStrahClient
+from tes import AlfaStrahClient
 
 api_key = os.getenv('ALFASTRAH_KEY')
 client = AlfaStrahClient(api_key)

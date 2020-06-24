@@ -1,4 +1,4 @@
-__title__ = 'alfastrah'
+__title__ = 'tes'
 __description__ = 'AlfaStrah API v2 Python SDK'
 __url__ = ''
 __version__ = '0.0.1'
