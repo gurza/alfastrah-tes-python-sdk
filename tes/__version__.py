@@ -1,5 +1,5 @@
 __title__ = 'tes'
-__description__ = 'AlfaStrah API v2 Python SDK'
+__description__ = 'Alfa Strakhovanie TES API Python SDK'
 __url__ = ''
 __version__ = '0.1.0'
 __author__ = 'Sergey Popinevskiy'
