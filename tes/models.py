@@ -6,6 +6,8 @@ tes.models
 This module contains the primary objects.
 """
 
+import uuid
+
 PRODUCT_TYPES = ['AIR']
 
 
@@ -52,5 +54,10 @@ class InsuranceProduct:
 class QuoteRequest:
     """Request for calculating one or more insurance policies."""
 
-    def __init__(self):
-        pass
+    def __init__(self, session_id=None):
+        """
+
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str
+        """
+        self.session_id = session_id if session_id is not None else str(uuid.uuid4())
