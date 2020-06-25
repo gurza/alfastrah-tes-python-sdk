@@ -34,9 +34,9 @@ class InsuranceProduct:
     def __init__(self, code, type, description, currency=None):
         """Init.
 
-        :param code: Code of insurance product, e.g. 'TEST_FLIGHT_PRODUCT'.
+        :param code: Code of insurance product, e.g. 'ON_ANTICOVID_AVIA_1'.
         :type code: str
-        :param type: Type of insurance product, one of ``POSSIBLE_PRODUCT_TYPES``, e.g. 'FLIGHT_TRAVEL'.
+        :param type: Type of insurance product, one of ``POSSIBLE_PRODUCT_TYPES``, e.g. 'AIR'.
         :type type: str
         :param description: Description of insurance product, e.g. 'Страховка от риска медицинских расходов'.
         :type description: str
