@@ -51,13 +51,23 @@ class InsuranceProduct:
         self.currency = currency
 
 
+class Person:
+    pass
+
+
 class QuoteRequest:
     """Request for calculating one or more insurance policies."""
 
-    def __init__(self, session_id=None):
-        """
+    def __init__(self, session_id=None, product=None, insureds=None):
+        """Init.
 
         :param session_id: (optional) Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
         :type session_id: str or None
+        :param product: (optional) Insurance product.
+        :type product: InsuranceProduct or None
+        :param insureds: (optional) List of insured persons.
+        :type insureds: list[Person] or None
         """
         self.session_id = session_id if session_id is not None else str(uuid.uuid4())
+        self.product = product
+        self.insureds = insureds if insureds is not None else []
