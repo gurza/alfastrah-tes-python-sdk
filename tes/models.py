@@ -47,3 +47,10 @@ class InsuranceProduct:
         self.type = type
         self.description = description
         self.currency = currency
+
+
+class QuoteRequest:
+    """Request for calculating one or more insurance policies."""
+
+    def __init__(self):
+        pass
