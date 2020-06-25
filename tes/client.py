@@ -35,8 +35,8 @@ class AlfaInsTESClient:
         :type method: str
         :param path: API path, e.g. '/products'.
         :type path: str
-        :param data: (optional) dictionary of parameters to send in the query.
-        :param data: dict or None
+        :param data: (optional) Dictionary of parameters to send in the query.
+        :type data: dict or None
         :return: JSON API response.
         :rtype: object
         """
@@ -59,10 +59,10 @@ class AlfaInsTESClient:
     def get_products(self, product_type=None):
         """Returns list of available insurance products.
 
-        :param product_type: (optional) returns list of insurance products of the given type, if specified,
-            e.g. 'FLIGHT'.
-        :type product_type: str
-        :returns: list of available insurance products.
+        :param product_type: (optional) Returns list of insurance products of the given type only, if specified,
+            e.g. 'AIR'.
+        :type product_type: str or None
+        :returns: List of available insurance products.
         :rtype: list[InsuranceProduct]
         """
         if product_type:
