@@ -6,6 +6,7 @@ tes.models
 This module contains the primary objects.
 """
 
+from decimal import Decimal
 import uuid
 
 PRODUCT_TYPES = ['AIR']
@@ -53,7 +54,18 @@ class InsuranceProduct:
 
 
 class Amount:
-    pass
+    """Amount."""
+
+    def __init__(self, value, currency=None):
+        """Init.
+
+        :param value: Value, e.g. 35000.
+        :type value: Decimal
+        :param currency: (optional) Currency code, ISO 4217, e.g. 'RUB'.
+        :type currency: str or None
+        """
+        self.value = value
+        self.currency = currency
 
 
 class Person:
