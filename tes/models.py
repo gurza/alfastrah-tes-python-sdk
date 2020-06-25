@@ -31,15 +31,15 @@ class ApiProblem:
 class InsuranceProduct:
     """Insurance product."""
 
-    def __init__(self, code, type, description, currency=None):
+    def __init__(self, code, type=None, description=None, currency=None):
         """Init.
 
         :param code: Code of insurance product, e.g. 'ON_ANTICOVID_AVIA_1'.
         :type code: str
-        :param type: Type of insurance product, one of ``POSSIBLE_PRODUCT_TYPES``, e.g. 'AIR'.
-        :type type: str
-        :param description: Description of insurance product, e.g. 'Страховка от риска медицинских расходов'.
-        :type description: str
+        :param type: (optional) Type of insurance product, one of ``POSSIBLE_PRODUCT_TYPES``, e.g. 'AIR'.
+        :type type: str or None
+        :param description: (optional) Description of insurance product, e.g. 'Страховка от риска медицинских расходов'.
+        :type description: str or None
         :param currency: (obsolete) Currency code of the product, ISO 4217, e.g. 'RUB'.
         :type currency: str or None
         """
