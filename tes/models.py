@@ -31,7 +31,7 @@ class ApiProblem:
 class InsuranceProduct:
     """Insurance product."""
 
-    def __init__(self, code, type, description, currency):
+    def __init__(self, code, type, description, currency=None):
         """Init.
 
         :param code: Code of insurance product, e.g. 'TEST_FLIGHT_PRODUCT'.
@@ -41,7 +41,7 @@ class InsuranceProduct:
         :param description: Description of insurance product, e.g. 'Страховка от риска медицинских расходов'.
         :type description: str
         :param currency: (obsolete) Currency code of the product, ISO 4217, e.g. 'RUB'.
-        :type currency: str
+        :type currency: str or None
         """
         self.code = code
         self.type = type
