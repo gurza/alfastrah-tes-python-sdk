@@ -57,7 +57,7 @@ class QuoteRequest:
     def __init__(self, session_id=None):
         """
 
-        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
-        :type session_id: str
+        :param session_id: (optional) Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
         """
         self.session_id = session_id if session_id is not None else str(uuid.uuid4())
