@@ -6,7 +6,7 @@ tes.models
 This module contains the primary objects.
 """
 
-PRODUCT_TYPES = ['FLIGHT', 'FLIGHT_TRAVEL', 'TRAVEL', 'RAILWAY', 'PROPERTY', 'EVENT', 'BUS', 'TAXI']
+PRODUCT_TYPES = ['AIR']
 
 
 class ApiProblem:
