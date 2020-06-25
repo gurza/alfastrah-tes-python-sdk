@@ -73,14 +73,57 @@ class Person:
 
 
 class Segment:
+    """Travel segment."""
+
+    def __init__(self, transport_operator_code=None, route_number=None, service_class=None,
+                 connection_time=None, departure=None, arrival=None, place_number=None,
+                 car_number=None, car_type=None, connecting_flight=None, flight_direction=None):
+        """Init.
+        
+        :param transport_operator_code: 
+        :param route_number: 
+        :param service_class: 
+        :param connection_time: 
+        :param departure: (optional) Departure point.
+        :type departure: Point or None
+        :param arrival: (optional) Arrival point.
+        :type arrival: Point or None
+        :param place_number: (optional) Place or seat number, e.g. '56b'.
+        :type place_number: str or None
+        :param car_number: (optional) Train car number, e.g. '12'.
+        :type car_number: str or None
+        :param car_type: (optional) Train car type, e.g. 'SV'.
+        :type car_type: str or None
+        :param connecting_flight: (optional) True if flight is connecting.
+        :type connecting_flight: bool or None
+        :param flight_direction: (optional) Flight direction.
+        :type flight_direction: FlightDirection or None
+        """
+        self.departure = departure
+        self.arrival = arrival
+        self.place_number = place_number
+        self.car_number = car_number
+        self.car_type = car_type
+        self.connecting_flight = connecting_flight
+        self.flight_direction = flight_direction
+
+
+class Point:
+    """Departure or arrival point."""
+    pass
+
+
+class FlightDirection:
+    """Flight direction"""
     pass
 
 
 class QuoteRequest:
     """Request for calculating one or more insurance policies."""
 
-    def __init__(self, session_id=None, product=None, insureds=None, segments=None,
-                 booking_price=None, currency=None, service_class=None, country=None):
+    def __init__(self, session_id=None, product=None, insureds=None,
+                 segments=None, booking_price=None, currency=None, service_class=None,
+                 country=None):
         """Init.
 
         :param session_id: (optional) Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
@@ -89,7 +132,7 @@ class QuoteRequest:
         :type product: InsuranceProduct or None
         :param insureds: (optional) List of insured persons.
         :type insureds: list[Person] or None
-        :param segments: (optional) List of flight segments.
+        :param segments: (optional) List of travel segments, e.g. list of flights.
         :type segments: list[Segment]
         :param booking_price: (optional) Total price of flight booking.
         :type booking_price: Amount or None
