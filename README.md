@@ -1,4 +1,4 @@
-AlfaStrah API v2 Python SDK
-===========================
+Alfa Strakhovanie TES API Python SDK
+====================================
 
-API description: [TES Insurance Services](https://uat-tes.alfastrah.ru/api/)
+API documentation: [TES Insurance Services](https://uat-tes.alfastrah.ru/api/)
