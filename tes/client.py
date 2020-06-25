@@ -10,7 +10,7 @@ from .exceptions import TESException, AuthErrorException
 
 
 class AlfaInsTESClient:
-    api_host = ''
+    api_host = 'https://uat-tes.alfastrah.ru'
     base_path = '/travel-ext-services/api/v2'
 
     def __init__(self, api_key, verify_ssl=True):
