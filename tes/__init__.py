@@ -6,13 +6,14 @@ from .__version__ import (
 
 from .client import AlfaInsTESClient
 from .models import (
-    ApiProblem, InsuranceProduct, Amount, Person,
-    Phone, Document, Ticket, Risk,
-    Segment, Point, Gender, PhoneType,
-    DocumentType, RiskType, FareType, LuggageType,
-    Opt, SellingPage, FlightDirection, AcquisitionChannel,
-    Policy, QuoteRequest, QuoteResponse, Quote,
-    ServiceClass,
+    ApiProblem, InsuranceProduct, Amount, PolicyStatus,
+    Operator, Agent, SubAgent, Cancellation,
+    ServiceCompany, Person, Phone, Document,
+    Ticket, Risk, Segment, Point,
+    Gender, PhoneType, DocumentType, RiskType,
+    FareType, LuggageType, Opt, SellingPage,
+    FlightDirection, AcquisitionChannel, Policy, QuoteRequest,
+    QuoteResponse, Quote, ServiceClass,
 )
 from .exceptions import TESException, AuthErrorException
 

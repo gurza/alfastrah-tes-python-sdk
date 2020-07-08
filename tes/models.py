@@ -69,6 +69,30 @@ class Amount:
         self.currency = currency
 
 
+class PolicyStatus:
+    pass
+
+
+class Operator:
+    pass
+
+
+class Agent:
+    pass
+
+
+class SubAgent:
+    pass
+
+
+class Cancellation:
+    pass
+
+
+class ServiceCompany:
+    pass
+
+
 class Person:
     """Person."""
 
