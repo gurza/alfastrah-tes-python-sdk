@@ -69,8 +69,13 @@ class Amount:
         self.currency = currency
 
 
-class PolicyStatus:
-    pass
+class PolicyStatus(Enum):
+    """Policy status."""
+
+    ISSUING = 1
+    CONFIRMED = 2
+    CANCELLED = 3
+    DELETED = 4
 
 
 class Operator:
@@ -464,7 +469,8 @@ class Policy:
         :param end_date:
         :param period_of_validity:
         :param risks:
-        :param status:
+        :param status: Policy status.
+        :type status: PolicyStatus or None
         :param created_at: Policy created datetime.
         :type created_at: datetime.datetime or None
         :param update_at: Policy updated datetime.
