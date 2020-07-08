@@ -128,7 +128,18 @@ class Person:
 
 
 class Phone:
-    pass
+    """Phone."""
+
+    def __init__(self, number=None, type=None):
+        """Init.
+
+        :param number: (optional) Phone number, e.g. '89101234567'.
+        :type number: str or None
+        :param type: (optional) Phone type.
+        :type type: PhoneType or None
+        """
+        self.number = number
+        self.type = type
 
 
 class Document:
@@ -210,6 +221,15 @@ class Gender(Enum):
 
     MALE = 1
     FEMALE = 2
+
+
+class PhoneType(Enum):
+    """Phone type"""
+
+    MOBILE = 1
+    HOME = 2
+    OFFICE = 3
+    OTHER = 4
 
 
 class FlightDirection(Enum):
