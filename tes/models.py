@@ -136,6 +136,13 @@ class Point:
         self.country = country
 
 
+class Gender(Enum):
+    """Gender."""
+
+    MALE = 1
+    FEMALE = 2
+
+
 class FlightDirection(Enum):
     """Flight direction."""
 
