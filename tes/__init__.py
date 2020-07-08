@@ -9,11 +9,13 @@ from .models import (
     ApiProblem, InsuranceProduct, Amount, PolicyStatus,
     Operator, Agent, SubAgent, Cancellation,
     ServiceCompany, Person, Phone, Document,
-    Ticket, Risk, Segment, Point,
-    Gender, PhoneType, DocumentType, RiskType,
-    FareType, LuggageType, Opt, SellingPage,
-    FlightDirection, AcquisitionChannel, Policy, QuoteRequest,
-    QuoteResponse, Quote, ServiceClass,
+    Ticket, Risk, Segment, TravelType,
+    Point, Gender, PhoneType, DocumentType,
+    RiskType, FareType, LuggageType, Opt,
+    SellingPage, FlightDirection, AcquisitionChannel, Policy,
+    Declaration, QuoteRequest, QuoteResponse, Quote,
+    CreateRequest, CreateResponse, UpdateRequest, UpdateResponse,
+    ConfirmRequest, SaleWithoutInsuranceRequest, SaleWithoutInsuranceResponse, ServiceClass,
 )
 from .exceptions import TESException, AuthErrorException
 

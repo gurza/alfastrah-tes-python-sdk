@@ -263,6 +263,10 @@ class Segment:
         self.flight_direction = flight_direction
 
 
+class TravelType:
+    pass
+
+
 class Point:
     """Departure or arrival point."""
 
@@ -375,6 +379,85 @@ class AcquisitionChannel(Enum):
 
 
 class Policy:
+    """Insurance policy."""
+
+    def __init__(self, policy_id=None, product=None, insured=None,
+                 insurer=None, customer_email=None, customer_phone=None, pnr=None,
+                 series=None, payment_type=None, sale_session=None, issuance_city=None,
+                 external_id=None, commentary=None, description=None, resources=None,
+                 travel_type=None, sport=None, service_company=None, segments=None,
+                 ticket=None, rate=None, discounted_rate=None, begin_date=None,
+                 end_date=None, period_of_validity=None, risks=None, status=None,
+                 created_at=None, update_at=None, fare_type=None, luggage_type=None,
+                 fare_code=None, cancellation=None, operator=None, agent=None,
+                 manager_name=None, manager_code=None, opt=None, selling_page=None,
+                 service_class=None, age_group=None, acquisition_channel=None, error=None):
+        """Init.
+
+        :param policy_id:
+        :param product:
+        :param insured:
+        :param insurer:
+        :param customer_email:
+        :param customer_phone:
+        :param pnr:
+        :param series:
+        :param payment_type:
+        :param sale_session:
+        :param issuance_city:
+        :param external_id:
+        :param commentary:
+        :param description:
+        :param resources:
+        :param travel_type:
+        :param sport:
+        :param service_company:
+        :param segments:
+        :param ticket:
+        :param rate:
+        :param discounted_rate:
+        :param begin_date:
+        :param end_date:
+        :param period_of_validity:
+        :param risks:
+        :param status:
+        :param created_at:
+        :param update_at:
+        :param fare_type:
+        :param luggage_type:
+        :param fare_code:
+        :param cancellation:
+        :param operator:
+        :param agent: Agent who owns this policy.
+        :type agent: Agent or None
+        :param manager_name: Manager (cashier) code, e.g. 'Ivanova A.A.'.
+        :type manager_name: str or None
+        :param manager_code: Manager (cashier) code, e.g. '1q2w3e4r'.
+        :type manager_code: str or None
+        :param opt: Option state.
+        :type opt: Opt or None
+        :param selling_page: Policy selling page.
+        :type selling_page: SellingPage or None
+        :param service_class: Service class.
+        :type service_class: ServiceClass or None
+        :param age_group: Age group, e.g. '0-75'.
+        :type age_group: str or None
+        :param acquisition_channel: Acquisition (data collection) channel.
+        :type acquisition_channel: AcquisitionChannel or None
+        :param error: Error message.
+        :type error: str or None
+        """
+        self.manager_name = manager_name
+        self.manager_code = manager_code
+        self.opt = opt
+        self.selling_page = selling_page
+        self.service_class = service_class
+        self.age_group = age_group
+        self.acquisition_channel = acquisition_channel
+        self.error = error
+
+
+class Declaration:
     pass
 
 
@@ -441,6 +524,34 @@ class Quote:
         """
         self.policies = policies if policies is not None else []
         self.error = error
+
+
+class CreateRequest:
+    pass
+
+
+class CreateResponse:
+    pass
+
+
+class UpdateRequest:
+    pass
+
+
+class UpdateResponse:
+    pass
+
+
+class ConfirmRequest:
+    pass
+
+
+class SaleWithoutInsuranceRequest:
+    pass
+
+
+class SaleWithoutInsuranceResponse:
+    pass
 
 
 class ServiceClass(Enum):
