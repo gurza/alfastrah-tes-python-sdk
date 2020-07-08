@@ -83,7 +83,7 @@ class Agent:
     def __init__(self, code, sub=None):
         """Init.
 
-        :param code: Agent code.
+        :param code: Agent code, e.g. 'TestTravelFlightAgent'.
         :type code: str
         :param sub: Subagent.
             The subagent code is used to split sales across different channels or divisions within the same agent.
