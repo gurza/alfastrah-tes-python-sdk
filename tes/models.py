@@ -465,8 +465,10 @@ class Policy:
         :param period_of_validity:
         :param risks:
         :param status:
-        :param created_at:
-        :param update_at:
+        :param created_at: Policy created datetime.
+        :type created_at: datetime.datetime or None
+        :param update_at: Policy updated datetime.
+        :type update_at: datetime.datetime or None
         :param fare_type: Refundability.
         :type fare_type: FareType or None
         :param luggage_type: Luggage type.
@@ -496,6 +498,10 @@ class Policy:
         :param error: Error message.
         :type error: str or None
         """
+        self.created_at = created_at
+        self.update_at = update_at
+        self.fare_type = fare_type
+        self.luggage_type = luggage_type
         self.fare_code = fare_code
         self.cancellation = cancellation
         self.operator = operator
