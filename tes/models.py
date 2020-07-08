@@ -446,16 +446,26 @@ class Policy:
                  service_class=None, age_group=None, acquisition_channel=None, error=None):
         """Init.
 
-        :param policy_id:
-        :param product:
-        :param insured:
-        :param insurer:
-        :param customer_email:
-        :param customer_phone:
-        :param pnr:
-        :param series:
-        :param payment_type:
-        :param sale_session:
+        :param policy_id: Policy ID, e.g. 21684956.
+        :type policy_id: int or None
+        :param product: Insurance product.
+        :type product: InsuranceProduct or None
+        :param insured: Insured person.
+        :type insured: Person or None
+        :param insurer: Insurer.
+        :type insurer: Person or None
+        :param customer_email: Customer contact email, e.g. 'example@mail.com'.
+        :type customer_email: str or None
+        :param customer_phone: Customer contact phone, e.g. '+79876543210'.
+        :type customer_phone: str or None
+        :param pnr: Booking number, e.g. 'TR097S'.
+        :type pnr: str or None
+        :param series: Policy series, e.g. '247.F'.
+        :type series: str or None
+        :param payment_type: Form of payment, e.g. 'CARD'.
+        :type payment_type: str or None
+        :param sale_session: Sale session, e.g. 'PQGWIXCLPY4613323570'.
+        :type sale_session: str or None
         :param issuance_city: City where the policy was issued, e.g. 'Moscow'.
         :type issuance_city: str or None
         :param external_id: Policy ID in partner system, e.g. 'FQU/12324264/546546654'.
@@ -524,6 +534,16 @@ class Policy:
         :param error: Error message.
         :type error: str or None
         """
+        self.policy_id = policy_id
+        self.product = product
+        self.insured = insured
+        self.insurer = insurer
+        self.customer_email = customer_email
+        self.customer_phone = customer_phone
+        self.pnr = pnr
+        self.series = series
+        self.payment_type = payment_type
+        self.sale_session = sale_session
         self.issuance_city = issuance_city
         self.external_id = external_id
         self.commentary = commentary
