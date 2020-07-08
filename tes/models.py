@@ -316,6 +316,14 @@ class FlightDirection(Enum):
     RT = 2  # Round trip
 
 
+class AcquisitionChannel(Enum):
+    """Acquisition (data collection) channel."""
+
+    DESKTOP = 1
+    MOBILE_SITE = 2
+    MOBILE_APP = 3
+
+
 class Policy:
     pass
 
