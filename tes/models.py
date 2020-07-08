@@ -309,6 +309,23 @@ class RiskType(Enum):
     RISK_COVID = 17
 
 
+class FareType:
+    pass
+
+
+class LuggageType:
+    pass
+
+
+class Opt(Enum):
+    """Option state."""
+
+    OPT_IN = 1
+    OPT_OUT = 2
+    SMART_OPT_IN = 3
+    SMART_OPT_OUT = 4
+
+
 class SellingPage(Enum):
     """Selling page."""
 
