@@ -94,7 +94,15 @@ class Agent:
 
 
 class SubAgent:
-    pass
+    """Subagent."""
+
+    def __init__(self, code):
+        """Init.
+
+        :param code: Subagent code, e.g. 'Subagent'.
+        :type code: str
+        """
+        self.code = code
 
 
 class Cancellation:
