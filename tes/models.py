@@ -82,10 +82,14 @@ class Segment:
                  car_number=None, car_type=None, connecting_flight=None, flight_direction=None):
         """Init.
         
-        :param transport_operator_code: 
-        :param route_number: 
-        :param service_class: 
-        :param connection_time: 
+        :param transport_operator_code: carrier code, e.g. 'SU'.
+        :type transport_operator_code: str or None
+        :param route_number: (optional) flight number or train number, e.g. '1490'.
+        :type route_number: str or None
+        :param service_class: (optional) Service class of flight, one of ``SERVICE_CLASSES``, e.g. 'BUSINESS'.
+        :type service_class: str or None
+        :param connection_time: (optional) Connection time in minutes, e.g. 120.
+        :type connection_time: int or None
         :param departure: (optional) Departure point.
         :type departure: Point or None
         :param arrival: (optional) Arrival point.
@@ -101,6 +105,10 @@ class Segment:
         :param flight_direction: (optional) Flight direction.
         :type flight_direction: FlightDirection or None
         """
+        self.transport_operator_code = transport_operator_code
+        self.route_number = route_number
+        self.service_class = service_class
+        self.connection_time = connection_time
         self.departure = departure
         self.arrival = arrival
         self.place_number = place_number
