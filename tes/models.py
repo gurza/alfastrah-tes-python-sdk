@@ -161,7 +161,21 @@ class Document:
 
 
 class Ticket:
-    pass
+    """Ticket."""
+
+    def __init__(self, number=None, price=None, issue_date=None):
+        """Init.
+
+        :param number: Ticket number, e.g. '5723574320584'.
+        :type number: str or None
+        :param price: Ticket price.
+        :type price: Amount or None
+        :param issue_date: Issue date.
+        :type issue_date: datetime.date or None
+        """
+        self.number = number
+        self.price = price
+        self.issue_date = issue_date
 
 
 class Risk:
