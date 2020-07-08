@@ -131,8 +131,8 @@ class Point:
 class FlightDirection(Enum):
     """Flight direction."""
 
-    OW = 1
-    RT = 2
+    OW = 1  # One way
+    RT = 2  # Round trip
 
 
 class QuoteRequest:
