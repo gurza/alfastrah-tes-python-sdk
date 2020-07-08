@@ -376,12 +376,17 @@ class RiskType(Enum):
     RISK_COVID = 17
 
 
-class FareType:
-    pass
+class FareType(Enum):
+    """Fare type (refundability)."""
+
+    REFUNDABLE = 1
+    NO_RETURN = 2
 
 
-class LuggageType:
-    pass
+class LuggageType(Enum):
+    """Luggage type."""
+
+    STANDARD = 1
 
 
 class Opt(Enum):
@@ -462,8 +467,10 @@ class Policy:
         :param status:
         :param created_at:
         :param update_at:
-        :param fare_type:
-        :param luggage_type:
+        :param fare_type: Refundability.
+        :type fare_type: FareType or None
+        :param luggage_type: Luggage type.
+        :type luggage_type: LuggageType or None
         :param fare_code: Fare code (fare basis), e.g. 'BPXOWRF'.
         :type fare_code: str or None
         :param cancellation: Reason for cancellation of the insurance policy.
