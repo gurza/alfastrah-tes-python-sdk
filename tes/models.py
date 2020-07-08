@@ -74,7 +74,15 @@ class PolicyStatus:
 
 
 class Operator:
-    pass
+    """Operator."""
+
+    def __init__(self, code):
+        """Init.
+
+        :param code: Operator code, e.g. 'operator'.
+        :type code: str
+        """
+        self.code = code
 
 
 class Agent:
@@ -447,7 +455,8 @@ class Policy:
         :param luggage_type:
         :param fare_code:
         :param cancellation:
-        :param operator:
+        :param operator: Operator who created the insurance policy.
+        :type operator: Operator or None
         :param agent: Agent who owns this policy.
         :type agent: Agent or None
         :param manager_name: Manager (cashier) code, e.g. 'Ivanova A.A.'.
