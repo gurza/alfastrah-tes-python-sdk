@@ -316,6 +316,10 @@ class FlightDirection(Enum):
     RT = 2  # Round trip
 
 
+class Policy:
+    pass
+
+
 class QuoteRequest:
     """Request for calculating one or more insurance policies."""
 
@@ -367,7 +371,18 @@ class QuoteResponse:
 
 
 class Quote:
-    pass
+    """Quote/Calculating."""
+
+    def __init__(self, policies=None, error=None):
+        """Init.
+
+        :param policies: List of policies.
+        :type policies: list[Policy]
+        :param error: Policy calculating error.
+        :type error: str or None
+        """
+        self.policies = policies if policies is not None else []
+        self.error = error
 
 
 class ServiceClass(Enum):

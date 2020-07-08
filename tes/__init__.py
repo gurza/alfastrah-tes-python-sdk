@@ -9,8 +9,8 @@ from .models import (
     ApiProblem, InsuranceProduct, Amount, Person,
     Phone, Document, Ticket, Risk,
     Segment, Point, Gender, PhoneType,
-    DocumentType, RiskType, FlightDirection, QuoteRequest,
-    QuoteResponse, Quote, ServiceClass,
+    DocumentType, RiskType, FlightDirection, Policy,
+    QuoteRequest, QuoteResponse, Quote, ServiceClass,
 )
 from .exceptions import TESException, AuthErrorException
 
