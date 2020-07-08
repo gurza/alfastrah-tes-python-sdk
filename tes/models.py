@@ -307,8 +307,11 @@ class Segment:
         self.flight_direction = flight_direction
 
 
-class TravelType:
-    pass
+class TravelType(Enum):
+    """Travel type."""
+
+    SINGLE = 1
+    MULTIPLE = 2
 
 
 class Point:
@@ -458,10 +461,14 @@ class Policy:
         :param commentary:
         :param description:
         :param resources:
-        :param travel_type:
-        :param sport:
-        :param service_company:
-        :param segments:
+        :param travel_type: Travel type.
+        :type travel_type: TravelType or None
+        :param sport: Insured sports kind.
+        :type sport: list[SportKind] or None
+        :param service_company: Service company.
+        :type service_company: str or None
+        :param segments: Travel segments.
+        :type segments: list[Segment] or None
         :param ticket: Ticket.
         :type ticket: Ticket or None
         :param rate: Rates in different currencies.
@@ -511,6 +518,10 @@ class Policy:
         :param error: Error message.
         :type error: str or None
         """
+        self.travel_type = travel_type
+        self.sport = sport if sport is not None else []
+        self.service_company = service_company
+        self.segments = segments if segments is not None else []
         self.ticket = ticket
         self.rate = rate if rate is not None else []
         self.discounted_rate = discounted_rate if discounted_rate is not None else []
@@ -640,3 +651,10 @@ class ServiceClass(Enum):
     ECONOM = 1
     COMFORT = 2
     BUSINESS = 3
+
+
+class SportKind(Enum):
+    """Insured sport."""
+
+    COMMON_SPORT = 1
+    DANGEROUS_SPORT = 2
