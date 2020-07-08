@@ -84,7 +84,7 @@ class Operator:
     def __init__(self, code):
         """Init.
 
-        :param code: Operator code, e.g. 'operator'.
+        :param code: Operator code.
         :type code: str
         """
         self.code = code
@@ -112,7 +112,7 @@ class SubAgent:
     def __init__(self, code):
         """Init.
 
-        :param code: Subagent code, e.g. 'Subagent'.
+        :param code: Subagent code.
         :type code: str
         """
         self.code = code
@@ -124,7 +124,7 @@ class Cancellation:
     def __init__(self, reason=None, amount=None):
         """Init.
 
-        :param reason: Reason for cancellation of the insurance policy, e.g. 'Отказ'.
+        :param reason: Reason for cancellation of the insurance policy.
         :type reason: str or None
         :param amount: Cancellation (refund) amount.
         :type amount: Amount or None
