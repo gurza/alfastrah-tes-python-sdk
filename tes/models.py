@@ -332,7 +332,7 @@ class QuoteRequest:
         :type insureds: list[Person] or None
         :param segments: List of travel segments, e.g. list of flights.
         :type segments: list[Segment]
-        :param booking_price: Total price of flight booking.
+        :param booking_price: Total price of the booking.
         :type booking_price: Amount or None
         :param currency: Quote currency code, ISO 4217, e.g. 'RUB'.
         :type currency: str or None
