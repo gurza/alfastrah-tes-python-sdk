@@ -71,6 +71,75 @@ class Amount:
 
 
 class Person:
+    """Person."""
+
+    def __init__(self, first_name=None, last_name=None, patronymic=None,
+                 nick_name=None, gender=None, birth_date=None, email=None,
+                 address=None, infant=None, nationality=None, id_card=None,
+                 phone=None, document=None, ticket=None, risks=None):
+        """Init.
+
+        :param first_name: (optional) First name, e.g. 'Федор'.
+        :type first_name: str or None
+        :param last_name: (optional) Last name, e.g. 'Васильев'.
+        :type last_name: str or None
+        :param patronymic: (optional) Patronymic, e.g. 'Иванович'.
+        :type patronymic: str or None
+        :param nick_name: (optional) Nick, e.g. 'Васильев Федор Иванович'.
+        :type nick_name: str or None
+        :param gender: (optional) Gender.
+        :type gender: Gender or None
+        :param birth_date: (optional) Birth date.
+        :type birth_date: datetime.date
+        :param email: (optional) Email, e.g. 'fedor.vasilyev@email.com'.
+        :type email: str or None
+        :param address: (optional) Address, e.g. 'г. Москва, ул. Иванова, д. 4, кв. 198'.
+        :type address: str or None
+        :param infant: (optional) True if the person is an infant.
+        :type infant: bool or None
+        :param nationality: (optional) Code of country, ISO 3166-1, e.g. 'RU'.
+        :type nationality: str or None
+        :param id_card: (optional) Number of additional document ID, e.g. '5456876321656'.
+        :type id_card: str or None
+        :param phone: (optional) Contact phone.
+        :type phone: Phone or None
+        :param document: (optional) Document ID.
+        :type document: Document or None
+        :param ticket: (optional) Ticket information.
+        :type ticket: Ticket or None
+        :param risks: (optional) Information about risks.
+        :type risks: list[Risk] or None
+        """
+        self.first_name = first_name
+        self.last_name = last_name
+        self.patronymic = patronymic
+        self.nick_name = nick_name
+        self.gender = gender
+        self.birth_date = birth_date
+        self.email = email
+        self.address = address
+        self.infant = infant
+        self.nationality = nationality
+        self.id_card = id_card
+        self.phone = phone
+        self.document = document
+        self.ticket = ticket
+        self.risks = risks if risks is not None else []
+
+
+class Phone:
+    pass
+
+
+class Document:
+    pass
+
+
+class Ticket:
+    pass
+
+
+class Risk:
     pass
 
 
