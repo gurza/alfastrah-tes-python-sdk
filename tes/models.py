@@ -464,7 +464,8 @@ class Policy:
         :param update_at:
         :param fare_type:
         :param luggage_type:
-        :param fare_code:
+        :param fare_code: Fare code (fare basis), e.g. 'BPXOWRF'.
+        :type fare_code: str or None
         :param cancellation: Reason for cancellation of the insurance policy.
         :type cancellation: Cancellation or None
         :param operator: Operator who created the insurance policy.
@@ -488,6 +489,10 @@ class Policy:
         :param error: Error message.
         :type error: str or None
         """
+        self.fare_code = fare_code
+        self.cancellation = cancellation
+        self.operator = operator
+        self.agent = agent
         self.manager_name = manager_name
         self.manager_code = manager_code
         self.opt = opt
