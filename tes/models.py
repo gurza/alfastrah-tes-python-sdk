@@ -465,10 +465,14 @@ class Policy:
         :param ticket:
         :param rate:
         :param discounted_rate:
-        :param begin_date:
-        :param end_date:
-        :param period_of_validity:
-        :param risks:
+        :param begin_date: Start date of the policy.
+        :type begin_date: datetime.datetime or None
+        :param end_date: Expiry date of the policy.
+        :type end_date: datetime.datetime or None
+        :param period_of_validity: Policy validity period in days, e.g. 14.
+        :type period_of_validity: int or None
+        :param risks: Information about risks.
+        :type risks: list[Risk] or None
         :param status: Policy status.
         :type status: PolicyStatus or None
         :param created_at: Policy created datetime.
@@ -504,6 +508,11 @@ class Policy:
         :param error: Error message.
         :type error: str or None
         """
+        self.begin_date = begin_date
+        self.end_date = end_date
+        self.period_of_validity = period_of_validity
+        self.risks = risks if risks is not None else []
+        self.status = status
         self.created_at = created_at
         self.update_at = update_at
         self.fare_type = fare_type
