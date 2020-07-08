@@ -462,9 +462,12 @@ class Policy:
         :param sport:
         :param service_company:
         :param segments:
-        :param ticket:
-        :param rate:
-        :param discounted_rate:
+        :param ticket: Ticket.
+        :type ticket: Ticket or None
+        :param rate: Rates in different currencies.
+        :type rate: list[Amount] or None
+        :param discounted_rate: Discounted rates in different currencies.
+        :type discounted_rate: list[Amount] or None
         :param begin_date: Start date of the policy.
         :type begin_date: datetime.datetime or None
         :param end_date: Expiry date of the policy.
@@ -508,6 +511,9 @@ class Policy:
         :param error: Error message.
         :type error: str or None
         """
+        self.ticket = ticket
+        self.rate = rate if rate is not None else []
+        self.discounted_rate = discounted_rate if discounted_rate is not None else []
         self.begin_date = begin_date
         self.end_date = end_date
         self.period_of_validity = period_of_validity
