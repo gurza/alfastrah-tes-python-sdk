@@ -179,7 +179,21 @@ class Ticket:
 
 
 class Risk:
-    pass
+    """Risk."""
+
+    def __init__(self, type=None, coverage=None, franchise=None):
+        """Init.
+
+        :param type: Risk type.
+        :type type: RiskType or None
+        :param coverage: Insurance amount.
+        :type coverage: Amount or None
+        :param franchise: Franchise amount.
+        :type franchise: Amount or None
+        """
+        self.type = type
+        self.coverage = coverage
+        self.franchise = franchise
 
 
 class Segment:
@@ -272,6 +286,28 @@ class DocumentType(Enum):
     ERGUL = 7
     DRIVER_LICENCE = 8
     BIRTHCERTIFICATE = 9
+
+
+class RiskType(Enum):
+    """Risk type."""
+
+    RISK_MR = 1
+    RISK_NSP = 2
+    RISK_NS = 3
+    RISK_FLIGHT_DELAYS_PERSONAL = 4
+    RISK_SPORT = 5
+    RISK_LOSS_LUGGAGE_PERSONAL = 6
+    RISK_DELAYED_LUGGAGE_PERSONAL = 7
+    RISK_GO = 8
+    RISK_LUGGAGE_MASSIVE = 9
+    RISK_FLIGHT_DELAYS_MASSIVE = 10
+    RISK_NR = 11
+    RISK_PROPERTY = 12
+    RISK_EVENT = 13
+    RISK_LOSS_RESTORE_DOCUMENTS = 14
+    RISK_CL = 15
+    RISK_LUGGAGE_DAMAGE = 16
+    RISK_COVID = 17
 
 
 class FlightDirection(Enum):
