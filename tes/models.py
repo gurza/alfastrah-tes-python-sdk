@@ -143,7 +143,21 @@ class Phone:
 
 
 class Document:
-    pass
+    """Document ID."""
+
+    def __init__(self, type=None, number=None, country=None):
+        """Init.
+
+        :param type: Document type.
+        :type type: DocumentType or None
+        :param number: Document number, e.g. '2901178356'.
+        :type number: str or None
+        :param country: Code of the country where the document was issued, ISO 3166-1, e.g. 'RU'.
+        :type country: str or None
+        """
+        self.type = type
+        self.number = number
+        self.country = country
 
 
 class Ticket:
@@ -230,6 +244,20 @@ class PhoneType(Enum):
     HOME = 2
     OFFICE = 3
     OTHER = 4
+
+
+class DocumentType(Enum):
+    """Document type."""
+
+    PASSPORT = 1
+    INTERNATIONAL = 2
+    IDCARD = 3
+    MILITARY = 4
+    FOREIGNER = 5
+    JURIDICAL = 6
+    ERGUL = 7
+    DRIVER_LICENCE = 8
+    BIRTHCERTIFICATE = 9
 
 
 class FlightDirection(Enum):
