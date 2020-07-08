@@ -82,9 +82,9 @@ class Segment:
                  car_number=None, car_type=None, connecting_flight=None, flight_direction=None):
         """Init.
         
-        :param transport_operator_code: carrier code, e.g. 'SU'.
+        :param transport_operator_code: Carrier code, e.g. 'SU'.
         :type transport_operator_code: str or None
-        :param route_number: (optional) flight number or train number, e.g. '1490'.
+        :param route_number: (optional) Route number (flight number, train number, etc), e.g. '1490'.
         :type route_number: str or None
         :param service_class: (optional) Service class of flight, one of ``SERVICE_CLASSES``, e.g. 'BUSINESS'.
         :type service_class: str or None
