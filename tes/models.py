@@ -78,7 +78,19 @@ class Operator:
 
 
 class Agent:
-    pass
+    """Agent."""
+
+    def __init__(self, code, sub=None):
+        """Init.
+
+        :param code: Agent code.
+        :type code: str
+        :param sub: Subagent.
+            The subagent code is used to split sales across different channels or divisions within the same agent.
+        :type sub: SubAgent or None
+        """
+        self.code = code
+        self.sub = sub
 
 
 class SubAgent:
