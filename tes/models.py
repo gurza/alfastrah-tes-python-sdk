@@ -7,6 +7,7 @@ This module contains the primary objects.
 """
 
 from decimal import Decimal
+from enum import Enum
 import datetime
 import uuid
 
@@ -127,9 +128,11 @@ class Point:
         self.country = country
 
 
-class FlightDirection:
-    """Flight direction"""
-    pass
+class FlightDirection(Enum):
+    """Flight direction."""
+
+    OW = 1
+    RT = 2
 
 
 class QuoteRequest:

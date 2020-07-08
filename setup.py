@@ -12,6 +12,8 @@ packages = ['tes']
 requires = [
     'requests>=2.21.0, <3',
 ]
+if sys.version_info[0] < 3:
+    requires.append('enum34>=1.1.10, <2')
 test_requirements = [
     'pytest>=5.4',
 ]
