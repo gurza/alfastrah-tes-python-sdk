@@ -10,6 +10,7 @@ from .models import (
     Phone, Document, Ticket, Risk,
     Segment, Point, Gender, PhoneType,
     DocumentType, RiskType, FlightDirection, QuoteRequest,
+    ServiceClass,
 )
 from .exceptions import TESException, AuthErrorException
 

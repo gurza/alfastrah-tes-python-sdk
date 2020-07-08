@@ -12,7 +12,6 @@ import datetime
 import uuid
 
 PRODUCT_TYPES = ['AIR']
-SERVICE_CLASSES = ['ECONOM', 'COMFORT', 'BUSINESS']
 
 
 class ApiProblem:
@@ -208,8 +207,8 @@ class Segment:
         :type transport_operator_code: str or None
         :param route_number: Route number (flight number, train number, etc), e.g. '1490'.
         :type route_number: str or None
-        :param service_class: Service class of flight, one of ``SERVICE_CLASSES``, e.g. 'BUSINESS'.
-        :type service_class: str or None
+        :param service_class: Service class.
+        :type service_class: ServiceClass or None
         :param connection_time: Connection time in minutes, e.g. 120.
         :type connection_time: int or None
         :param departure: Departure point.
@@ -337,8 +336,8 @@ class QuoteRequest:
         :type booking_price: Amount or None
         :param currency: Quote currency code, ISO 4217, e.g. 'RUB'.
         :type currency: str or None
-        :param service_class: Service class of flight, one of ``SERVICE_CLASSES``, e.g. 'BUSINESS'.
-        :type service_class: str or None
+        :param service_class: Service class.
+        :type service_class: ServiceClass or None
         :param country: Country code where the insurance policy will be paid for, ISO 3166-1, e.g. 'RU'.
         :type country: str or None
         """
@@ -350,3 +349,11 @@ class QuoteRequest:
         self.currency = currency
         self.service_class = service_class
         self.country = country
+
+
+class ServiceClass(Enum):
+    """Service class."""
+
+    ECONOM = 1
+    COMFORT = 2
+    BUSINESS = 3
