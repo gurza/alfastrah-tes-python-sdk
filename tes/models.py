@@ -21,11 +21,11 @@ class ApiProblem:
     def __init__(self, title=None, status=None, detail=None):
         """Init.
 
-        :param title: (optional) Short error description, e.g. 'POLICY_NOT_FOUND'.
+        :param title: Short error description, e.g. 'POLICY_NOT_FOUND'.
         :type title: str or None
-        :param status: (optional) Status code, e.g. 'PNF_002'.
+        :param status: Status code, e.g. 'PNF_002'.
         :type status: str or None
-        :param detail: (optional) Full error description,
+        :param detail: Full error description,
             e.g. 'Policy with id 12345 not found or does not belong to agent'.
         :type detail: str or None
         """
@@ -42,9 +42,9 @@ class InsuranceProduct:
 
         :param code: Code of insurance product, e.g. 'ON_ANTICOVID_AVIA_1'.
         :type code: str
-        :param type: (optional) Type of insurance product, one of ``POSSIBLE_PRODUCT_TYPES``, e.g. 'AIR'.
+        :param type: Type of insurance product, one of ``POSSIBLE_PRODUCT_TYPES``, e.g. 'AIR'.
         :type type: str or None
-        :param description: (optional) Description of insurance product, e.g. 'Страховка от риска медицинских расходов'.
+        :param description: Description of insurance product, e.g. 'Страховка от риска медицинских расходов'.
         :type description: str or None
         :param currency: (obsolete) Currency code of the product, ISO 4217, e.g. 'RUB'.
         :type currency: str or None
@@ -63,7 +63,7 @@ class Amount:
 
         :param value: Value, e.g. 35000.
         :type value: Decimal
-        :param currency: (optional) Currency code, ISO 4217, e.g. 'RUB'.
+        :param currency: Currency code, ISO 4217, e.g. 'RUB'.
         :type currency: str or None
         """
         self.value = value
@@ -79,35 +79,35 @@ class Person:
                  phone=None, document=None, ticket=None, risks=None):
         """Init.
 
-        :param first_name: (optional) First name, e.g. 'Федор'.
+        :param first_name: First name, e.g. 'Федор'.
         :type first_name: str or None
-        :param last_name: (optional) Last name, e.g. 'Васильев'.
+        :param last_name: Last name, e.g. 'Васильев'.
         :type last_name: str or None
-        :param patronymic: (optional) Patronymic, e.g. 'Иванович'.
+        :param patronymic: Patronymic, e.g. 'Иванович'.
         :type patronymic: str or None
-        :param nick_name: (optional) Nick, e.g. 'Васильев Федор Иванович'.
+        :param nick_name: Nick, e.g. 'Васильев Федор Иванович'.
         :type nick_name: str or None
-        :param gender: (optional) Gender.
+        :param gender: Gender.
         :type gender: Gender or None
-        :param birth_date: (optional) Birth date.
+        :param birth_date: Birth date.
         :type birth_date: datetime.date
-        :param email: (optional) Email, e.g. 'fedor.vasilyev@email.com'.
+        :param email: Email, e.g. 'fedor.vasilyev@email.com'.
         :type email: str or None
-        :param address: (optional) Address, e.g. 'г. Москва, ул. Иванова, д. 4, кв. 198'.
+        :param address: Address, e.g. 'г. Москва, ул. Иванова, д. 4, кв. 198'.
         :type address: str or None
-        :param infant: (optional) True if the person is an infant.
+        :param infant: True if the person is an infant.
         :type infant: bool or None
-        :param nationality: (optional) Code of country, ISO 3166-1, e.g. 'RU'.
+        :param nationality: Code of country, ISO 3166-1, e.g. 'RU'.
         :type nationality: str or None
-        :param id_card: (optional) Number of additional document ID, e.g. '5456876321656'.
+        :param id_card: Number of additional document ID, e.g. '5456876321656'.
         :type id_card: str or None
-        :param phone: (optional) Contact phone.
+        :param phone: Contact phone.
         :type phone: Phone or None
-        :param document: (optional) Document ID.
+        :param document: Document ID.
         :type document: Document or None
-        :param ticket: (optional) Ticket information.
+        :param ticket: Ticket information.
         :type ticket: Ticket or None
-        :param risks: (optional) Information about risks.
+        :param risks: Information about risks.
         :type risks: list[Risk] or None
         """
         self.first_name = first_name
@@ -133,9 +133,9 @@ class Phone:
     def __init__(self, number=None, type=None):
         """Init.
 
-        :param number: (optional) Phone number, e.g. '89101234567'.
+        :param number: Phone number, e.g. '89101234567'.
         :type number: str or None
-        :param type: (optional) Phone type.
+        :param type: Phone type.
         :type type: PhoneType or None
         """
         self.number = number
@@ -178,25 +178,25 @@ class Segment:
         
         :param transport_operator_code: Carrier code, e.g. 'SU'.
         :type transport_operator_code: str or None
-        :param route_number: (optional) Route number (flight number, train number, etc), e.g. '1490'.
+        :param route_number: Route number (flight number, train number, etc), e.g. '1490'.
         :type route_number: str or None
-        :param service_class: (optional) Service class of flight, one of ``SERVICE_CLASSES``, e.g. 'BUSINESS'.
+        :param service_class: Service class of flight, one of ``SERVICE_CLASSES``, e.g. 'BUSINESS'.
         :type service_class: str or None
-        :param connection_time: (optional) Connection time in minutes, e.g. 120.
+        :param connection_time: Connection time in minutes, e.g. 120.
         :type connection_time: int or None
-        :param departure: (optional) Departure point.
+        :param departure: Departure point.
         :type departure: Point or None
-        :param arrival: (optional) Arrival point.
+        :param arrival: Arrival point.
         :type arrival: Point or None
-        :param place_number: (optional) Place or seat number, e.g. '56b'.
+        :param place_number: Place or seat number, e.g. '56b'.
         :type place_number: str or None
-        :param car_number: (optional) Train car number, e.g. '12'.
+        :param car_number: Train car number, e.g. '12'.
         :type car_number: str or None
-        :param car_type: (optional) Train car type, e.g. 'SV'.
+        :param car_type: Train car type, e.g. 'SV'.
         :type car_type: str or None
-        :param connecting_flight: (optional) True if flight is connecting.
+        :param connecting_flight: True if flight is connecting.
         :type connecting_flight: bool or None
-        :param flight_direction: (optional) Flight direction.
+        :param flight_direction: Flight direction.
         :type flight_direction: FlightDirection or None
         """
         self.transport_operator_code = transport_operator_code
@@ -218,11 +218,11 @@ class Point:
     def __init__(self, date=None, point=None, country=None):
         """Init.
 
-        :param date: (optional) Datetime of departure/arrival.
+        :param date: Datetime of departure/arrival.
         :type date: datetime.datetime or None
-        :param point: (optional) Code of departure/arrival point, e.g. 'SVO'.
+        :param point: Code of departure/arrival point, e.g. 'SVO'.
         :type point: str or None
-        :param country: (optional) Code of country, ISO 3166-1, e.g. 'RU'.
+        :param country: Code of country, ISO 3166-1, e.g. 'RU'.
         :type country: str or None
         """
         self.date = date
@@ -275,21 +275,21 @@ class QuoteRequest:
                  country=None):
         """Init.
 
-        :param session_id: (optional) Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
         :type session_id: str or None
-        :param product: (optional) Insurance product.
+        :param product: Insurance product.
         :type product: InsuranceProduct or None
-        :param insureds: (optional) List of insured persons.
+        :param insureds: List of insured persons.
         :type insureds: list[Person] or None
-        :param segments: (optional) List of travel segments, e.g. list of flights.
+        :param segments: List of travel segments, e.g. list of flights.
         :type segments: list[Segment]
-        :param booking_price: (optional) Total price of flight booking.
+        :param booking_price: Total price of flight booking.
         :type booking_price: Amount or None
-        :param currency: (optional) Quote currency code, ISO 4217, e.g. 'RUB'.
+        :param currency: Quote currency code, ISO 4217, e.g. 'RUB'.
         :type currency: str or None
-        :param service_class: (optional) Service class of flight, one of ``SERVICE_CLASSES``, e.g. 'BUSINESS'.
+        :param service_class: Service class of flight, one of ``SERVICE_CLASSES``, e.g. 'BUSINESS'.
         :type service_class: str or None
-        :param country: (optional) Country code where the insurance policy will be paid for, ISO 3166-1, e.g. 'RU'.
+        :param country: Country code where the insurance policy will be paid for, ISO 3166-1, e.g. 'RU'.
         :type country: str or None
         """
         self.session_id = session_id if session_id is not None else str(uuid.uuid4())
