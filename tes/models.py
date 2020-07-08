@@ -309,6 +309,15 @@ class RiskType(Enum):
     RISK_COVID = 17
 
 
+class SellingPage(Enum):
+    """Selling page."""
+
+    CROSS_SALE = 1
+    BOOKING_EDITION = 2
+    WEB_CHECK_IN = 3
+    STANDALONE = 4
+
+
 class FlightDirection(Enum):
     """Flight direction."""
 
