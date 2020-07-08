@@ -456,11 +456,17 @@ class Policy:
         :param series:
         :param payment_type:
         :param sale_session:
-        :param issuance_city:
-        :param external_id:
-        :param commentary:
-        :param description:
-        :param resources:
+        :param issuance_city: City where the policy was issued, e.g. 'Moscow'.
+        :type issuance_city: str or None
+        :param external_id: Policy ID in partner system, e.g. 'FQU/12324264/546546654'.
+        :type external_id: str or None
+        :param commentary: Comment, e.g. 'PQGWIXCLPY4613323570'.
+        :type commentary: str or None
+        :param description: Description: risks and insurance premium, e.g.
+            'Несчастный случай - 500 000 RUBПотеря багажа - 35 000 RUBПовреждение багажа - 25 000 RUB...'.
+        :type description: str or None
+        :param resources: Resources, e.g. ['resource1.pdf', 'resource2.pdf'].
+        :type resources: list[str] or None
         :param travel_type: Travel type.
         :type travel_type: TravelType or None
         :param sport: Insured sports kind.
@@ -518,6 +524,11 @@ class Policy:
         :param error: Error message.
         :type error: str or None
         """
+        self.issuance_city = issuance_city
+        self.external_id = external_id
+        self.commentary = commentary
+        self.description = description
+        self.resources = resources if resources is not None else []
         self.travel_type = travel_type
         self.sport = sport if sport is not None else []
         self.service_company = service_company
