@@ -351,6 +351,25 @@ class QuoteRequest:
         self.country = country
 
 
+class QuoteResponse:
+    """Quote response."""
+
+    def __init__(self, session_id=None, quotes=None):
+        """Init.
+
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+        :param quotes: List of policies for each insured person.
+        :type quotes: list[Quote] or None
+        """
+        self.session_id = session_id
+        self.quotes = quotes if quotes is not None else []
+
+
+class Quote:
+    pass
+
+
 class ServiceClass(Enum):
     """Service class."""
 
