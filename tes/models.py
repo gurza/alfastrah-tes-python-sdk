@@ -206,9 +206,9 @@ class Point:
 
         :param date: (optional) Datetime of departure/arrival.
         :type date: datetime.datetime or None
-        :param point: (optional) code of departure/arrival point, e.g. 'SVO'.
+        :param point: (optional) Code of departure/arrival point, e.g. 'SVO'.
         :type point: str or None
-        :param country: (optional) code of country, ISO 3166-1, e.g. 'RU'.
+        :param country: (optional) Code of country, ISO 3166-1, e.g. 'RU'.
         :type country: str or None
         """
         self.date = date
