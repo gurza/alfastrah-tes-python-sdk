@@ -7,6 +7,7 @@ This module contains the primary objects.
 """
 
 from decimal import Decimal
+import datetime
 import uuid
 
 PRODUCT_TYPES = ['AIR']
@@ -110,7 +111,20 @@ class Segment:
 
 class Point:
     """Departure or arrival point."""
-    pass
+
+    def __init__(self, date=None, point=None, country=None):
+        """Init.
+
+        :param date: (optional) Datetime of departure/arrival.
+        :type date: datetime.datetime or None
+        :param point: (optional) code of departure/arrival point, e.g. 'SVO'.
+        :type point: str or None
+        :param country: (optional) code of country, ISO 3166-1, e.g. 'RU'.
+        :type country: str or None
+        """
+        self.date = date
+        self.point = point
+        self.country = country
 
 
 class FlightDirection:
