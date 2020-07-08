@@ -114,7 +114,18 @@ class SubAgent:
 
 
 class Cancellation:
-    pass
+    """Policy cancellation."""
+
+    def __init__(self, reason=None, amount=None):
+        """Init.
+
+        :param reason: Reason for cancellation of the insurance policy, e.g. 'Отказ'.
+        :type reason: str or None
+        :param amount: Cancellation (refund) amount.
+        :type amount: Amount or None
+        """
+        self.reason = reason
+        self.amount = amount
 
 
 class ServiceCompany:
@@ -454,7 +465,8 @@ class Policy:
         :param fare_type:
         :param luggage_type:
         :param fare_code:
-        :param cancellation:
+        :param cancellation: Reason for cancellation of the insurance policy.
+        :type cancellation: Cancellation or None
         :param operator: Operator who created the insurance policy.
         :type operator: Operator or None
         :param agent: Agent who owns this policy.
