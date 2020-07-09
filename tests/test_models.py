@@ -1,10 +1,22 @@
 # -*- coding: utf-8 -*-
+import json
+
 import pytest
 
 from .utils import load_response
+from tes import MultiJSONEncoder
 from tes import (
-    ApiProblem, InsuranceProduct
+    ApiProblem, InsuranceProduct, Risk, RiskType,
 )
+
+
+class TestJsonSerialization:
+    def test_enum_to_json(self):
+        risk = Risk(type=RiskType.RISK_COVID)
+        risk_dict = {
+            'type': 'RISK_COVID',
+        }
+        assert json.dumps(risk, cls=MultiJSONEncoder) == json.dumps(risk_dict)
 
 
 class TestAPIResponseHandling:
