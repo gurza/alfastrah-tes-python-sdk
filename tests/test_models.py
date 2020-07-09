@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 import json
 
 import pytest
@@ -21,6 +22,18 @@ class TestJsonSerialization:
         quote = QuoteRequest(sport=[SportKind.COMMON_SPORT])
         quote_dict = json.loads(json.dumps(quote, cls=MultiJSONEncoder))
         assert quote_dict['sport'] == ['COMMON_SPORT']
+
+    def test_date(self):
+        date = {
+            'date': datetime.date(1970, 1, 1),
+        }
+        assert '1970-01-01' in json.dumps(date, cls=MultiJSONEncoder)
+
+    def test_datetime(self):
+        dt = {
+            'dt': datetime.datetime(1970, 1, 1, 7, 40, 0),
+        }
+        assert '1970-01-01T07:40:00' in json.dumps(dt, cls=MultiJSONEncoder)
 
 
 class TestAPIResponseHandling:
