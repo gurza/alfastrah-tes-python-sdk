@@ -27,7 +27,9 @@ class TestJsonSerialization:
         date = {
             'date': datetime.date(1970, 1, 1),
         }
-        assert '1970-01-01' in json.dumps(date, cls=MultiJSONEncoder)
+        date_json = json.dumps(date, cls=MultiJSONEncoder)
+        assert '1970-01-01' in date_json
+        assert '1970-01-01T' not in date_json
 
     def test_datetime(self):
         dt = {
