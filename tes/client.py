@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import datetime
+from enum import Enum
 import json
 
 import requests
@@ -83,5 +85,7 @@ class MultiJSONEncoder(json.JSONEncoder):
     def default(self, o):
         if hasattr(o, 'to_json') and callable(o.to_json):
             return o.to_json()
+        if isinstance(o, Enum):
+            return o.name
         # Let the base class default raise the TypeError
         return json.JSONEncoder.default(self, o)
