@@ -83,9 +83,15 @@ class AlfaInsTESClient:
 
 class MultiJSONEncoder(json.JSONEncoder):
     def default(self, o):
-        if hasattr(o, 'to_json') and callable(o.to_json):
-            return o.to_json()
         if isinstance(o, Enum):
             return o.name
+        if isinstance(o, datetime.date):
+            return o.strftime('%Y-%m-%d')
+        if isinstance(o, datetime.datetime):
+            return o.strftime('%Y-%m-%dT%H:%M:%S')
+
+        if hasattr(o, 'to_json') and callable(o.to_json):
+            return o.to_json()
+
         # Let the base class default raise the TypeError
         return json.JSONEncoder.default(self, o)
