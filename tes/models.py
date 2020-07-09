@@ -428,6 +428,7 @@ class AcquisitionChannel(Enum):
     DESKTOP = 1
     MOBILE_SITE = 2
     MOBILE_APP = 3
+    CROSS_SALE = 4
 
 
 class Policy:
