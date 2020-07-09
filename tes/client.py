@@ -3,8 +3,11 @@ import json
 
 import requests
 
+from .exceptions import TESException, AuthErrorException
 from .models import (
-    ApiProblem, InsuranceProduct,
+    ApiRequest, ApiProblem, InsuranceProduct, Person,
+    Segment, Amount, ServiceClass, SportKind,
+    FareType, Opt, AcquisitionChannel, QuoteRequest,
 )
 from .exceptions import TESException, AuthErrorException
 
@@ -35,8 +38,8 @@ class AlfaInsTESClient:
         :type method: str
         :param path: API path, e.g. '/products'.
         :type path: str
-        :param data: (optional) Dictionary of parameters to send in the query.
-        :type data: dict or None
+        :param data: (optional) Request body.
+        :type data: ApiRequest or None
         :return: JSON API response.
         :rtype: object
         """
