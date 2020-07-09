@@ -14,6 +14,10 @@ import uuid
 PRODUCT_TYPES = ['AIR']
 
 
+class ApiRequest:
+    """API request base class."""
+
+
 class ApiProblem:
     """Description of the error that occurred while handling your request."""
 
@@ -584,7 +588,7 @@ class Declaration:
     pass
 
 
-class QuoteRequest:
+class QuoteRequest(ApiRequest):
     """Request for calculating one or more insurance policies."""
 
     def __init__(self, session_id=None, product=None, insureds=None,
@@ -681,7 +685,7 @@ class Quote:
         self.error = error
 
 
-class CreateRequest:
+class CreateRequest(ApiRequest):
     pass
 
 
@@ -689,7 +693,7 @@ class CreateResponse:
     pass
 
 
-class UpdateRequest:
+class UpdateRequest(ApiRequest):
     pass
 
 
@@ -697,11 +701,11 @@ class UpdateResponse:
     pass
 
 
-class ConfirmRequest:
+class ConfirmRequest(ApiRequest):
     pass
 
 
-class SaleWithoutInsuranceRequest:
+class SaleWithoutInsuranceRequest(ApiRequest):
     pass
 
 
