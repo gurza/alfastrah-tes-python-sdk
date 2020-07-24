@@ -5,11 +5,20 @@ import os
 
 import pytest
 
+from tes import AlfaInsTESClient
 from tes import (
     Amount, Document, DocumentType, FareType,
     Gender, Person, Point, Segment,
     ServiceClass,
 )
+
+
+@pytest.fixture
+def client_connector():
+    api_key = os.getenv('ALFAINS_TES_KEY')
+    client = AlfaInsTESClient(api_key)
+    client.api_host = 'https://uat-tes.alfastrah.ru'
+    yield client
 
 
 @pytest.fixture
