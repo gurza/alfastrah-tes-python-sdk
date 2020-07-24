@@ -50,6 +50,7 @@ class AlfaInsTESClient:
         url = '{api_host}{base_path}{path}'.format(api_host=self.api_host, base_path=self.base_path, path=path)
         headers = {
             'X-API-Key': self.api_key,
+            'Content-Type': 'application/json',
         }
         r = requests.request(method, url,
                              headers=headers, data=self.req, verify=self.verify_ssl)
