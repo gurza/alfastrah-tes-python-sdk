@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+from decimal import Decimal
 from enum import Enum
 import json
 
@@ -83,6 +84,8 @@ class AlfaInsTESClient:
 
 class MultiJSONEncoder(json.JSONEncoder):
     def default(self, o):
+        if isinstance(o, Decimal):
+            return float(o)
         if isinstance(o, Enum):
             return o.name
         if isinstance(o, datetime.datetime):
