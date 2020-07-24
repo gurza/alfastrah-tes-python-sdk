@@ -20,11 +20,6 @@ class BaseModel:
     __attrs__ = []
 
     def to_json(self):
-        """Serializes object to JSON.
-
-        :return: String in JSON format.
-        :rtype: dict
-        """
         json = dict()
 
         if not hasattr(self, '__attrs__') or not isinstance(self.__getattribute__('__attrs__'), list):
