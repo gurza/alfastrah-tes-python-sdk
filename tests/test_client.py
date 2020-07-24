@@ -23,3 +23,9 @@ class TestBasic:
         with pytest.raises(TESException):
             client.request('GET', '/404')
         assert client.status_code == 404
+
+
+class TestApi:
+    def test_get_products(self):
+        products = client.get_products(product_type='AIR')
+        assert products
