@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+from decimal import Decimal
 import json
 
 import pytest
@@ -8,11 +9,17 @@ from .utils import load_response
 from tes import MultiJSONEncoder
 from tes import (
     ApiProblem, InsuranceProduct, Risk, RiskType,
-    QuoteRequest, SportKind,
+    QuoteRequest, SportKind, Amount
 )
 
 
 class TestJsonSerialization:
+    def test_decimal(self):
+        value = 95000
+        price = Amount(Decimal(value), currency='RUB')
+        price_dict = json.loads(json.dumps(price, cls=MultiJSONEncoder))
+        assert abs(price_dict['value'] - value) < 1e-08
+
     def test_enum_attribute(self):
         risk = Risk(type=RiskType.RISK_COVID)
         risk_dict = json.loads(json.dumps(risk, cls=MultiJSONEncoder))
