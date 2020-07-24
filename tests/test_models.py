@@ -57,8 +57,8 @@ class TestAPIResponseHandling:
 
     @pytest.mark.parametrize(
         'fn', (
-            'products.json',
-            'products_with_currency.json',
+            'products/products.json',
+            'products/products_with_currency.json',
         ))
     def test_init_insurance_product(self, fn):
         resp = load_response(fn)
