@@ -12,7 +12,6 @@ from .models import (
     Segment, Amount, ServiceClass, SportKind,
     FareType, Opt, AcquisitionChannel, QuoteRequest,
 )
-from .exceptions import TESException, AuthErrorException
 
 
 class AlfaInsTESClient:
