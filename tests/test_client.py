@@ -30,6 +30,6 @@ class TestApi:
         fare_type = trip_additional_data.get('fare_type')
         fare_code = trip_additional_data.get('fare_code')
         end_date = segments[-1].arrival.date
-        quote = client_connector.quote(product_code, insureds, segments, booking_price,
-                                       service_class, fare_type, fare_code, end_date)
-        assert quote
+        resp = client_connector.quote(product_code, insureds, segments, booking_price,
+                                      service_class, fare_type, fare_code, end_date)
+        assert resp.quotes[0].policies[0].rate[0].value > 0
