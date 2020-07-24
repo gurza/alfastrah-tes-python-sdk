@@ -37,6 +37,14 @@ def insureds():
             document=Document(type=DocumentType.PASSPORT, number='4509511410'),
             nationality='RU'
         ),
+        Person(
+            first_name='Louisa',
+            last_name='Hawkins',
+            gender=Gender.FEMALE,
+            birth_date=datetime.date(1977, 4, 10),
+            document=Document(type=DocumentType.PASSPORT, number='3809468921'),
+            nationality='RU'
+        )
     ]
 
 
