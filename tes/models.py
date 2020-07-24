@@ -42,8 +42,12 @@ class ApiRequest:
     """API request base class."""
 
 
-class ApiProblem:
+class ApiProblem(BaseModel):
     """Description of the error that occurred while handling your request."""
+
+    __attrs__ = [
+        'title', 'status', 'detail',
+    ]
 
     def __init__(self, title=None, status=None, detail=None):
         """Init.
@@ -61,8 +65,12 @@ class ApiProblem:
         self.detail = detail
 
 
-class InsuranceProduct:
+class InsuranceProduct(BaseModel):
     """Insurance product."""
+
+    __attrs__ = [
+        'code', 'type', 'description', 'currency',
+    ]
 
     def __init__(self, code, type=None, description=None, currency=None):
         """Init.
@@ -82,8 +90,12 @@ class InsuranceProduct:
         self.currency = currency
 
 
-class Amount:
+class Amount(BaseModel):
     """Amount."""
+
+    __attrs__ = [
+        'value', 'currency',
+    ]
 
     def __init__(self, value, currency=None):
         """Init.
@@ -106,8 +118,12 @@ class PolicyStatus(Enum):
     DELETED = 4
 
 
-class Operator:
+class Operator(BaseModel):
     """Operator."""
+
+    __attrs__ = [
+        'code',
+    ]
 
     def __init__(self, code):
         """Init.
@@ -118,8 +134,12 @@ class Operator:
         self.code = code
 
 
-class Agent:
+class Agent(BaseModel):
     """Agent."""
+
+    __attrs__ = [
+        'code', 'sub',
+    ]
 
     def __init__(self, code, sub=None):
         """Init.
@@ -134,8 +154,12 @@ class Agent:
         self.sub = sub
 
 
-class SubAgent:
+class SubAgent(BaseModel):
     """Subagent."""
+
+    __attrs__ = [
+        'code',
+    ]
 
     def __init__(self, code):
         """Init.
@@ -146,8 +170,12 @@ class SubAgent:
         self.code = code
 
 
-class Cancellation:
+class Cancellation(BaseModel):
     """Policy cancellation."""
+
+    __attrs__ = [
+        'reason', 'amount',
+    ]
 
     def __init__(self, reason=None, amount=None):
         """Init.
@@ -165,8 +193,15 @@ class ServiceCompany:
     pass
 
 
-class Person:
+class Person(BaseModel):
     """Person."""
+
+    __attrs__ = [
+        'first_name', 'last_name', 'patronymic',
+        'nick_name', 'gender', 'birth_date', 'email',
+        'address', 'infant', 'nationality', 'id_card',
+        'phone', 'document', 'ticket', 'risks',
+    ]
 
     def __init__(self, first_name=None, last_name=None, patronymic=None,
                  nick_name=None, gender=None, birth_date=None, email=None,
@@ -222,8 +257,12 @@ class Person:
         self.risks = risks if risks is not None else []
 
 
-class Phone:
+class Phone(BaseModel):
     """Phone."""
+
+    __attrs__ = [
+        'number', 'type',
+    ]
 
     def __init__(self, number=None, type=None):
         """Init.
@@ -237,8 +276,12 @@ class Phone:
         self.type = type
 
 
-class Document:
+class Document(BaseModel):
     """Document ID."""
+
+    __attrs__ = [
+        'type', 'number', 'country',
+    ]
 
     def __init__(self, type=None, number=None, country=None):
         """Init.
@@ -255,8 +298,12 @@ class Document:
         self.country = country
 
 
-class Ticket:
+class Ticket(BaseModel):
     """Ticket."""
+
+    __attrs__ = [
+        'number', 'price', 'issue_date',
+    ]
 
     def __init__(self, number=None, price=None, issue_date=None):
         """Init.
@@ -273,8 +320,12 @@ class Ticket:
         self.issue_date = issue_date
 
 
-class Risk:
+class Risk(BaseModel):
     """Risk."""
+
+    __attrs__ = [
+        'type', 'coverage', 'franchise'
+    ]
 
     def __init__(self, type=None, coverage=None, franchise=None):
         """Init.
@@ -291,8 +342,14 @@ class Risk:
         self.franchise = franchise
 
 
-class Segment:
+class Segment(BaseModel):
     """Travel segment."""
+
+    __attrs__ = [
+        'transport_operator_code', 'route_number', 'service_class',
+        'connection_time', 'departure', 'arrival', 'place_number',
+        'car_number', 'car_type', 'connecting_flight', 'flight_direction',
+    ]
 
     def __init__(self, transport_operator_code=None, route_number=None, service_class=None,
                  connection_time=None, departure=None, arrival=None, place_number=None,
@@ -342,8 +399,12 @@ class TravelType(Enum):
     MULTIPLE = 2
 
 
-class Point:
+class Point(BaseModel):
     """Departure or arrival point."""
+
+    __attrs__ = [
+        'date', 'point', 'country',
+    ]
 
     def __init__(self, date=None, point=None, country=None):
         """Init.
@@ -459,8 +520,22 @@ class AcquisitionChannel(Enum):
     CROSS_SALE = 4
 
 
-class Policy:
+class Policy(BaseModel):
     """Insurance policy."""
+
+    __attrs__ = [
+        'policy_id', 'product', 'insured',
+        'insurer', 'customer_email', 'customer_phone', 'pnr',
+        'series', 'payment_type', 'sale_session', 'issuance_city',
+        'external_id', 'commentary', 'description', 'resources',
+        'travel_type', 'sport', 'service_company', 'segments',
+        'ticket', 'rate', 'discounted_rate', 'begin_date',
+        'end_date', 'period_of_validity', 'risks', 'status',
+        'created_at', 'update_at', 'fare_type', 'luggage_type',
+        'fare_code', 'cancellation', 'operator', 'agent',
+        'manager_name', 'manager_code', 'opt', 'selling_page',
+        'service_class', 'age_group', 'acquisition_channel', 'error',
+    ]
 
     def __init__(self, policy_id=None, product=None, insured=None,
                  insurer=None, customer_email=None, customer_phone=None, pnr=None,
@@ -612,8 +687,16 @@ class Declaration:
     pass
 
 
-class QuoteRequest(ApiRequest):
+class QuoteRequest(BaseModel, ApiRequest):
     """Request for calculating one or more insurance policies."""
+
+    __attrs__ = [
+        'session_id', 'product', 'insureds',
+        'segments', 'booking_price', 'currency', 'service_class',
+        'country', 'sport', 'fare_type', 'luggage_type',
+        'fare_code', 'manager_name', 'manager_code', 'opt',
+        'selling_page', 'end_date', 'acquisition_channel',
+    ]
 
     def __init__(self, session_id=None, product=None, insureds=None,
                  segments=None, booking_price=None, currency=None, service_class=None,
@@ -679,8 +762,12 @@ class QuoteRequest(ApiRequest):
         self.acquisition_channel = acquisition_channel
 
 
-class QuoteResponse:
+class QuoteResponse(BaseModel):
     """Quote response."""
+
+    __attrs__ = [
+        'session_id', 'quotes',
+    ]
 
     def __init__(self, session_id=None, quotes=None):
         """Init.
@@ -694,8 +781,12 @@ class QuoteResponse:
         self.quotes = quotes if quotes is not None else []
 
 
-class Quote:
+class Quote(BaseModel):
     """Quote/Calculating."""
+
+    __attrs__ = [
+        'policies', 'error',
+    ]
 
     def __init__(self, policies=None, error=None):
         """Init.
