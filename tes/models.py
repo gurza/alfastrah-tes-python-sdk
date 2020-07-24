@@ -23,7 +23,7 @@ class BaseModel:
         """Serializes object to JSON.
 
         :return: String in JSON format.
-        :rtype: str
+        :rtype: dict
         """
         json = dict()
         if not hasattr(self, '__attrs__'):
