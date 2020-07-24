@@ -12,7 +12,7 @@ from tes import (
 )
 
 
-class TestJsonEncoder:
+class TestMultiJSONEncoder:
     def test_decimal(self):
         value = 95000
         price = Amount(Decimal(value), currency='RUB')
