@@ -26,7 +26,7 @@ class BaseModel:
         :rtype: dict
         """
         json = dict()
-        if not hasattr(self, '__attrs__'):
+        if not hasattr(self, '__attrs__') or not isinstance(self.__getattribute__('__attrs__'), list):
             return json
         for attr in self.__getattribute__('__attrs__'):
             if not hasattr(self, attr) or self.__getattribute__(attr) is None:
