@@ -22,3 +22,13 @@ class TestApi:
     def test_get_products(self, client_connector):
         products = client_connector.get_products(product_type='AIR')
         assert products
+
+    def test_quote(self, client_connector, product_code, insureds, segments, trip_additional_data):
+        booking_price = trip_additional_data.get('booking_price')
+        service_class = trip_additional_data.get('service_class')
+        fare_type = trip_additional_data.get('fare_type')
+        fare_code = trip_additional_data.get('fare_code')
+        end_date = segments[-1].arrival.date
+        quote = client_connector.quote(product_code, insureds, segments, booking_price,
+                                       service_class, fare_type, fare_code, end_date)
+        assert quote
