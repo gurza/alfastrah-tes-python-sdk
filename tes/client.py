@@ -33,7 +33,7 @@ class AlfaInsTESClient:
         else:
             raise TESException(api_problem.detail or 'Unknown problem')
 
-    def request(self, method, path, data=None):
+    def request(self, method, path, data=None, decode=None):
         """Constructs and sends a request to API Gateway.
 
         :param method: HTTP method, e.g. 'GET', 'POST', 'PUT', 'DELETE'.
@@ -60,6 +60,8 @@ class AlfaInsTESClient:
             self.resp = None
         self.status_code = r.status_code
         self.raise_for_error()
+        if decode is not None:
+            return json.loads(r.content, object_hook=decode)
         return self.resp
 
     def get_products(self, product_type=None):
@@ -75,12 +77,8 @@ class AlfaInsTESClient:
             path = '/products/{type}'.format(type=product_type)
         else:
             path = '/products'
-        resp = self.request('GET', path)
-        if isinstance(resp, list):
-            return [InsuranceProduct(**product) for product in resp]
-        else:
-            raise TESException('Unexpected response format')
-
+        products = self.request('GET', path, decode=InsuranceProduct.decode)
+        return products
 
 class MultiJSONEncoder(json.JSONEncoder):
     def default(self, o):
