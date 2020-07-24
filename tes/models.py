@@ -87,6 +87,15 @@ class InsuranceProduct(BaseModel):
         self.description = description
         self.currency = currency
 
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return InsuranceProduct(**dct)
+
 
 class Amount(BaseModel):
     """Amount."""
