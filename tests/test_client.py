@@ -19,9 +19,10 @@ class TestBasic:
 
 
 class TestApi:
-    def test_get_products(self, client_connector):
+    def test_get_products(self, client_connector, product_code):
         products = client_connector.get_products(product_type='AIR')
-        assert products
+        products_codes = [product.code for product in products]
+        assert product_code in products_codes
 
     def test_quote(self, client_connector, product_code, insureds, segments, trip_additional_data):
         booking_price = trip_additional_data.get('booking_price')
