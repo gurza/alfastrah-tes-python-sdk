@@ -14,6 +14,30 @@ import uuid
 PRODUCT_TYPES = ['AIR']
 
 
+class BaseModel:
+    """Base class with serialization."""
+
+    __attrs__ = []
+
+    def to_json(self):
+        """Serializes object to JSON.
+
+        :return: String in JSON format.
+        :rtype: str
+        """
+        json = dict()
+        if not hasattr(self, '__attrs__'):
+            return json
+        for attr in self.__getattribute__('__attrs__'):
+            if not hasattr(self, attr) or self.__getattribute__(attr) is None:
+                continue
+            if isinstance(self.__getattribute__(attr), Enum):
+                json[attr] = self.__getattribute__(attr).name
+            else:
+                json[attr] = self.__getattribute__(attr)
+        return json
+
+
 class ApiRequest:
     """API request base class."""
 
