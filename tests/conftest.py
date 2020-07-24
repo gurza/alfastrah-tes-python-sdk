@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 from decimal import Decimal
+import os
 
 import pytest
 
@@ -9,6 +10,11 @@ from tes import (
     Gender, Person, Point, Segment,
     ServiceClass,
 )
+
+
+@pytest.fixture
+def product_code():
+    yield os.getenv('ALFAINS_TES_PRODUCT_CODE')
 
 
 @pytest.fixture
@@ -26,7 +32,7 @@ def insureds():
 
 
 @pytest.fixture
-def trip():
+def segments():
     outbound_datetime = datetime.datetime.now() + datetime.timedelta(days=30)
     inbound_datetime = datetime.datetime.now() + datetime.timedelta(days=39)
 
