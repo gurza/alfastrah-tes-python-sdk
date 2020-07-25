@@ -33,7 +33,7 @@ class AlfaInsTESClient:
         else:
             raise TESException(api_problem.detail or 'Unknown problem')
 
-    def request(self, method, path, data=None, decode=None):
+    def request(self, method, path, data=None, resp_cls=None):
         """Constructs and sends a request to API Gateway.
 
         :param method: HTTP method, e.g. 'GET', 'POST', 'PUT', 'DELETE'.
@@ -42,6 +42,8 @@ class AlfaInsTESClient:
         :type path: str
         :param data: (optional) Request body.
         :type data: ApiRequest or None
+        :param resp_cls: Response class.
+        :type resp_cls: ApiResponse
         :return: JSON API response.
         :rtype: object
         """
@@ -60,8 +62,8 @@ class AlfaInsTESClient:
             self.resp = None
         self.status_code = r.status_code
         self.raise_for_error()
-        if decode is not None:
-            return json.loads(r.content, object_hook=decode)
+        if resp_cls is not None:
+            return json.loads(r.content, cls=MultiJSONDecoder, result_cls=resp_cls)
         return self.resp
 
     def get_products(self, product_type=None):
@@ -96,3 +98,21 @@ class MultiJSONEncoder(json.JSONEncoder):
 
         # Let the base class default raise the TypeError
         return json.JSONEncoder.default(self, o)
+
+
+class MultiJSONDecoder(json.JSONDecoder):
+    def __init__(self, *args, **kwargs):
+        self.result_cls = kwargs.pop('result_cls', None)
+        json.JSONDecoder.__init__(self, *args, **kwargs)
+
+    def decode(self, s, **kwargs):
+        json_obj = json.JSONDecoder.decode(self, s, **kwargs)
+
+        if self.result_cls is None:
+            return json_obj
+
+        if isinstance(json_obj, dict):
+            return self.result_cls.decode(json_obj)
+        elif isinstance(json_obj, list):
+            return [self.result_cls.decode(o) for o in json_obj]
+        return json_obj
