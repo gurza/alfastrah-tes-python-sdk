@@ -80,7 +80,7 @@ class AlfaInsTESClient:
             path = '/products/{type}'.format(type=product_type)
         else:
             path = '/products'
-        products = self.request('GET', path, decode=InsuranceProduct.decode)
+        products = self.request('GET', path, resp_cls=InsuranceProduct)
         return products
 
 class MultiJSONEncoder(json.JSONEncoder):
