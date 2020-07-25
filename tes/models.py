@@ -13,6 +13,21 @@ import uuid
 PRODUCT_TYPES = ['AIR']
 
 
+class ServiceClass(Enum):
+    """Service class."""
+
+    ECONOM = 1
+    COMFORT = 2
+    BUSINESS = 3
+
+
+class SportKind(Enum):
+    """Insured sport."""
+
+    COMMON_SPORT = 1
+    DANGEROUS_SPORT = 2
+
+
 class BaseModel:
     """Base class with serialization."""
 
@@ -832,18 +847,3 @@ class SaleWithoutInsuranceRequest(ApiRequest):
 
 class SaleWithoutInsuranceResponse:
     pass
-
-
-class ServiceClass(Enum):
-    """Service class."""
-
-    ECONOM = 1
-    COMFORT = 2
-    BUSINESS = 3
-
-
-class SportKind(Enum):
-    """Insured sport."""
-
-    COMMON_SPORT = 1
-    DANGEROUS_SPORT = 2
