@@ -832,6 +832,18 @@ class Quote(BaseModel):
         self.policies = policies if policies is not None else []
         self.error = error
 
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Quote(
+            policies=[Policy.decode(policy) for policy in dct.get('policies', [])],
+            error=dct.get('error', None)
+        )
+
 
 class CreateRequest(ApiRequest):
     pass
