@@ -477,6 +477,20 @@ class Ticket(BaseModel):
         self.price = price
         self.issue_date = issue_date
 
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Ticket(
+            number=dct.get('number'),
+            price=Amount.decode(dct.get('price')) if dct.get('price') is not None else None,
+            issue_date=datetime.datetime.strptime(dct.get('issue_date'), '%Y-%m-%d').date()
+            if dct.get('issue_date') is not None else None,
+        )
+
 
 class Risk(BaseModel):
     """Risk."""
@@ -561,6 +575,27 @@ class Segment(BaseModel):
         self.car_type = car_type
         self.connecting_flight = connecting_flight
         self.flight_direction = flight_direction
+
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Segment(
+            transport_operator_code=None, route_number=None, service_class=None,
+
+            connection_time=None,
+            departure=None,
+            arrival=None,
+            place_number=None,
+
+            car_number=dct.get('car_number'),
+            car_type=dct.get('car_type'),
+            connecting_flight=dct.get('connecting_flight'),
+            flight_direction=FlightDirection['flight_direction'] if dct.get('flight_direction') is not None else None
+        )
 
 
 class TravelType(Enum):
@@ -766,9 +801,18 @@ class Policy(BaseModel):
             insurer=None, customer_email=None, customer_phone=None, pnr=None,
             series=None, payment_type=None, sale_session=None, issuance_city=None,
             external_id=None, commentary=None, description=None, resources=None,
-            travel_type=None, sport=None, service_company=None, segments=None,
-            ticket=None, rate=None, discounted_rate=None, begin_date=None,
 
+            travel_type=None,
+            sport=None,
+            service_company=None,
+            segments=[Segment.decode(segment) for segment in dct.get('segments', [])],
+
+            ticket=Ticket.decode(dct.get('ticket')) if dct.get('ticket') is not None else None,
+            rate=[Amount.decode(rate) for rate in dct.get('rates', [])],
+            discounted_rate=Amount.decode(dct.get('discounted_rate'))
+            if dct.get('discounted_rate') is not None else None,
+            begin_date=datetime.datetime.strptime(dct.get('begin_date'), '%Y-%m-%dT%H:%M:%S')
+            if dct.get('begin_date') is not None else None,
             end_date=datetime.datetime.strptime(dct.get('end_date'), '%Y-%m-%dT%H:%M:%S')
             if dct.get('end_date') is not None else None,
             period_of_validity=dct.get('period_of_validity'),
