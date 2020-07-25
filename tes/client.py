@@ -8,7 +8,7 @@ import requests
 
 from .exceptions import TESException, AuthErrorException
 from .models import (
-    ApiRequest, ApiResponse, ApiProblem, InsuranceProduct,
+    ApiRequest, ApiProblem, InsuranceProduct,
     Person, Segment, Amount, ServiceClass,
     SportKind, FareType, Opt, AcquisitionChannel,
     QuoteRequest, QuoteResponse,

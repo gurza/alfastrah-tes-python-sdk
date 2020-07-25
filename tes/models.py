@@ -5,7 +5,6 @@ tes.models
 ~~~~~~~~~~
 This module contains the primary objects.
 """
-
 from decimal import Decimal
 from enum import Enum
 import datetime
@@ -40,14 +39,6 @@ class ApiRequest:
     """API request base class."""
 
 
-class ApiResponse:
-    """API response base class."""
-
-    @staticmethod
-    def decode(dct):
-        raise NotImplementedError
-
-
 class ApiProblem(BaseModel):
     """Description of the error that occurred while handling your request."""
 
@@ -71,7 +62,7 @@ class ApiProblem(BaseModel):
         self.detail = detail
 
 
-class InsuranceProduct(BaseModel, ApiResponse):
+class InsuranceProduct(BaseModel):
     """Insurance product."""
 
     __attrs__ = [

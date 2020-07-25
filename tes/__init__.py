@@ -6,7 +6,7 @@ from .__version__ import (
 
 from .client import AlfaInsTESClient, MultiJSONEncoder
 from .models import (
-    BaseModel, ApiRequest, ApiResponse, ApiProblem,
+    BaseModel, ApiRequest, ApiProblem,
     InsuranceProduct, Amount, PolicyStatus, Operator,
     Agent, SubAgent, Cancellation, ServiceCompany,
     Person, Phone, Document, Ticket,
