@@ -228,6 +228,15 @@ class Amount(BaseModel):
         self.value = value
         self.currency = currency
 
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Amount(**dct)
+
 
 class PolicyStatus(Enum):
     """Policy status."""
@@ -253,6 +262,14 @@ class Operator(BaseModel):
         """
         self.code = code
 
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Operator(**dct)
+
 
 class Agent(BaseModel):
     """Agent."""
@@ -272,6 +289,15 @@ class Agent(BaseModel):
         """
         self.code = code
         self.sub = sub
+
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Agent(**dct)
 
 
 class SubAgent(BaseModel):
@@ -307,6 +333,18 @@ class Cancellation(BaseModel):
         """
         self.reason = reason
         self.amount = amount
+
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Cancellation(
+            reason=dct.get('reason'),
+            amount=Amount.decode(dct.get('amount')) if dct.get('amount') is not None else None
+        )
 
 
 class ServiceCompany:
@@ -460,6 +498,19 @@ class Risk(BaseModel):
         self.type = type
         self.coverage = coverage
         self.franchise = franchise
+
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Risk(
+            type=RiskType[dct.get('type')] if dct.get('type') is not None else None,
+            coverage=Amount(dct.get('coverage')) if dct.get('coverage') is not None else None,
+            franchise=Amount(dct.get('franchise')) if dct.get('franchise') is not None else None
+        )
 
 
 class Segment(BaseModel):
@@ -702,6 +753,47 @@ class Policy(BaseModel):
         self.age_group = age_group
         self.acquisition_channel = acquisition_channel
         self.error = error
+
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Policy(
+            policy_id=None, product=None, insured=None,
+            insurer=None, customer_email=None, customer_phone=None, pnr=None,
+            series=None, payment_type=None, sale_session=None, issuance_city=None,
+            external_id=None, commentary=None, description=None, resources=None,
+            travel_type=None, sport=None, service_company=None, segments=None,
+            ticket=None, rate=None, discounted_rate=None, begin_date=None,
+
+            end_date=datetime.datetime.strptime(dct.get('end_date'), '%Y-%m-%dT%H:%M:%S')
+            if dct.get('end_date') is not None else None,
+            period_of_validity=dct.get('period_of_validity'),
+            risks=[Risk.decode(risk) for risk in dct.get('risks', [])],
+            status=PolicyStatus[dct.get('status')] if dct.get('status') is not None else None,
+            created_at=datetime.datetime.strptime(dct.get('update_at'), '%Y-%m-%dT%H:%M:%S')
+            if dct.get('created_at') is not None else None,
+            update_at=datetime.datetime.strptime(dct.get('update_at'), '%Y-%m-%dT%H:%M:%S')
+            if dct.get('update_at') is not None else None,
+            fare_type=FareType[dct.get('fare_type')] if dct.get('fare_type') is not None else None,
+            luggage_type=LuggageType[dct.get('luggage_type')] if dct.get('luggage_type') is not None else None,
+            fare_code=dct.get('fare_code'),
+            cancellation=Cancellation.decode(dct.get('cancellation')) if dct.get('cancellation') is not None else None,
+            operator=Operator.decode(dct.get('operator')) if dct.get('operator') is not None else None,
+            agent=Agent.decode(dct.get('agent')) if dct.get('agent') is not None else None,
+            manager_name=dct.get('manager_name'),
+            manager_code=dct.get('manager_code'),
+            opt=Opt[dct.get('opt')] if dct.get('opt') is not None else None,
+            selling_page=SellingPage[dct.get('selling_page')] if dct.get('selling_page') is not None else None,
+            service_class=ServiceClass[dct.get('service_class')] if dct.get('service_class') is not None else None,
+            age_group=dct.get('age_group'),
+            acquisition_channel=AcquisitionChannel[dct.get('acquisition_channel')]
+            if dct.get('acquisition_channel') is not None else None,
+            error=dct.get('error')
+        )
 
 
 class Declaration:
