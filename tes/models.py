@@ -801,6 +801,18 @@ class QuoteResponse(BaseModel):
         self.session_id = session_id
         self.quotes = quotes if quotes is not None else []
 
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return QuoteResponse(
+            session_id=dct.get('session_id'),
+            quotes=[Quote.decode(quote) for quote in dct.get('quotes', [])]
+        )
+
 
 class Quote(BaseModel):
     """Quote/Calculating."""
