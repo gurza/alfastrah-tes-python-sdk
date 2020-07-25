@@ -44,9 +44,9 @@ class AlfaInsTESClient:
         :param data: (optional) Request body.
         :type data: ApiRequest or None
         :param resp_cls: Response class.
-        :type resp_cls: ApiResponse
+        :type resp_cls: class or None
         :return: JSON API response.
-        :rtype: object
+        :rtype: class
         """
         self.req = json.dumps(data, cls=MultiJSONEncoder) if data is not None else None
         self.resp = None
