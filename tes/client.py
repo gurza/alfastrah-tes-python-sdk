@@ -44,6 +44,8 @@ class AlfaInsTESClient:
         :param data: (optional) Request body.
         :type data: ApiRequest or None
         :param resp_cls: Response class.
+            This class must contain a static "decode()" method
+            that will be called to convert a JSON Python object (API Response) to an instance of this class.
         :type resp_cls: class or None
         :return: JSON API response.
         :rtype: class
