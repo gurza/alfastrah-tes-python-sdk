@@ -42,6 +42,7 @@ class ApiRequest:
 
 class ApiResponse:
     """API response base class."""
+
     @staticmethod
     def decode(dct):
         raise NotImplementedError
