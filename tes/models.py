@@ -28,6 +28,105 @@ class SportKind(Enum):
     DANGEROUS_SPORT = 2
 
 
+class Gender(Enum):
+    """Gender."""
+
+    MALE = 1
+    FEMALE = 2
+
+
+class PhoneType(Enum):
+    """Phone type"""
+
+    MOBILE = 1
+    HOME = 2
+    OFFICE = 3
+    OTHER = 4
+
+
+class DocumentType(Enum):
+    """Document type."""
+
+    PASSPORT = 1
+    INTERNATIONAL = 2
+    IDCARD = 3
+    MILITARY = 4
+    FOREIGNER = 5
+    JURIDICAL = 6
+    ERGUL = 7
+    DRIVER_LICENCE = 8
+    BIRTHCERTIFICATE = 9
+
+
+class RiskType(Enum):
+    """Risk type."""
+
+    RISK_MR = 1
+    RISK_NSP = 2
+    RISK_NS = 3
+    RISK_FLIGHT_DELAYS_PERSONAL = 4
+    RISK_SPORT = 5
+    RISK_LOSS_LUGGAGE_PERSONAL = 6
+    RISK_DELAYED_LUGGAGE_PERSONAL = 7
+    RISK_GO = 8
+    RISK_LUGGAGE_MASSIVE = 9
+    RISK_FLIGHT_DELAYS_MASSIVE = 10
+    RISK_NR = 11
+    RISK_PROPERTY = 12
+    RISK_EVENT = 13
+    RISK_LOSS_RESTORE_DOCUMENTS = 14
+    RISK_CL = 15
+    RISK_LUGGAGE_DAMAGE = 16
+    RISK_COVID = 17
+
+
+class FareType(Enum):
+    """Fare type (refundability)."""
+
+    REFUNDABLE = 1
+    NO_RETURN = 2
+
+
+class LuggageType(Enum):
+    """Luggage type."""
+
+    STANDARD = 1
+
+
+class Opt(Enum):
+    """Option state."""
+
+    OPT_IN = 1
+    OPT_OUT = 2
+    SMART_OPT_IN = 3
+    SMART_OPT_OUT = 4
+
+
+class SellingPage(Enum):
+    """Selling page."""
+
+    CROSS_SALE = 1
+    BOOKING_EDITION = 2
+    WEB_CHECK_IN = 3
+    STANDALONE = 4
+
+
+class FlightDirection(Enum):
+    """Flight direction."""
+
+    OW = 1  # One way
+    RT = 2  # Round trip
+
+
+class AcquisitionChannel(Enum):
+    """Acquisition (data collection) channel."""
+
+    DESKTOP = 1
+    MOBILE_SITE = 2
+    MOBILE_APP = 3
+    CROSS_SALE = 4
+
+
 class BaseModel:
     """Base class with serialization."""
 
@@ -440,105 +539,6 @@ class Point(BaseModel):
         self.date = date
         self.point = point
         self.country = country
-
-
-class Gender(Enum):
-    """Gender."""
-
-    MALE = 1
-    FEMALE = 2
-
-
-class PhoneType(Enum):
-    """Phone type"""
-
-    MOBILE = 1
-    HOME = 2
-    OFFICE = 3
-    OTHER = 4
-
-
-class DocumentType(Enum):
-    """Document type."""
-
-    PASSPORT = 1
-    INTERNATIONAL = 2
-    IDCARD = 3
-    MILITARY = 4
-    FOREIGNER = 5
-    JURIDICAL = 6
-    ERGUL = 7
-    DRIVER_LICENCE = 8
-    BIRTHCERTIFICATE = 9
-
-
-class RiskType(Enum):
-    """Risk type."""
-
-    RISK_MR = 1
-    RISK_NSP = 2
-    RISK_NS = 3
-    RISK_FLIGHT_DELAYS_PERSONAL = 4
-    RISK_SPORT = 5
-    RISK_LOSS_LUGGAGE_PERSONAL = 6
-    RISK_DELAYED_LUGGAGE_PERSONAL = 7
-    RISK_GO = 8
-    RISK_LUGGAGE_MASSIVE = 9
-    RISK_FLIGHT_DELAYS_MASSIVE = 10
-    RISK_NR = 11
-    RISK_PROPERTY = 12
-    RISK_EVENT = 13
-    RISK_LOSS_RESTORE_DOCUMENTS = 14
-    RISK_CL = 15
-    RISK_LUGGAGE_DAMAGE = 16
-    RISK_COVID = 17
-
-
-class FareType(Enum):
-    """Fare type (refundability)."""
-
-    REFUNDABLE = 1
-    NO_RETURN = 2
-
-
-class LuggageType(Enum):
-    """Luggage type."""
-
-    STANDARD = 1
-
-
-class Opt(Enum):
-    """Option state."""
-
-    OPT_IN = 1
-    OPT_OUT = 2
-    SMART_OPT_IN = 3
-    SMART_OPT_OUT = 4
-
-
-class SellingPage(Enum):
-    """Selling page."""
-
-    CROSS_SALE = 1
-    BOOKING_EDITION = 2
-    WEB_CHECK_IN = 3
-    STANDALONE = 4
-
-
-class FlightDirection(Enum):
-    """Flight direction."""
-
-    OW = 1  # One way
-    RT = 2  # Round trip
-
-
-class AcquisitionChannel(Enum):
-    """Acquisition (data collection) channel."""
-
-    DESKTOP = 1
-    MOBILE_SITE = 2
-    MOBILE_APP = 3
-    CROSS_SALE = 4
 
 
 class Policy(BaseModel):
