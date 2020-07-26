@@ -5,10 +5,13 @@ tes.models
 ~~~~~~~~~~
 This module contains the primary objects.
 """
-from decimal import Decimal
-from enum import Enum
 import datetime
+import numbers
+import sys
+import typing
 import uuid
+from enum import Enum
+from decimal import Decimal
 
 PRODUCT_TYPES = ['AIR']
 
@@ -112,8 +115,6 @@ class SellingPage(Enum):
 
 
 class FlightDirection(Enum):
-    """Flight direction."""
-
     OW = 1  # One way
     RT = 2  # Round trip
 
@@ -149,6 +150,63 @@ class BaseModel:
         return json
 
 
+class BaseModel2:
+    __attrs__ = {}
+
+    def __init__(self, *args, **kwargs):
+        pass
+
+    def to_json(self):
+        json = dict()
+
+        if not hasattr(self, '__attrs__') or not isinstance(self.__getattribute__('__attrs__'), dict):
+            return json
+
+        for attr in self.__attrs__.keys():
+            if not hasattr(self, attr) or self.__getattribute__(attr) is None:
+                continue
+            if isinstance(self.__getattribute__(attr), Enum):
+                json[attr] = self.__getattribute__(attr).name
+            else:
+                json[attr] = self.__getattribute__(attr)
+
+        return json
+
+    @classmethod
+    def decode(cls, dct):
+        def cast(json_value, target_type):
+            if json_value is None:
+                return None
+
+            if isinstance(json_value, bool) or isinstance(json_value, numbers.Number):
+                return json_value
+
+            # TODO: Remove Python2 dependecy
+            # isinstance(json_value, str)
+            if isinstance(json_value, str if sys.version_info[0] == 3 else basestring):
+                if target_type == datetime.date:
+                    return datetime.datetime.strptime(json_value, '%Y-%m-%d').date()
+                if target_type == datetime.datetime:
+                    return datetime.datetime.strptime(json_value, '%Y-%m-%dT%H:%M:%S')
+                if issubclass(target_type, Enum):
+                    return target_type[json_value]
+                return json_value
+
+            if issubclass(target_type, BaseModel2):
+                return target_type.decode(dct.get(attr_name)) if dct.get(attr_name) is not None else None
+
+            raise NotImplementedError
+
+        params = {}
+        for attr_name, attr_type in cls.__attrs__.items():
+            if type(attr_type) == typing.GenericMeta and attr_type.__base__[0] == list:
+                params[attr_name] = [cast(o, attr_type.__args__[0]) for o in dct.get(attr_name, [])]
+            else:
+                params[attr_name] = cast(dct.get(attr_name), attr_type)
+
+        return cls(**params)
+
+
 class ApiRequest:
     """API request base class."""
 
@@ -176,12 +234,19 @@ class ApiProblem(BaseModel):
         self.detail = detail
 
 
-class InsuranceProduct(BaseModel):
+class InsuranceProduct(BaseModel2):
     """Insurance product."""
 
-    __attrs__ = [
-        'code', 'type', 'description', 'currency',
-    ]
+    # __attrs__ = [
+    #     'code', 'type', 'description', 'currency',
+    # ]
+
+    __attrs__ = {
+        'code': str,
+        'type': str,
+        'description': str,
+        'currency': str,
+    }
 
     def __init__(self, code, type=None, description=None, currency=None):
         """Init.
@@ -200,14 +265,14 @@ class InsuranceProduct(BaseModel):
         self.description = description
         self.currency = currency
 
-    @staticmethod
-    def decode(dct):
-        """Decodes.
-
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return InsuranceProduct(**dct)
+    # @staticmethod
+    # def decode(dct):
+    #     """Decodes.
+    #
+    #     :param dct: Dictionary.
+    #     :type dct: dict
+    #     """
+    #     return InsuranceProduct(**dct)
 
 
 class Amount(BaseModel):
