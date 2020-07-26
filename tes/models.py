@@ -414,6 +414,24 @@ class Person(BaseModel):
         self.ticket = ticket
         self.risks = risks if risks is not None else []
 
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Person(
+            first_name=None, last_name=None, patronymic=None,
+            nick_name=None, gender=None, birth_date=None, email=None,
+            address=None, infant=None, nationality=None, id_card=None,
+
+            phone=Phone.decode(dct.get('phone')) if dct.get('phone') is not None else None,
+            document=Document.decode(dct.get('document')) if dct.get('document') is not None else None,
+            ticket=Ticket.decode(dct.get('ticket')) if dct.get('ticket') is not None else None,
+            risks=[Risk.decode(risk) for risk in dct.get('risks', [])]
+        )
+
 
 class Phone(BaseModel):
     """Phone."""
@@ -432,6 +450,18 @@ class Phone(BaseModel):
         """
         self.number = number
         self.type = type
+
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Phone(
+            number=dct.get('number'),
+            type=PhoneType[dct.get('type')] if dct.get('type') is not None else None
+        )
 
 
 class Document(BaseModel):
@@ -454,6 +484,19 @@ class Document(BaseModel):
         self.type = type
         self.number = number
         self.country = country
+
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Document(
+            type=DocumentType[dct.get('type')] if dct.get('type') is not None else None,
+            number=dct.get('number'),
+            country=dct.get('country')
+        )
 
 
 class Ticket(BaseModel):
@@ -584,13 +627,13 @@ class Segment(BaseModel):
         :type dct: dict
         """
         return Segment(
-            transport_operator_code=None, route_number=None, service_class=None,
-
-            connection_time=None,
-            departure=None,
-            arrival=None,
-            place_number=None,
-
+            transport_operator_code=dct.get('transport_operator_code'),
+            route_number=dct.get('route_number'),
+            service_class=ServiceClass[dct.get('service_class')] if dct.get('service_class') is not None else None,
+            connection_time=dct.get('connection_time'),
+            departure=Point.decode(dct.get('departure')) if dct.get('departure') is not None else None,
+            arrival=Point.decode(dct.get('arrival')) if dct.get('arrival') is not None else None,
+            place_number=dct.get('place_number'),
             car_number=dct.get('car_number'),
             car_type=dct.get('car_type'),
             connecting_flight=dct.get('connecting_flight'),
@@ -625,6 +668,20 @@ class Point(BaseModel):
         self.date = date
         self.point = point
         self.country = country
+
+    @staticmethod
+    def decode(dct):
+        """Decodes.
+
+        :param dct: Dictionary.
+        :type dct: dict
+        """
+        return Point(
+            date=datetime.datetime.strptime(dct.get('date'), '%Y-%m-%dT%H:%M:%S')
+            if dct.get('date') is not None else None,
+            point=dct.get('point'),
+            country=dct.get('country')
+        )
 
 
 class Policy(BaseModel):
@@ -798,15 +855,23 @@ class Policy(BaseModel):
         """
         return Policy(
             policy_id=None, product=None, insured=None,
-            insurer=None, customer_email=None, customer_phone=None, pnr=None,
-            series=None, payment_type=None, sale_session=None, issuance_city=None,
-            external_id=None, commentary=None, description=None, resources=None,
 
-            travel_type=None,
-            sport=None,
-            service_company=None,
+            insurer=Person.decode(dct.get('insurer')) if dct.get('insurer') is not None else None,
+            customer_email=dct.get('customer_email'),
+            customer_phone=dct.get('customer_phone'),
+            pnr=dct.get('pnr'),
+            series=dct.get('series'),
+            payment_type=dct.get('payment_type'),
+            sale_session=dct.get('sale_session'),
+            issuance_city=dct.get('issuance_city'),
+            external_id=dct.get('external_id'),
+            commentary=dct.get('commentary'),
+            description=dct.get('description'),
+            resources=[resource for resource in dct.get('resources', [])],
+            travel_type=TravelType[dct.get('travel_type')] if dct.get('travel_type') is not None else None,
+            sport=[SportKind[sport] for sport in dct.get('sport', [])],
+            service_company=dct.get('service_company'),
             segments=[Segment.decode(segment) for segment in dct.get('segments', [])],
-
             ticket=Ticket.decode(dct.get('ticket')) if dct.get('ticket') is not None else None,
             rate=[Amount.decode(rate) for rate in dct.get('rates', [])],
             discounted_rate=Amount.decode(dct.get('discounted_rate'))
