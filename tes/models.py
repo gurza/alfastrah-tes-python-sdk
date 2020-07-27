@@ -96,6 +96,15 @@ class LuggageType(Enum):
     STANDARD = 1
 
 
+class PolicyStatus(Enum):
+    """Policy status."""
+
+    ISSUING = 1
+    CONFIRMED = 2
+    CANCELLED = 3
+    DELETED = 4
+
+
 class Opt(Enum):
     """Option state."""
 
@@ -184,6 +193,9 @@ class BaseModel2:
         def cast(json_value, target_type):
             if json_value is None:
                 return None
+
+            if target_type == Decimal:
+                return Decimal(json_value)
 
             if isinstance(json_value, bool) or isinstance(json_value, numbers.Number):
                 return json_value
@@ -294,12 +306,12 @@ class InsuranceProduct(BaseModel2):
     #     return InsuranceProduct(**dct)
 
 
-class Amount(BaseModel):
+class Amount(BaseModel2):
     """Amount."""
 
-    __attrs__ = [
-        'value', 'currency',
-    ]
+    __attrs__ = {
+        'value': Decimal, 'currency': str,
+    }
 
     def __init__(self, value, currency=None):
         """Init.
@@ -311,24 +323,6 @@ class Amount(BaseModel):
         """
         self.value = value
         self.currency = currency
-
-    @staticmethod
-    def decode(dct):
-        """Decodes.
-
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Amount(**dct)
-
-
-class PolicyStatus(Enum):
-    """Policy status."""
-
-    ISSUING = 1
-    CONFIRMED = 2
-    CANCELLED = 3
-    DELETED = 4
 
 
 class Operator(BaseModel2):
