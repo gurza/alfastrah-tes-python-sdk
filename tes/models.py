@@ -198,7 +198,7 @@ class BaseModel2:
                 return json_value
 
             if issubclass(target_type, BaseModel2):
-                return target_type.decode(dct.get(attr_name)) if dct.get(attr_name) is not None else None
+                return target_type.decode(json_value)
 
             raise NotImplementedError
 
