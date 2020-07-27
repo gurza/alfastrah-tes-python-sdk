@@ -3,6 +3,7 @@ import datetime
 from decimal import Decimal
 from enum import Enum
 import json
+import uuid
 
 import requests
 
@@ -18,6 +19,9 @@ from .models import (
 class AlfaInsTESClient:
     api_host = 'https://uat-tes.alfastrah.ru'
     base_path = '/travel-ext-services/api/v2'
+    default_currency = 'RUB'
+    default_country = 'RU'
+    default_manager = 'AlfaInsTESClient'
 
     def __init__(self, api_key, verify_ssl=True):
         self.api_key = api_key
@@ -84,6 +88,69 @@ class AlfaInsTESClient:
             path = '/products'
         products = self.request('GET', path, resp_cls=InsuranceProduct)
         return products
+
+    def quote(self, product_code, insureds, segments,
+              booking_price, service_class, fare_type, fare_code,
+              end_date,
+              currency=None, country=None, sport=None, manager_name=None,
+              manager_code=None, opt=None, acquisition_channel=None):
+        """
+
+        :param product_code: Insurance product code.
+        :type product_code: str
+        :param insureds: List of insured persons.
+        :type insureds: list[Person]
+        :param segments: List of travel segments, e.g. list of flights.
+        :type segments: list[Segment]
+        :param booking_price: Total price of the booking.
+        :type booking_price: Amount
+        :param service_class: Service class.
+        :type service_class: ServiceClass
+        :param fare_type: Refundability.
+        :type fare_type: FareType
+        :param fare_code: Fare code (fare basis), e.g. 'BPXOWRF'.
+        :type fare_code: str
+        :param end_date: Expiry date of the policy.
+        :type end_date: datetime.datetime
+
+        :param currency: Quote currency code, ISO 4217, default is ``self.default_currency``.
+        :type currency: str or None
+        :param country: Country code where the insurance policy will be paid for, ISO 3166-1,
+            default is ``self.default_country``.
+        :type country: str or None
+        :param sport: Insured sports kind, default is None.
+        :type sport: list[SportKind] or None
+        :param manager_name: Manager (cashier) code, default is ``self.default_manager``.
+        :type manager_name: str or None
+        :param manager_code: Manager (cashier) code, default is ``self.default_manager``.
+        :type manager_code: str or None
+        :param opt: Option state, default is ``Opt.OPT_IN``.
+        :type opt: Opt or None
+        :param acquisition_channel: Acquisition (data collection) channel,
+            default is ``AcquisitionChannel.CROSS_SALE``.
+        :type acquisition_channel: AcquisitionChannel or None
+
+        :return:
+        """
+        path = '/policies/quote'
+
+        currency = currency if currency is not None else self.default_currency
+        country = country if country is not None else self.default_country
+        manager_name = manager_name if manager_name is not None else self.default_manager
+        manager_code = manager_code if manager_code is not None else self.default_manager
+        opt = opt if opt is not None else Opt.OPT_IN
+        acquisition_channel = acquisition_channel if acquisition_channel is not None else AcquisitionChannel.CROSS_SALE
+
+        product = InsuranceProduct(product_code)
+        quote_request = QuoteRequest(
+            session_id=str(uuid.uuid4()), product=product, insureds=insureds, segments=segments,
+            booking_price=booking_price, currency=currency, service_class=service_class, country=country,
+            sport=sport, fare_type=fare_type, fare_code=fare_code, manager_name=manager_name,
+            manager_code=manager_code, opt=opt, end_date=end_date, acquisition_channel=acquisition_channel
+        )
+        resp = self.request('POST', path, data=quote_request, resp_cls=QuoteResponse)
+        return resp
+
 
 class MultiJSONEncoder(json.JSONEncoder):
     def default(self, o):
