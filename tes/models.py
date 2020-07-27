@@ -114,6 +114,13 @@ class SellingPage(Enum):
     STANDALONE = 4
 
 
+class TravelType(Enum):
+    """Travel type."""
+
+    SINGLE = 1
+    MULTIPLE = 2
+
+
 class FlightDirection(Enum):
     OW = 1  # One way
     RT = 2  # Round trip
@@ -221,12 +228,14 @@ class ApiRequest:
     """API request base class."""
 
 
-class ApiProblem(BaseModel):
+class ApiProblem(BaseModel2):
     """Description of the error that occurred while handling your request."""
 
-    __attrs__ = [
-        'title', 'status', 'detail',
-    ]
+    __attrs__ = {
+        'title': str,
+        'status': str,
+        'detail': str,
+    }
 
     def __init__(self, title=None, status=None, detail=None):
         """Init.
@@ -322,12 +331,12 @@ class PolicyStatus(Enum):
     DELETED = 4
 
 
-class Operator(BaseModel):
+class Operator(BaseModel2):
     """Operator."""
 
-    __attrs__ = [
-        'code',
-    ]
+    __attrs__ = {
+        'code': str,
+    }
 
     def __init__(self, code):
         """Init.
@@ -337,21 +346,29 @@ class Operator(BaseModel):
         """
         self.code = code
 
-    def decode(dct):
-        """Decodes.
 
-        :param dct: Dictionary.
-        :type dct: dict
+class SubAgent(BaseModel2):
+    """Subagent."""
+
+    __attrs__ = {
+        'code': str,
+    }
+
+    def __init__(self, code):
+        """Init.
+
+        :param code: Subagent code.
+        :type code: str
         """
-        return Operator(**dct)
+        self.code = code
 
 
-class Agent(BaseModel):
+class Agent(BaseModel2):
     """Agent."""
 
-    __attrs__ = [
-        'code', 'sub',
-    ]
+    __attrs__ = {
+        'code': str, 'sub': SubAgent,
+    }
 
     def __init__(self, code, sub=None):
         """Init.
@@ -365,38 +382,13 @@ class Agent(BaseModel):
         self.code = code
         self.sub = sub
 
-    @staticmethod
-    def decode(dct):
-        """Decodes.
 
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Agent(**dct)
-
-
-class SubAgent(BaseModel):
-    """Subagent."""
-
-    __attrs__ = [
-        'code',
-    ]
-
-    def __init__(self, code):
-        """Init.
-
-        :param code: Subagent code.
-        :type code: str
-        """
-        self.code = code
-
-
-class Cancellation(BaseModel):
+class Cancellation(BaseModel2):
     """Policy cancellation."""
 
-    __attrs__ = [
-        'reason', 'amount',
-    ]
+    __attrs__ = {
+        'reason': str, 'amount': Amount,
+    }
 
     def __init__(self, reason=None, amount=None):
         """Init.
@@ -409,32 +401,105 @@ class Cancellation(BaseModel):
         self.reason = reason
         self.amount = amount
 
-    @staticmethod
-    def decode(dct):
-        """Decodes.
-
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Cancellation(
-            reason=dct.get('reason'),
-            amount=Amount.decode(dct.get('amount')) if dct.get('amount') is not None else None
-        )
-
 
 class ServiceCompany:
     pass
 
 
-class Person(BaseModel):
+class Phone(BaseModel2):
+    """Phone."""
+
+    __attrs__ = {
+        'number': str, 'type': PhoneType,
+    }
+
+    def __init__(self, number=None, type=None):
+        """Init.
+
+        :param number: Phone number, e.g. '89101234567'.
+        :type number: str or None
+        :param type: Phone type.
+        :type type: PhoneType or None
+        """
+        self.number = number
+        self.type = type
+
+
+class Document(BaseModel2):
+    """Document ID."""
+
+    __attrs__ = {
+        'type': DocumentType, 'number': str, 'country': str,
+    }
+
+    def __init__(self, type=None, number=None, country=None):
+        """Init.
+
+        :param type: Document type.
+        :type type: DocumentType or None
+        :param number: Document number, e.g. '2901178356'.
+        :type number: str or None
+        :param country: Code of the country where the document was issued, ISO 3166-1, e.g. 'RU'.
+        :type country: str or None
+        """
+        self.type = type
+        self.number = number
+        self.country = country
+
+
+class Ticket(BaseModel2):
+    """Ticket."""
+
+    __attrs__ = {
+        'number': str, 'price': Amount, 'issue_date': datetime.date,
+    }
+
+    def __init__(self, number=None, price=None, issue_date=None):
+        """Init.
+
+        :param number: Ticket number, e.g. '5723574320584'.
+        :type number: str or None
+        :param price: Ticket price.
+        :type price: Amount or None
+        :param issue_date: Issue date.
+        :type issue_date: datetime.date or None
+        """
+        self.number = number
+        self.price = price
+        self.issue_date = issue_date
+
+
+class Risk(BaseModel2):
+    """Risk."""
+
+    __attrs__ = {
+        'type': RiskType, 'coverage': Amount, 'franchise': Amount,
+    }
+
+    def __init__(self, type=None, coverage=None, franchise=None):
+        """Init.
+
+        :param type: Risk type.
+        :type type: RiskType or None
+        :param coverage: Insurance amount.
+        :type coverage: Amount or None
+        :param franchise: Franchise amount.
+        :type franchise: Amount or None
+        """
+        self.type = type
+        self.coverage = coverage
+        self.franchise = franchise
+
+
+class Person(BaseModel2):
     """Person."""
 
-    __attrs__ = [
-        'first_name', 'last_name', 'patronymic',
-        'nick_name', 'gender', 'birth_date', 'email',
-        'address', 'infant', 'nationality', 'id_card',
-        'phone', 'document', 'ticket', 'risks',
-    ]
+    __attrs__ = {
+        'first_name': str, 'last_name': str, 'patronymic': str,
+        'nick_name': str, 'gender': Gender, 'birth_date': datetime.date, 'email': str,
+        'address': str, 'infant': bool, 'nationality': str, 'id_card': str,
+        'phone': Phone, 'document': Document, 'ticket': Ticket, 'risks': typing.List[Risk],
+    }
 
     def __init__(self, first_name=None, last_name=None, patronymic=None,
                  nick_name=None, gender=None, birth_date=None, email=None,
@@ -489,170 +554,37 @@ class Person(BaseModel):
         self.ticket = ticket
         self.risks = risks if risks is not None else []
 
-    @staticmethod
-    def decode(dct):
-        """Decodes.
 
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Person(
-            first_name=None, last_name=None, patronymic=None,
-            nick_name=None, gender=None, birth_date=None, email=None,
-            address=None, infant=None, nationality=None, id_card=None,
+class Point(BaseModel2):
+    """Departure or arrival point."""
 
-            phone=Phone.decode(dct.get('phone')) if dct.get('phone') is not None else None,
-            document=Document.decode(dct.get('document')) if dct.get('document') is not None else None,
-            ticket=Ticket.decode(dct.get('ticket')) if dct.get('ticket') is not None else None,
-            risks=[Risk.decode(risk) for risk in dct.get('risks', [])]
-        )
+    __attrs__ = {
+        'date': datetime.datetime, 'point': str, 'country': str,
+    }
 
-
-class Phone(BaseModel):
-    """Phone."""
-
-    __attrs__ = [
-        'number', 'type',
-    ]
-
-    def __init__(self, number=None, type=None):
+    def __init__(self, date=None, point=None, country=None):
         """Init.
 
-        :param number: Phone number, e.g. '89101234567'.
-        :type number: str or None
-        :param type: Phone type.
-        :type type: PhoneType or None
-        """
-        self.number = number
-        self.type = type
-
-    @staticmethod
-    def decode(dct):
-        """Decodes.
-
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Phone(
-            number=dct.get('number'),
-            type=PhoneType[dct.get('type')] if dct.get('type') is not None else None
-        )
-
-
-class Document(BaseModel):
-    """Document ID."""
-
-    __attrs__ = [
-        'type', 'number', 'country',
-    ]
-
-    def __init__(self, type=None, number=None, country=None):
-        """Init.
-
-        :param type: Document type.
-        :type type: DocumentType or None
-        :param number: Document number, e.g. '2901178356'.
-        :type number: str or None
-        :param country: Code of the country where the document was issued, ISO 3166-1, e.g. 'RU'.
+        :param date: Datetime of departure/arrival.
+        :type date: datetime.datetime or None
+        :param point: Code of departure/arrival point, e.g. 'SVO'.
+        :type point: str or None
+        :param country: Code of country, ISO 3166-1, e.g. 'RU'.
         :type country: str or None
         """
-        self.type = type
-        self.number = number
+        self.date = date
+        self.point = point
         self.country = country
 
-    @staticmethod
-    def decode(dct):
-        """Decodes.
 
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Document(
-            type=DocumentType[dct.get('type')] if dct.get('type') is not None else None,
-            number=dct.get('number'),
-            country=dct.get('country')
-        )
-
-
-class Ticket(BaseModel):
-    """Ticket."""
-
-    __attrs__ = [
-        'number', 'price', 'issue_date',
-    ]
-
-    def __init__(self, number=None, price=None, issue_date=None):
-        """Init.
-
-        :param number: Ticket number, e.g. '5723574320584'.
-        :type number: str or None
-        :param price: Ticket price.
-        :type price: Amount or None
-        :param issue_date: Issue date.
-        :type issue_date: datetime.date or None
-        """
-        self.number = number
-        self.price = price
-        self.issue_date = issue_date
-
-    @staticmethod
-    def decode(dct):
-        """Decodes.
-
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Ticket(
-            number=dct.get('number'),
-            price=Amount.decode(dct.get('price')) if dct.get('price') is not None else None,
-            issue_date=datetime.datetime.strptime(dct.get('issue_date'), '%Y-%m-%d').date()
-            if dct.get('issue_date') is not None else None,
-        )
-
-
-class Risk(BaseModel):
-    """Risk."""
-
-    __attrs__ = [
-        'type', 'coverage', 'franchise'
-    ]
-
-    def __init__(self, type=None, coverage=None, franchise=None):
-        """Init.
-
-        :param type: Risk type.
-        :type type: RiskType or None
-        :param coverage: Insurance amount.
-        :type coverage: Amount or None
-        :param franchise: Franchise amount.
-        :type franchise: Amount or None
-        """
-        self.type = type
-        self.coverage = coverage
-        self.franchise = franchise
-
-    @staticmethod
-    def decode(dct):
-        """Decodes.
-
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Risk(
-            type=RiskType[dct.get('type')] if dct.get('type') is not None else None,
-            coverage=Amount(dct.get('coverage')) if dct.get('coverage') is not None else None,
-            franchise=Amount(dct.get('franchise')) if dct.get('franchise') is not None else None
-        )
-
-
-class Segment(BaseModel):
+class Segment(BaseModel2):
     """Travel segment."""
 
-    __attrs__ = [
-        'transport_operator_code', 'route_number', 'service_class',
-        'connection_time', 'departure', 'arrival', 'place_number',
-        'car_number', 'car_type', 'connecting_flight', 'flight_direction',
-    ]
+    __attrs__ = {
+        'transport_operator_code': str, 'route_number': str, 'service_class': ServiceClass,
+        'connection_time': int, 'departure': Point, 'arrival': Point, 'place_number': str,
+        'car_number': str, 'car_type': str, 'connecting_flight': bool, 'flight_direction': FlightDirection,
+    }
 
     def __init__(self, transport_operator_code=None, route_number=None, service_class=None,
                  connection_time=None, departure=None, arrival=None, place_number=None,
@@ -694,87 +626,26 @@ class Segment(BaseModel):
         self.connecting_flight = connecting_flight
         self.flight_direction = flight_direction
 
-    @staticmethod
-    def decode(dct):
-        """Decodes.
 
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Segment(
-            transport_operator_code=dct.get('transport_operator_code'),
-            route_number=dct.get('route_number'),
-            service_class=ServiceClass[dct.get('service_class')] if dct.get('service_class') is not None else None,
-            connection_time=dct.get('connection_time'),
-            departure=Point.decode(dct.get('departure')) if dct.get('departure') is not None else None,
-            arrival=Point.decode(dct.get('arrival')) if dct.get('arrival') is not None else None,
-            place_number=dct.get('place_number'),
-            car_number=dct.get('car_number'),
-            car_type=dct.get('car_type'),
-            connecting_flight=dct.get('connecting_flight'),
-            flight_direction=FlightDirection['flight_direction'] if dct.get('flight_direction') is not None else None
-        )
-
-
-class TravelType(Enum):
-    """Travel type."""
-
-    SINGLE = 1
-    MULTIPLE = 2
-
-
-class Point(BaseModel):
-    """Departure or arrival point."""
-
-    __attrs__ = [
-        'date', 'point', 'country',
-    ]
-
-    def __init__(self, date=None, point=None, country=None):
-        """Init.
-
-        :param date: Datetime of departure/arrival.
-        :type date: datetime.datetime or None
-        :param point: Code of departure/arrival point, e.g. 'SVO'.
-        :type point: str or None
-        :param country: Code of country, ISO 3166-1, e.g. 'RU'.
-        :type country: str or None
-        """
-        self.date = date
-        self.point = point
-        self.country = country
-
-    @staticmethod
-    def decode(dct):
-        """Decodes.
-
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Point(
-            date=datetime.datetime.strptime(dct.get('date'), '%Y-%m-%dT%H:%M:%S')
-            if dct.get('date') is not None else None,
-            point=dct.get('point'),
-            country=dct.get('country')
-        )
-
-
-class Policy(BaseModel):
+class Policy(BaseModel2):
     """Insurance policy."""
 
-    __attrs__ = [
-        'policy_id', 'product', 'insured',
-        'insurer', 'customer_email', 'customer_phone', 'pnr',
-        'series', 'payment_type', 'sale_session', 'issuance_city',
-        'external_id', 'commentary', 'description', 'resources',
-        'travel_type', 'sport', 'service_company', 'segments',
-        'ticket', 'rate', 'discounted_rate', 'begin_date',
-        'end_date', 'period_of_validity', 'risks', 'status',
-        'created_at', 'update_at', 'fare_type', 'luggage_type',
-        'fare_code', 'cancellation', 'operator', 'agent',
-        'manager_name', 'manager_code', 'opt', 'selling_page',
-        'service_class', 'age_group', 'acquisition_channel', 'error',
-    ]
+    __attrs__ = {
+        'policy_id': int, 'product': InsuranceProduct, 'insured': Person,
+        'insurer': Person, 'customer_email': str, 'customer_phone': str, 'pnr': str,
+        'series': str, 'payment_type': str, 'sale_session': str, 'issuance_city': str,
+        'external_id': str, 'commentary': str, 'description': str, 'resources': typing.List[str],
+        'travel_type': TravelType, 'sport': typing.List[SportKind], 'service_company': str,
+        'segments': typing.List[Segment],
+        'ticket': Ticket, 'rate': typing.List[Amount], 'discounted_rate': typing.List[Amount],
+        'begin_date': datetime.datetime,
+        'end_date': datetime.datetime, 'period_of_validity': int, 'risks': typing.List[Risk], 'status': PolicyStatus,
+        'created_at': datetime.datetime, 'update_at': datetime.datetime, 'fare_type': FareType,
+        'luggage_type': LuggageType,
+        'fare_code': str, 'cancellation': Cancellation, 'operator': Operator, 'agent': Agent,
+        'manager_name': str, 'manager_code': str, 'opt': Opt, 'selling_page': SellingPage,
+        'service_class': ServiceClass, 'age_group': str, 'acquisition_channel': AcquisitionChannel, 'error': str,
+    }
 
     def __init__(self, policy_id=None, product=None, insured=None,
                  insurer=None, customer_email=None, customer_phone=None, pnr=None,
@@ -921,64 +792,6 @@ class Policy(BaseModel):
         self.acquisition_channel = acquisition_channel
         self.error = error
 
-    @staticmethod
-    def decode(dct):
-        """Decodes.
-
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return Policy(
-            policy_id=None, product=None, insured=None,
-
-            insurer=Person.decode(dct.get('insurer')) if dct.get('insurer') is not None else None,
-            customer_email=dct.get('customer_email'),
-            customer_phone=dct.get('customer_phone'),
-            pnr=dct.get('pnr'),
-            series=dct.get('series'),
-            payment_type=dct.get('payment_type'),
-            sale_session=dct.get('sale_session'),
-            issuance_city=dct.get('issuance_city'),
-            external_id=dct.get('external_id'),
-            commentary=dct.get('commentary'),
-            description=dct.get('description'),
-            resources=[resource for resource in dct.get('resources', [])],
-            travel_type=TravelType[dct.get('travel_type')] if dct.get('travel_type') is not None else None,
-            sport=[SportKind[sport] for sport in dct.get('sport', [])],
-            service_company=dct.get('service_company'),
-            segments=[Segment.decode(segment) for segment in dct.get('segments', [])],
-            ticket=Ticket.decode(dct.get('ticket')) if dct.get('ticket') is not None else None,
-            rate=[Amount.decode(rate) for rate in dct.get('rates', [])],
-            discounted_rate=Amount.decode(dct.get('discounted_rate'))
-            if dct.get('discounted_rate') is not None else None,
-            begin_date=datetime.datetime.strptime(dct.get('begin_date'), '%Y-%m-%dT%H:%M:%S')
-            if dct.get('begin_date') is not None else None,
-            end_date=datetime.datetime.strptime(dct.get('end_date'), '%Y-%m-%dT%H:%M:%S')
-            if dct.get('end_date') is not None else None,
-            period_of_validity=dct.get('period_of_validity'),
-            risks=[Risk.decode(risk) for risk in dct.get('risks', [])],
-            status=PolicyStatus[dct.get('status')] if dct.get('status') is not None else None,
-            created_at=datetime.datetime.strptime(dct.get('update_at'), '%Y-%m-%dT%H:%M:%S')
-            if dct.get('created_at') is not None else None,
-            update_at=datetime.datetime.strptime(dct.get('update_at'), '%Y-%m-%dT%H:%M:%S')
-            if dct.get('update_at') is not None else None,
-            fare_type=FareType[dct.get('fare_type')] if dct.get('fare_type') is not None else None,
-            luggage_type=LuggageType[dct.get('luggage_type')] if dct.get('luggage_type') is not None else None,
-            fare_code=dct.get('fare_code'),
-            cancellation=Cancellation.decode(dct.get('cancellation')) if dct.get('cancellation') is not None else None,
-            operator=Operator.decode(dct.get('operator')) if dct.get('operator') is not None else None,
-            agent=Agent.decode(dct.get('agent')) if dct.get('agent') is not None else None,
-            manager_name=dct.get('manager_name'),
-            manager_code=dct.get('manager_code'),
-            opt=Opt[dct.get('opt')] if dct.get('opt') is not None else None,
-            selling_page=SellingPage[dct.get('selling_page')] if dct.get('selling_page') is not None else None,
-            service_class=ServiceClass[dct.get('service_class')] if dct.get('service_class') is not None else None,
-            age_group=dct.get('age_group'),
-            acquisition_channel=AcquisitionChannel[dct.get('acquisition_channel')]
-            if dct.get('acquisition_channel') is not None else None,
-            error=dct.get('error')
-        )
-
 
 class Declaration:
     pass
@@ -1059,43 +872,12 @@ class QuoteRequest(BaseModel, ApiRequest):
         self.acquisition_channel = acquisition_channel
 
 
-class QuoteResponse(BaseModel):
-    """Quote response."""
-
-    __attrs__ = [
-        'session_id', 'quotes',
-    ]
-
-    def __init__(self, session_id=None, quotes=None):
-        """Init.
-
-        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
-        :type session_id: str or None
-        :param quotes: List of policies for each insured person.
-        :type quotes: list[Quote] or None
-        """
-        self.session_id = session_id
-        self.quotes = quotes if quotes is not None else []
-
-    @staticmethod
-    def decode(dct):
-        """Decodes.
-
-        :param dct: Dictionary.
-        :type dct: dict
-        """
-        return QuoteResponse(
-            session_id=dct.get('session_id'),
-            quotes=[Quote.decode(quote) for quote in dct.get('quotes', [])]
-        )
-
-
-class Quote(BaseModel):
+class Quote(BaseModel2):
     """Quote/Calculating."""
 
-    __attrs__ = [
-        'policies', 'error',
-    ]
+    __attrs__ = {
+        'policies': typing.List[Policy], 'error': str,
+    }
 
     def __init__(self, policies=None, error=None):
         """Init.
@@ -1108,17 +890,24 @@ class Quote(BaseModel):
         self.policies = policies if policies is not None else []
         self.error = error
 
-    @staticmethod
-    def decode(dct):
-        """Decodes.
 
-        :param dct: Dictionary.
-        :type dct: dict
+class QuoteResponse(BaseModel2):
+    """Quote response."""
+
+    __attrs__ = {
+        'session_id': str, 'quotes': typing.List[Quote],
+    }
+
+    def __init__(self, session_id=None, quotes=None):
+        """Init.
+
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+        :param quotes: List of policies for each insured person.
+        :type quotes: list[Quote] or None
         """
-        return Quote(
-            policies=[Policy.decode(policy) for policy in dct.get('policies', [])],
-            error=dct.get('error', None)
-        )
+        self.session_id = session_id
+        self.quotes = quotes if quotes is not None else []
 
 
 class CreateRequest(ApiRequest):
