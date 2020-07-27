@@ -94,7 +94,7 @@ class AlfaInsTESClient:
               end_date,
               currency=None, country=None, sport=None, manager_name=None,
               manager_code=None, opt=None, acquisition_channel=None):
-        """
+        """Calculates the cost of one or more insurance policies.
 
         :param product_code: Insurance product code.
         :type product_code: str
