@@ -70,7 +70,7 @@ class AlfaInsTESClient:
         self.status_code = r.status_code
         self.raise_for_error()
         if resp_cls is not None:
-            return json.loads(r.content, cls=MultiJSONDecoder, result_cls=resp_cls)
+            return json.loads(r.content, cls=MultiJSONDecoder, target_type=resp_cls)
         return self.resp
 
     def get_products(self, product_type=None):
@@ -172,17 +172,17 @@ class MultiJSONEncoder(json.JSONEncoder):
 
 class MultiJSONDecoder(json.JSONDecoder):
     def __init__(self, *args, **kwargs):
-        self.result_cls = kwargs.pop('result_cls', None)
+        self.target_type = kwargs.pop('target_type', None)
         json.JSONDecoder.__init__(self, *args, **kwargs)
 
     def decode(self, s, **kwargs):
         obj = json.JSONDecoder.decode(self, s, **kwargs)
 
         if isinstance(obj, dict):
-            return self.result_cls.decode(obj)
+            return self.target_type.decode(obj)
 
         if isinstance(obj, list):
-            return [self.result_cls.decode(o) for o in obj]
+            return [self.target_type.decode(o) for o in obj]
 
         # None
         return obj
