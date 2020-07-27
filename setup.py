@@ -13,7 +13,7 @@ requires = [
     'requests>=2.21.0, <3',
 ]
 if sys.version_info[0] < 3:
-    requires.append('enum34>=1.1.10, <2')
+    requires.append('enum34>=1.0, <2')
     requires.append('typing>=3.5, <4')
 test_requirements = [
     'pytest>=5.4',
