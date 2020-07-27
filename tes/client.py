@@ -178,12 +178,11 @@ class MultiJSONDecoder(json.JSONDecoder):
     def decode(self, s, **kwargs):
         obj = json.JSONDecoder.decode(self, s, **kwargs)
 
-        if self.result_cls is None:
-            return obj
-
         if isinstance(obj, dict):
             return self.result_cls.decode(obj)
-        elif isinstance(obj, list):
+
+        if isinstance(obj, list):
             return [self.result_cls.decode(o) for o in obj]
 
+        # None
         return obj
