@@ -181,8 +181,6 @@ class BaseModel2:
             if isinstance(json_value, bool) or isinstance(json_value, numbers.Number):
                 return json_value
 
-            # TODO: Remove Python2 dependecy
-            # isinstance(json_value, str)
             if isinstance(json_value, str if sys.version_info[0] == 3 else basestring):
                 if target_type == datetime.date:
                     return datetime.datetime.strptime(json_value, '%Y-%m-%d').date()
