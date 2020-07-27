@@ -240,6 +240,7 @@ class ApiProblem(BaseModel):
             e.g. 'Policy with id 12345 not found or does not belong to agent'.
         :type detail: str or None
         """
+        BaseModel.__init__(self)
         self.title = title
         self.status = status
         self.detail = detail
@@ -271,19 +272,11 @@ class InsuranceProduct(BaseModel):
         :param currency: (obsolete) Currency code of the product, ISO 4217, e.g. 'RUB'.
         :type currency: str or None
         """
+        BaseModel.__init__(self)
         self.code = code
         self.type = type
         self.description = description
         self.currency = currency
-
-    # @staticmethod
-    # def decode(dct):
-    #     """Decodes.
-    #
-    #     :param dct: Dictionary.
-    #     :type dct: dict
-    #     """
-    #     return InsuranceProduct(**dct)
 
 
 class Amount(BaseModel):
@@ -301,6 +294,7 @@ class Amount(BaseModel):
         :param currency: Currency code, ISO 4217, e.g. 'RUB'.
         :type currency: str or None
         """
+        BaseModel.__init__(self)
         self.value = value
         self.currency = currency
 
@@ -318,6 +312,7 @@ class Operator(BaseModel):
         :param code: Operator code.
         :type code: str
         """
+        BaseModel.__init__(self)
         self.code = code
 
 
@@ -334,6 +329,7 @@ class SubAgent(BaseModel):
         :param code: Subagent code.
         :type code: str
         """
+        BaseModel.__init__(self)
         self.code = code
 
 
@@ -353,6 +349,7 @@ class Agent(BaseModel):
             The subagent code is used to split sales across different channels or divisions within the same agent.
         :type sub: SubAgent or None
         """
+        BaseModel.__init__(self)
         self.code = code
         self.sub = sub
 
@@ -372,6 +369,7 @@ class Cancellation(BaseModel):
         :param amount: Cancellation (refund) amount.
         :type amount: Amount or None
         """
+        BaseModel.__init__(self)
         self.reason = reason
         self.amount = amount
 
@@ -395,6 +393,7 @@ class Phone(BaseModel):
         :param type: Phone type.
         :type type: PhoneType or None
         """
+        BaseModel.__init__(self)
         self.number = number
         self.type = type
 
@@ -416,6 +415,7 @@ class Document(BaseModel):
         :param country: Code of the country where the document was issued, ISO 3166-1, e.g. 'RU'.
         :type country: str or None
         """
+        BaseModel.__init__(self)
         self.type = type
         self.number = number
         self.country = country
@@ -438,6 +438,7 @@ class Ticket(BaseModel):
         :param issue_date: Issue date.
         :type issue_date: datetime.date or None
         """
+        BaseModel.__init__(self)
         self.number = number
         self.price = price
         self.issue_date = issue_date
@@ -460,6 +461,7 @@ class Risk(BaseModel):
         :param franchise: Franchise amount.
         :type franchise: Amount or None
         """
+        BaseModel.__init__(self)
         self.type = type
         self.coverage = coverage
         self.franchise = franchise
@@ -512,6 +514,7 @@ class Person(BaseModel):
         :param risks: Information about risks.
         :type risks: list[Risk] or None
         """
+        BaseModel.__init__(self)
         self.first_name = first_name
         self.last_name = last_name
         self.patronymic = patronymic
@@ -546,6 +549,7 @@ class Point(BaseModel):
         :param country: Code of country, ISO 3166-1, e.g. 'RU'.
         :type country: str or None
         """
+        BaseModel.__init__(self)
         self.date = date
         self.point = point
         self.country = country
@@ -588,6 +592,7 @@ class Segment(BaseModel):
         :param flight_direction: Flight direction.
         :type flight_direction: FlightDirection or None
         """
+        BaseModel.__init__(self)
         self.transport_operator_code = transport_operator_code
         self.route_number = route_number
         self.service_class = service_class
@@ -722,6 +727,7 @@ class Policy(BaseModel):
         :param error: Error message.
         :type error: str or None
         """
+        BaseModel.__init__(self)
         self.policy_id = policy_id
         self.product = product
         self.insured = insured
@@ -826,6 +832,7 @@ class QuoteRequest(BaseModel, ApiRequest):
         :param acquisition_channel: Acquisition (data collection) channel.
         :type acquisition_channel: AcquisitionChannel or None
         """
+        BaseModel.__init__(self)
         self.session_id = session_id if session_id is not None else str(uuid.uuid4())
         self.product = product
         self.insureds = insureds if insureds is not None else []
@@ -861,6 +868,7 @@ class Quote(BaseModel):
         :param error: Policy calculating error.
         :type error: str or None
         """
+        BaseModel.__init__(self)
         self.policies = policies if policies is not None else []
         self.error = error
 
@@ -880,6 +888,7 @@ class QuoteResponse(BaseModel):
         :param quotes: List of policies for each insured person.
         :type quotes: list[Quote] or None
         """
+        BaseModel.__init__(self)
         self.session_id = session_id
         self.quotes = quotes if quotes is not None else []
 
