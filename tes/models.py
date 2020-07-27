@@ -791,16 +791,16 @@ class Declaration:
     pass
 
 
-class QuoteRequest(BaseModel, ApiRequest):
+class QuoteRequest(BaseModel2, ApiRequest):
     """Request for calculating one or more insurance policies."""
 
-    __attrs__ = [
-        'session_id', 'product', 'insureds',
-        'segments', 'booking_price', 'currency', 'service_class',
-        'country', 'sport', 'fare_type', 'luggage_type',
-        'fare_code', 'manager_name', 'manager_code', 'opt',
-        'selling_page', 'end_date', 'acquisition_channel',
-    ]
+    __attrs__ = {
+        'session_id': str, 'product': InsuranceProduct, 'insureds': typing.List[Person],
+        'segments': typing.List[Segment], 'booking_price': Amount, 'currency': str, 'service_class': ServiceClass,
+        'country': str, 'sport': typing.List[SportKind], 'fare_type': FareType, 'luggage_type': LuggageType,
+        'fare_code': str, 'manager_name': str, 'manager_code': str, 'opt': Opt,
+        'selling_page': SellingPage, 'end_date': datetime.datetime, 'acquisition_channel': AcquisitionChannel,
+    }
 
     def __init__(self, session_id=None, product=None, insureds=None,
                  segments=None, booking_price=None, currency=None, service_class=None,
