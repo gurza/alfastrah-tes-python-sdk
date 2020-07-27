@@ -145,28 +145,6 @@ class AcquisitionChannel(Enum):
 
 
 class BaseModel:
-    """Base class with serialization."""
-
-    __attrs__ = []
-
-    def to_json(self):
-        json = dict()
-
-        if not hasattr(self, '__attrs__') or not isinstance(self.__getattribute__('__attrs__'), list):
-            return json
-
-        for attr in self.__getattribute__('__attrs__'):
-            if not hasattr(self, attr) or self.__getattribute__(attr) is None:
-                continue
-            if isinstance(self.__getattribute__(attr), Enum):
-                json[attr] = self.__getattribute__(attr).name
-            else:
-                json[attr] = self.__getattribute__(attr)
-
-        return json
-
-
-class BaseModel2:
     __attrs__ = {}
 
     def __init__(self, *args, **kwargs):
@@ -209,7 +187,7 @@ class BaseModel2:
                     return target_type[json_value]
                 return json_value
 
-            if issubclass(target_type, BaseModel2):
+            if issubclass(target_type, BaseModel):
                 return target_type.decode(json_value)
 
             raise NotImplementedError
@@ -240,7 +218,7 @@ class ApiRequest:
     """API request base class."""
 
 
-class ApiProblem(BaseModel2):
+class ApiProblem(BaseModel):
     """Description of the error that occurred while handling your request."""
 
     __attrs__ = {
@@ -265,7 +243,7 @@ class ApiProblem(BaseModel2):
         self.detail = detail
 
 
-class InsuranceProduct(BaseModel2):
+class InsuranceProduct(BaseModel):
     """Insurance product."""
 
     # __attrs__ = [
@@ -306,7 +284,7 @@ class InsuranceProduct(BaseModel2):
     #     return InsuranceProduct(**dct)
 
 
-class Amount(BaseModel2):
+class Amount(BaseModel):
     """Amount."""
 
     __attrs__ = {
@@ -325,7 +303,7 @@ class Amount(BaseModel2):
         self.currency = currency
 
 
-class Operator(BaseModel2):
+class Operator(BaseModel):
     """Operator."""
 
     __attrs__ = {
@@ -341,7 +319,7 @@ class Operator(BaseModel2):
         self.code = code
 
 
-class SubAgent(BaseModel2):
+class SubAgent(BaseModel):
     """Subagent."""
 
     __attrs__ = {
@@ -357,7 +335,7 @@ class SubAgent(BaseModel2):
         self.code = code
 
 
-class Agent(BaseModel2):
+class Agent(BaseModel):
     """Agent."""
 
     __attrs__ = {
@@ -377,7 +355,7 @@ class Agent(BaseModel2):
         self.sub = sub
 
 
-class Cancellation(BaseModel2):
+class Cancellation(BaseModel):
     """Policy cancellation."""
 
     __attrs__ = {
@@ -400,7 +378,7 @@ class ServiceCompany:
     pass
 
 
-class Phone(BaseModel2):
+class Phone(BaseModel):
     """Phone."""
 
     __attrs__ = {
@@ -419,7 +397,7 @@ class Phone(BaseModel2):
         self.type = type
 
 
-class Document(BaseModel2):
+class Document(BaseModel):
     """Document ID."""
 
     __attrs__ = {
@@ -441,7 +419,7 @@ class Document(BaseModel2):
         self.country = country
 
 
-class Ticket(BaseModel2):
+class Ticket(BaseModel):
     """Ticket."""
 
     __attrs__ = {
@@ -463,7 +441,7 @@ class Ticket(BaseModel2):
         self.issue_date = issue_date
 
 
-class Risk(BaseModel2):
+class Risk(BaseModel):
     """Risk."""
 
     __attrs__ = {
@@ -485,7 +463,7 @@ class Risk(BaseModel2):
         self.franchise = franchise
 
 
-class Person(BaseModel2):
+class Person(BaseModel):
     """Person."""
 
     __attrs__ = {
@@ -549,7 +527,7 @@ class Person(BaseModel2):
         self.risks = risks if risks is not None else []
 
 
-class Point(BaseModel2):
+class Point(BaseModel):
     """Departure or arrival point."""
 
     __attrs__ = {
@@ -571,7 +549,7 @@ class Point(BaseModel2):
         self.country = country
 
 
-class Segment(BaseModel2):
+class Segment(BaseModel):
     """Travel segment."""
 
     __attrs__ = {
@@ -621,7 +599,7 @@ class Segment(BaseModel2):
         self.flight_direction = flight_direction
 
 
-class Policy(BaseModel2):
+class Policy(BaseModel):
     """Insurance policy."""
 
     __attrs__ = {
@@ -791,7 +769,7 @@ class Declaration:
     pass
 
 
-class QuoteRequest(BaseModel2, ApiRequest):
+class QuoteRequest(BaseModel, ApiRequest):
     """Request for calculating one or more insurance policies."""
 
     __attrs__ = {
@@ -866,7 +844,7 @@ class QuoteRequest(BaseModel2, ApiRequest):
         self.acquisition_channel = acquisition_channel
 
 
-class Quote(BaseModel2):
+class Quote(BaseModel):
     """Quote/Calculating."""
 
     __attrs__ = {
@@ -885,7 +863,7 @@ class Quote(BaseModel2):
         self.error = error
 
 
-class QuoteResponse(BaseModel2):
+class QuoteResponse(BaseModel):
     """Quote response."""
 
     __attrs__ = {
