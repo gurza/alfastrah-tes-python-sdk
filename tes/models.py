@@ -197,10 +197,22 @@ class BaseModel2:
 
             raise NotImplementedError
 
+        def get_list_args(tp):
+            """get_list_args: typing.List[int] -> (<class 'int'>,)"""
+            if sys.version_info[:3] >= (3, 7, 0):
+                if isinstance(tp, typing._GenericAlias) and tp.__origin__ == list:
+                    return tp.__args__
+            else:
+                if isinstance(tp, typing.GenericMeta) and tp.__origin__ == typing.List:
+                    return tp.__args__
+
+            return ()
+
         params = {}
         for attr_name, attr_type in cls.__attrs__.items():
-            if type(attr_type) == typing.GenericMeta and attr_type.__base__[0] == list:
-                params[attr_name] = [cast(o, attr_type.__args__[0]) for o in dct.get(attr_name, [])]
+            type_args = get_list_args(attr_type)
+            if len(type_args):
+                params[attr_name] = [cast(o, type_args[0]) for o in dct.get(attr_name, [])]
             else:
                 params[attr_name] = cast(dct.get(attr_name), attr_type)
 
