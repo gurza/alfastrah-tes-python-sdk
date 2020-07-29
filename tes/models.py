@@ -777,6 +777,26 @@ class Declaration:
     pass
 
 
+class Quote(BaseModel):
+    """Quote/Calculating."""
+
+    __attrs__ = {
+        'policies': typing.List[Policy], 'error': str,
+    }
+
+    def __init__(self, policies=None, error=None):
+        """Init.
+
+        :param policies: List of policies.
+        :type policies: list[Policy]
+        :param error: Policy calculating error.
+        :type error: str or None
+        """
+        BaseModel.__init__(self)
+        self.policies = policies if policies is not None else []
+        self.error = error
+
+
 class QuoteRequest(BaseModel, ApiRequest):
     """Request for calculating one or more insurance policies."""
 
@@ -851,26 +871,6 @@ class QuoteRequest(BaseModel, ApiRequest):
         self.selling_page = selling_page
         self.end_date = end_date
         self.acquisition_channel = acquisition_channel
-
-
-class Quote(BaseModel):
-    """Quote/Calculating."""
-
-    __attrs__ = {
-        'policies': typing.List[Policy], 'error': str,
-    }
-
-    def __init__(self, policies=None, error=None):
-        """Init.
-
-        :param policies: List of policies.
-        :type policies: list[Policy]
-        :param error: Policy calculating error.
-        :type error: str or None
-        """
-        BaseModel.__init__(self)
-        self.policies = policies if policies is not None else []
-        self.error = error
 
 
 class QuoteResponse(BaseModel):
