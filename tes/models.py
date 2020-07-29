@@ -797,8 +797,22 @@ class Quote(BaseModel):
         self.error = error
 
 
-class ConfirmRequest(ApiRequest):
-    pass
+class ConfirmRequest(BaseModel, ApiRequest):
+    """Request for confirmation of insurance policy."""
+
+    __attrs__ = {
+        'session_id': str,
+    }
+
+    def __init__(self, session_id=None):
+        """Init.
+
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+        """
+        BaseModel.__init__(self)
+        self.session_id = session_id
+
 
 
 class CreateRequest(BaseModel, ApiRequest):
