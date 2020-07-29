@@ -136,7 +136,6 @@ class AlfaInsTESClient:
         :return:
         """
         path = '/policies/quote'
-
         product = InsuranceProduct(product_code)
         quote_request = QuoteRequest(
             session_id=str(uuid.uuid4()), product=product, insureds=insureds, segments=segments,
@@ -217,7 +216,6 @@ class AlfaInsTESClient:
         :return:
         """
         path = '/policies'
-
         create_request = CreateRequest(
             insureds, session_id=session_id, product=product, insurer=insurer,
             segments=segments, booking_price=booking_price, currency=currency, discounted_rate=discounted_rate,
