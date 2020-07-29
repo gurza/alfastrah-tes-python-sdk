@@ -115,13 +115,11 @@ class TestApiIntegration:
                                       service_class, fare_type, fare_code, end_date)
         assert resp.quotes[0].policies[0].rate[0].value > 0
 
-    def test_create(self, client_connector, insureds, product, segments, pnr):
+    def test_issue(self, client_connector, insureds, product, segments, pnr):
         resp = client_connector.create(insureds,
                                        product=product, segments=segments, pnr=pnr)
         ids = [policy.policy_id for policy in resp.policies]
-        assert ids and all('ids')
-
-    def test_confirm(self, client_connector):
-        ids = []  # fake
+        if not ids:
+            assert False
         for policy_id in ids:
             assert client_connector.confirm(policy_id)
