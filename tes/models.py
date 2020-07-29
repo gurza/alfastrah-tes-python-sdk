@@ -982,7 +982,12 @@ class CreateRequest(BaseModel, ApiRequest):
         self.segments = segments if segments is not None else []
         self.booking_price = booking_price
         self.currency = currency
-        self.discounted_rate = discounted_rate if discounted_rate is not None else []
+
+        # self.discounted_rate = discounted_rate if discounted_rate is not None else []
+        # "discounted_rate": []
+        # Invalid JSON. Cannot deserialize instance of `java.math.BigDecimal` out of START_ARRAY token
+        self.discounted_rate = discounted_rate
+
         self.service_class = service_class
         self.pnr = pnr
         self.customer_email = customer_email
