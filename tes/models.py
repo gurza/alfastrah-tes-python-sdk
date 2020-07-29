@@ -797,100 +797,22 @@ class Quote(BaseModel):
         self.error = error
 
 
-class QuoteRequest(BaseModel, ApiRequest):
-    """Request for calculating one or more insurance policies."""
+class ConfirmRequest(BaseModel, ApiRequest):
+    """Request for confirmation of insurance policy."""
 
     __attrs__ = {
-        'session_id': str, 'product': InsuranceProduct, 'insureds': typing.List[Person],
-        'segments': typing.List[Segment], 'booking_price': Amount, 'currency': str, 'service_class': ServiceClass,
-        'country': str, 'sport': typing.List[SportKind], 'fare_type': FareType, 'luggage_type': LuggageType,
-        'fare_code': str, 'manager_name': str, 'manager_code': str, 'opt': Opt,
-        'selling_page': SellingPage, 'end_date': datetime.datetime, 'acquisition_channel': AcquisitionChannel,
+        'session_id': str,
     }
 
-    def __init__(self, session_id=None, product=None, insureds=None,
-                 segments=None, booking_price=None, currency=None, service_class=None,
-                 country=None, sport=None, fare_type=None, luggage_type=None,
-                 fare_code=None, manager_name=None, manager_code=None, opt=None,
-                 selling_page=None, end_date=None, acquisition_channel=None):
+    def __init__(self, session_id=None):
         """Init.
 
         :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
         :type session_id: str or None
-        :param product: Insurance product.
-        :type product: InsuranceProduct or None
-        :param insureds: List of insured persons.
-        :type insureds: list[Person] or None
-        :param segments: List of travel segments, e.g. list of flights.
-        :type segments: list[Segment] or None
-        :param booking_price: Total price of the booking.
-        :type booking_price: Amount or None
-        :param currency: Quote currency code, ISO 4217, e.g. 'RUB'.
-        :type currency: str or None
-        :param service_class: Service class.
-        :type service_class: ServiceClass or None
-        :param country: Country code where the insurance policy will be paid for, ISO 3166-1, e.g. 'RU'.
-        :type country: str or None
-        :param sport: Insured sports kind.
-        :type sport: list[SportKind] or None
-        :param fare_type: Refundability.
-        :type fare_type: FareType or None
-        :param luggage_type: Luggage type.
-        :type luggage_type: LuggageType or None
-        :param fare_code: Fare code (fare basis), e.g. 'BPXOWRF'.
-        :type fare_code: str or None
-        :param manager_name: Manager (cashier) code, e.g. 'Ivanova A.A.'.
-        :type manager_name: str or None
-        :param manager_code: Manager (cashier) code, e.g. '1q2w3e4r'.
-        :type manager_code: str or None
-        :param opt: Option state.
-        :type opt: Opt or None
-        :param selling_page: Policy selling page.
-        :type selling_page: SellingPage or None
-        :param end_date: Expiry date of the policy.
-        :type end_date: datetime.datetime or None
-        :param acquisition_channel: Acquisition (data collection) channel.
-        :type acquisition_channel: AcquisitionChannel or None
-        """
-        BaseModel.__init__(self)
-        self.session_id = session_id if session_id is not None else str(uuid.uuid4())
-        self.product = product
-        self.insureds = insureds if insureds is not None else []
-        self.segments = segments if segments is not None else []
-        self.booking_price = booking_price
-        self.currency = currency
-        self.service_class = service_class
-        self.country = country
-        self.sport = sport
-        self.fare_type = fare_type
-        self.luggage_type = luggage_type
-        self.fare_code = fare_code
-        self.manager_name = manager_name
-        self.manager_code = manager_code
-        self.opt = opt
-        self.selling_page = selling_page
-        self.end_date = end_date
-        self.acquisition_channel = acquisition_channel
-
-
-class QuoteResponse(BaseModel):
-    """Quote response."""
-
-    __attrs__ = {
-        'session_id': str, 'quotes': typing.List[Quote],
-    }
-
-    def __init__(self, session_id=None, quotes=None):
-        """Init.
-
-        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
-        :type session_id: str or None
-        :param quotes: List of policies for each insured person.
-        :type quotes: list[Quote] or None
         """
         BaseModel.__init__(self)
         self.session_id = session_id
-        self.quotes = quotes if quotes is not None else []
+
 
 
 class CreateRequest(BaseModel, ApiRequest):
@@ -1027,16 +949,100 @@ class CreateResponse(BaseModel):
         self.policies = policies if policies is not None else []
 
 
-class UpdateRequest(ApiRequest):
-    pass
+class QuoteRequest(BaseModel, ApiRequest):
+    """Request for calculating one or more insurance policies."""
+
+    __attrs__ = {
+        'session_id': str, 'product': InsuranceProduct, 'insureds': typing.List[Person],
+        'segments': typing.List[Segment], 'booking_price': Amount, 'currency': str, 'service_class': ServiceClass,
+        'country': str, 'sport': typing.List[SportKind], 'fare_type': FareType, 'luggage_type': LuggageType,
+        'fare_code': str, 'manager_name': str, 'manager_code': str, 'opt': Opt,
+        'selling_page': SellingPage, 'end_date': datetime.datetime, 'acquisition_channel': AcquisitionChannel,
+    }
+
+    def __init__(self, session_id=None, product=None, insureds=None,
+                 segments=None, booking_price=None, currency=None, service_class=None,
+                 country=None, sport=None, fare_type=None, luggage_type=None,
+                 fare_code=None, manager_name=None, manager_code=None, opt=None,
+                 selling_page=None, end_date=None, acquisition_channel=None):
+        """Init.
+
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+        :param product: Insurance product.
+        :type product: InsuranceProduct or None
+        :param insureds: List of insured persons.
+        :type insureds: list[Person] or None
+        :param segments: List of travel segments, e.g. list of flights.
+        :type segments: list[Segment] or None
+        :param booking_price: Total price of the booking.
+        :type booking_price: Amount or None
+        :param currency: Quote currency code, ISO 4217, e.g. 'RUB'.
+        :type currency: str or None
+        :param service_class: Service class.
+        :type service_class: ServiceClass or None
+        :param country: Country code where the insurance policy will be paid for, ISO 3166-1, e.g. 'RU'.
+        :type country: str or None
+        :param sport: Insured sports kind.
+        :type sport: list[SportKind] or None
+        :param fare_type: Refundability.
+        :type fare_type: FareType or None
+        :param luggage_type: Luggage type.
+        :type luggage_type: LuggageType or None
+        :param fare_code: Fare code (fare basis), e.g. 'BPXOWRF'.
+        :type fare_code: str or None
+        :param manager_name: Manager (cashier) code, e.g. 'Ivanova A.A.'.
+        :type manager_name: str or None
+        :param manager_code: Manager (cashier) code, e.g. '1q2w3e4r'.
+        :type manager_code: str or None
+        :param opt: Option state.
+        :type opt: Opt or None
+        :param selling_page: Policy selling page.
+        :type selling_page: SellingPage or None
+        :param end_date: Expiry date of the policy.
+        :type end_date: datetime.datetime or None
+        :param acquisition_channel: Acquisition (data collection) channel.
+        :type acquisition_channel: AcquisitionChannel or None
+        """
+        BaseModel.__init__(self)
+        self.session_id = session_id if session_id is not None else str(uuid.uuid4())
+        self.product = product
+        self.insureds = insureds if insureds is not None else []
+        self.segments = segments if segments is not None else []
+        self.booking_price = booking_price
+        self.currency = currency
+        self.service_class = service_class
+        self.country = country
+        self.sport = sport
+        self.fare_type = fare_type
+        self.luggage_type = luggage_type
+        self.fare_code = fare_code
+        self.manager_name = manager_name
+        self.manager_code = manager_code
+        self.opt = opt
+        self.selling_page = selling_page
+        self.end_date = end_date
+        self.acquisition_channel = acquisition_channel
 
 
-class UpdateResponse:
-    pass
+class QuoteResponse(BaseModel):
+    """Quote response."""
 
+    __attrs__ = {
+        'session_id': str, 'quotes': typing.List[Quote],
+    }
 
-class ConfirmRequest(ApiRequest):
-    pass
+    def __init__(self, session_id=None, quotes=None):
+        """Init.
+
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+        :param quotes: List of policies for each insured person.
+        :type quotes: list[Quote] or None
+        """
+        BaseModel.__init__(self)
+        self.session_id = session_id
+        self.quotes = quotes if quotes is not None else []
 
 
 class SaleWithoutInsuranceRequest(ApiRequest):
@@ -1044,4 +1050,12 @@ class SaleWithoutInsuranceRequest(ApiRequest):
 
 
 class SaleWithoutInsuranceResponse:
+    pass
+
+
+class UpdateRequest(ApiRequest):
+    pass
+
+
+class UpdateResponse:
     pass

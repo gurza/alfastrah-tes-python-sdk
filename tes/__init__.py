@@ -4,7 +4,7 @@ from .__version__ import (
     __author__, __author_email__, __license__
 )
 
-from .client import AlfaInsTESClient, MultiJSONEncoder
+from .client import AlfaStrahTESClient, MultiJSONEncoder
 from .models import (
     BaseModel, ApiRequest, ApiProblem,
     InsuranceProduct, Amount, PolicyStatus, Operator,

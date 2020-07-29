@@ -14,15 +14,16 @@ from .models import (
     SportKind, FareType, Opt, AcquisitionChannel,
 )
 from .models import (
-    QuoteRequest, QuoteResponse, CreateRequest, CreateResponse,
+    ConfirmRequest, CreateRequest, CreateResponse, QuoteRequest,
+    QuoteResponse,
 )
 
 DEFAULT_CURRENCY = 'RUB'
 DEFAULT_COUNTRY = 'RU'
-DEFAULT_MANAGER = 'AlfaInsTESClient'
+DEFAULT_MANAGER = 'AlfaStrahTESClient'
 
 
-class AlfaInsTESClient:
+class AlfaStrahTESClient:
     api_host = 'https://uat-tes.alfastrah.ru'
     base_path = '/travel-ext-services/api/v2'
 
@@ -237,6 +238,22 @@ class AlfaInsTESClient:
         )
         resp = self.request('POST', path, data=create_request, resp_cls=CreateResponse)
         return resp
+
+    def confirm(self, policy_id, session_id=None):
+        """Confirms insurance policy.
+
+        :param policy_id: Policy Id, e.g. 21684956.
+        :type policy_id: int
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+
+        :return: True in case of success.
+        :rtype: bool
+        """
+        path = '/policies/{policy_id}/confirm'.format(policy_id=policy_id)
+        confirm_request = ConfirmRequest(session_id=session_id)
+        _ = self.request('PUT', path, data=confirm_request)
+        return True
 
 
 class MultiJSONEncoder(json.JSONEncoder):
