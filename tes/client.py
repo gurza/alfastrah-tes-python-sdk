@@ -266,7 +266,7 @@ class AlfaStrahTESClient:
         :rtype: Policy
         """
         path = '/policies/{policy_id}'.format(policy_id=policy_id)
-        policy = self.request('GET', path)
+        policy = self.request('GET', path, resp_cls=Policy)
         return policy
 
 
