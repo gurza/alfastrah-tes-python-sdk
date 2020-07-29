@@ -7,7 +7,7 @@ import string
 
 import pytest
 
-from tes import AlfaInsTESClient
+from tes import AlfaStrahTESClient
 from tes import (
     Amount, Document, DocumentType, FareType,
     Gender, InsuranceProduct, Person, Point,
@@ -19,7 +19,7 @@ from tes import TESException
 @pytest.fixture(scope='class')
 def client_connector():
     api_key = os.getenv('ALFAINS_TES_KEY')
-    client = AlfaInsTESClient(api_key)
+    client = AlfaStrahTESClient(api_key)
     client.api_host = 'https://uat-tes.alfastrah.ru'
     yield client
 

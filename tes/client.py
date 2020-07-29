@@ -23,7 +23,7 @@ DEFAULT_COUNTRY = 'RU'
 DEFAULT_MANAGER = 'AlfaInsTESClient'
 
 
-class AlfaInsTESClient:
+class AlfaStrahTESClient:
     api_host = 'https://uat-tes.alfastrah.ru'
     base_path = '/travel-ext-services/api/v2'
 
