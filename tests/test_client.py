@@ -21,7 +21,8 @@ class TestBasic:
         assert client_connector.status_code == 404
 
 
-class TestApi:
+@pytest.mark.incremental
+class TestMainFlow:
     def test_get_products(self, client_connector, product_code):
         products = client_connector.get_products(product_type='AIR')
         products_codes = [product.code for product in products]
@@ -35,6 +36,7 @@ class TestApi:
         end_date = segments[-1].arrival.date
         resp = client_connector.quote(product_code, insureds, segments, booking_price,
                                       service_class, fare_type, fare_code, end_date)
+        assert False
         assert resp.quotes[0].policies[0].rate[0].value > 0
 
     def test_create(self, client_connector, insureds, product_code, segments, pnr):
