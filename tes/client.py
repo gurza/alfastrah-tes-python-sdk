@@ -12,7 +12,9 @@ from .models import (
     ApiRequest, ApiProblem, InsuranceProduct,
     Person, Segment, Amount, ServiceClass,
     SportKind, FareType, Opt, AcquisitionChannel,
-    QuoteRequest, QuoteResponse,
+)
+from .models import (
+    QuoteRequest, QuoteResponse, CreateRequest, CreateResponse,
 )
 
 
@@ -149,6 +151,89 @@ class AlfaInsTESClient:
             manager_code=manager_code, opt=opt, end_date=end_date, acquisition_channel=acquisition_channel
         )
         resp = self.request('POST', path, data=quote_request, resp_cls=QuoteResponse)
+        return resp
+
+    def create(self, insureds, session_id=None, product=None,
+               insurer=None, segments=None, booking_price=None, currency=None,
+               discounted_rate=None, service_class=None, pnr=None, customer_email=None,
+               customer_phone=None, payment_type=None, sale_session=None, country=None,
+               issuance_city=None, sport=None, fare_type=None, luggage_type=None,
+               fare_code=None, manager_name=None, manager_code=None, begin_date=None,
+               end_date=None, external_id=None, opt=None, selling_page=None,
+               acquisition_channel=None):
+        """Creates one or more insurance policies.
+
+        :param insureds: List of insured persons.
+        :type insureds: list[Person] or None
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+        :param product: Insurance product.
+        :type product: InsuranceProduct or None
+        :param insurer: Insurer.
+        :type insurer: Person or None
+        :param segments: Travel segments.
+        :type segments: list[Segment] or None
+        :param booking_price: Total price of the booking.
+        :type booking_price: Amount or None
+        :param currency: Quote currency code, ISO 4217, e.g. 'RUB'.
+        :type currency: str or None
+        :param discounted_rate: Discounted rates in different currencies.
+        :type discounted_rate: list[Amount] or None
+        :param service_class: Service class.
+        :type service_class: ServiceClass or None
+        :param pnr: Booking number, e.g. 'TR097S'.
+        :type pnr: str or None
+        :param customer_email: Customer contact email, e.g. 'example@mail.com'.
+        :type customer_email: str or None
+        :param customer_phone: Customer contact phone, e.g. '+79876543210'.
+        :type customer_phone: str or None
+        :param payment_type: Form of payment, e.g. 'CARD'.
+        :type payment_type: str or None
+        :param sale_session: Sale session, e.g. 'PQGWIXCLPY4613323570'.
+        :type sale_session: str or None
+        :param country: Code of the country where the document was issued, ISO 3166-1, e.g. 'RU'.
+        :type country: str or None
+        :param issuance_city: City where the policy was issued, e.g. 'Moscow'.
+        :type issuance_city: str or None
+        :param sport: Insured sports kind.
+        :type sport: list[SportKind] or None
+        :param fare_type: Refundability.
+        :type fare_type: FareType or None
+        :param luggage_type: Luggage type.
+        :type luggage_type: LuggageType or None
+        :param fare_code: Fare code (fare basis), e.g. 'BPXOWRF'.
+        :type fare_code: str or None
+        :param manager_name: Manager (cashier) code, e.g. 'Ivanova A.A.'.
+        :type manager_name: str or None
+        :param manager_code: Manager (cashier) code, e.g. '1q2w3e4r'.
+        :type manager_code: str or None
+        :param begin_date: Start date of the policy.
+        :type begin_date: datetime.datetime or None
+        :param end_date: Expiry date of the policy.
+        :type end_date: datetime.datetime or None
+        :param external_id: Policy ID in partner system, e.g. 'FQU/12324264/546546654'.
+        :type external_id: str or None
+        :param opt: Option state.
+        :type opt: Opt or None
+        :param selling_page: Policy selling page.
+        :type selling_page: SellingPage or None
+        :param acquisition_channel: Acquisition (data collection) channel.
+        :type acquisition_channel: AcquisitionChannel or None
+
+        :return:
+        """
+        path = '/policies'
+
+        create_request = CreateRequest(
+            insureds, session_id=session_id, product=product, insurer=insurer,
+            segments=segments, booking_price=booking_price, currency=currency, discounted_rate=discounted_rate,
+            service_class=service_class, pnr=pnr, customer_email=customer_email, customer_phone=customer_phone,
+            payment_type=payment_type, sale_session=sale_session, country=country, issuance_city=issuance_city,
+            sport=sport, fare_type=fare_type, luggage_type=luggage_type, fare_code=fare_code,
+            manager_name=manager_name, manager_code=manager_code, begin_date=begin_date, end_date=end_date,
+            external_id=external_id, opt=opt, selling_page=selling_page, acquisition_channel=acquisition_channel
+        )
+        resp = self.request('POST', path, data=create_request, resp_cls=CreateResponse)
         return resp
 
 
