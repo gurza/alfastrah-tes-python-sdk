@@ -8,8 +8,8 @@ import pytest
 from tes import AlfaInsTESClient
 from tes import (
     Amount, Document, DocumentType, FareType,
-    Gender, Person, Point, Segment,
-    ServiceClass,
+    Gender, InsuranceProduct, Person, Point,
+    Segment, ServiceClass,
 )
 
 
@@ -23,7 +23,14 @@ def client_connector():
 
 @pytest.fixture
 def product_code():
+    # TODO: delete it
     yield os.getenv('ALFAINS_TES_PRODUCT_CODE')
+
+
+@pytest.fixture
+def product():
+    product_code = os.getenv('ALFAINS_TES_PRODUCT_CODE')
+    yield InsuranceProduct(product_code)
 
 
 @pytest.fixture
