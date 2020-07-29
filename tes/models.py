@@ -1005,8 +1005,21 @@ class CreateRequest(BaseModel, ApiRequest):
         self.acquisition_channel = acquisition_channel
 
 
-class CreateResponse:
-    pass
+class CreateResponse(BaseModel):
+    """Create response."""
+
+    __attrs__ = {
+        'policies': typing.List[Policy],
+    }
+
+    def __init__(self, policies=None):
+        """Init.
+
+        :param policies: List of policies.
+        :type policies: list[Policy]
+        """
+        BaseModel.__init__(self)
+        self.policies = policies if policies is not None else []
 
 
 class UpdateRequest(ApiRequest):
