@@ -14,7 +14,8 @@ from .models import (
     SportKind, FareType, Opt, AcquisitionChannel,
 )
 from .models import (
-    QuoteRequest, QuoteResponse, CreateRequest, CreateResponse,
+    ConfirmRequest, CreateRequest, CreateResponse, QuoteRequest,
+    QuoteResponse,
 )
 
 DEFAULT_CURRENCY = 'RUB'
@@ -237,6 +238,20 @@ class AlfaInsTESClient:
         )
         resp = self.request('POST', path, data=create_request, resp_cls=CreateResponse)
         return resp
+
+    def confirm(self, session_id=None):
+        """Confirms insurance policy.
+
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+
+        :return: True in case of success.
+        :rtype: bool
+        """
+        path = ''
+        confirm_request = ConfirmRequest(session_id=session_id)
+        resp = self.request('PUT', path, data=confirm_request)
+        return True
 
 
 class MultiJSONEncoder(json.JSONEncoder):
