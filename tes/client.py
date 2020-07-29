@@ -31,6 +31,15 @@ class AlfaInsTESClient:
         self.verify_ssl = verify_ssl
         self.req = self.resp = self.status_code = None
 
+    @staticmethod
+    def generate_session_id():
+        """Generates unique session id.
+
+        :returns: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :rtype: str
+        """
+        return str(uuid.uuid4())
+
     def raise_for_error(self):
         """Raises stored :class:`TESException`, if one occurred."""
         if self.status_code is None or self.status_code == 200:
@@ -136,8 +145,9 @@ class AlfaInsTESClient:
         :return:
         """
         path = '/policies/quote'
+        session_id = self.generate_session_id()
         quote_request = QuoteRequest(
-            session_id=str(uuid.uuid4()), product=InsuranceProduct(product_code), insureds=insureds, segments=segments,
+            session_id=session_id, product=InsuranceProduct(product_code), insureds=insureds, segments=segments,
             booking_price=booking_price, currency=currency, service_class=service_class, country=country,
             sport=sport, fare_type=fare_type, fare_code=fare_code, manager_name=manager_name,
             manager_code=manager_code, opt=opt, end_date=end_date, acquisition_channel=acquisition_channel
@@ -145,7 +155,7 @@ class AlfaInsTESClient:
         resp = self.request('POST', path, data=quote_request, resp_cls=QuoteResponse)
         return resp
 
-    def create(self, insureds, session_id=None, product_code=None,
+    def create(self, insureds, product_code=None,
                insurer=None, segments=None, booking_price=None, currency=DEFAULT_CURRENCY,
                discounted_rate=None, service_class=None, pnr=None, customer_email=None,
                customer_phone=None, payment_type=None, sale_session=None, country=DEFAULT_COUNTRY,
@@ -215,6 +225,7 @@ class AlfaInsTESClient:
         :return:
         """
         path = '/policies'
+        session_id = self.generate_session_id()
         create_request = CreateRequest(
             insureds, session_id=session_id, product=InsuranceProduct(product_code), insurer=insurer,
             segments=segments, booking_price=booking_price, currency=currency, discounted_rate=discounted_rate,
