@@ -156,7 +156,7 @@ class AlfaInsTESClient:
         """Creates one or more insurance policies.
 
         :param insureds: List of insured persons.
-        :type insureds: list[Person] or None
+        :type insureds: list[Person]
         :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
         :type session_id: str or None
         :param product_code: Insurance product code.
