@@ -1,10 +1,27 @@
 # -*- coding: utf-8 -*-
+import datetime
+from decimal import Decimal
+import os
+import random
+import string
+
 import pytest
 
+from tes import AlfaInsTESClient
 from tes import (
-    InsuranceProduct,
+    Amount, Document, DocumentType, FareType,
+    Gender, InsuranceProduct, Person, Point,
+    Segment, ServiceClass,
 )
 from tes import TESException
+
+
+@pytest.fixture(scope='class')
+def client_connector():
+    api_key = os.getenv('ALFAINS_TES_KEY')
+    client = AlfaInsTESClient(api_key)
+    client.api_host = 'https://uat-tes.alfastrah.ru'
+    yield client
 
 
 class TestBasic:
@@ -21,35 +38,90 @@ class TestBasic:
         assert client_connector.status_code == 404
 
 
-@pytest.mark.incremental
-class TestMainFlow:
-    @pytest.fixture(autouse=True, scope='class')
-    def state(self):
-        yield {}
+class TestApiIntegration:
+    @pytest.fixture
+    def insureds(self):
+        yield [
+            Person(
+                first_name='Arthur',
+                last_name='Conan Doyle',
+                gender=Gender.MALE,
+                birth_date=datetime.date(1979, 5, 22),
+                document=Document(type=DocumentType.PASSPORT, number='4509511410'),
+                nationality='RU'
+            ),
+            Person(
+                first_name='Louisa',
+                last_name='Hawkins',
+                gender=Gender.FEMALE,
+                birth_date=datetime.date(1977, 4, 10),
+                document=Document(type=DocumentType.PASSPORT, number='3809468921'),
+                nationality='RU'
+            )
+        ]
 
-    def test_get_products(self, client_connector, product_code):
+    @pytest.fixture
+    def product(self):
+        product_code = os.getenv('ALFAINS_TES_PRODUCT_CODE')
+        yield InsuranceProduct(product_code)
+
+    @pytest.fixture
+    def pnr(self):
+        letters = string.ascii_uppercase
+        record_locator = ''.join(random.choice(letters) for i in range(6))
+        yield record_locator
+
+    @pytest.fixture
+    def segments(self):
+        outbound_datetime = datetime.datetime.now() + datetime.timedelta(days=30)
+        inbound_datetime = datetime.datetime.now() + datetime.timedelta(days=39)
+
+        yield [
+            Segment(
+                transport_operator_code='AF',
+                route_number='1845',
+                departure=Point(date=outbound_datetime, point='SVO'),
+                arrival=Point(date=outbound_datetime + datetime.timedelta(minutes=260), point='CDG'),
+            ),
+            Segment(
+                transport_operator_code='AF',
+                route_number='1144',
+                departure=Point(date=inbound_datetime, point='CDG'),
+                arrival=Point(date=inbound_datetime + datetime.timedelta(minutes=225), point='SVO')
+            ),
+        ]
+
+    @pytest.fixture
+    def trip_additional_data(self):
+        yield {
+            'booking_price': Amount(Decimal(115000), currency='RUB'),
+            'service_class': ServiceClass.BUSINESS,
+            'fare_type': FareType.REFUNDABLE,
+            'fare_code': 'CRT',
+        }
+
+    def test_get_products(self, client_connector, product):
         products = client_connector.get_products(product_type='AIR')
         products_codes = [product.code for product in products]
-        assert product_code in products_codes
+        assert product.code in products_codes
 
-    def test_quote(self, client_connector, product_code, insureds, segments, trip_additional_data):
+    def test_quote(self, client_connector, product, insureds, segments, trip_additional_data):
         booking_price = trip_additional_data.get('booking_price')
         service_class = trip_additional_data.get('service_class')
         fare_type = trip_additional_data.get('fare_type')
         fare_code = trip_additional_data.get('fare_code')
         end_date = segments[-1].arrival.date
-        resp = client_connector.quote(product_code, insureds, segments, booking_price,
+        resp = client_connector.quote(product.code, insureds, segments, booking_price,
                                       service_class, fare_type, fare_code, end_date)
         assert resp.quotes[0].policies[0].rate[0].value > 0
 
-    def test_create(self, state, client_connector, insureds, product_code, segments, pnr):
-        product = InsuranceProduct(product_code)
+    def test_create(self, client_connector, insureds, product, segments, pnr):
         resp = client_connector.create(insureds,
                                        product=product, segments=segments, pnr=pnr)
-        state['ids'] = [policy.policy_id for policy in resp.policies]
-        assert len(state['ids']) > 0
-        assert all(state['ids'])
+        ids = [policy.policy_id for policy in resp.policies]
+        assert ids and all('ids')
 
-    def test_confirm(self, state, client_connector):
-        for policy_id in state['ids']:
+    def test_confirm(self, client_connector):
+        ids = []  # fake
+        for policy_id in ids:
             assert client_connector.confirm(policy_id)
