@@ -36,7 +36,6 @@ class TestMainFlow:
         end_date = segments[-1].arrival.date
         resp = client_connector.quote(product_code, insureds, segments, booking_price,
                                       service_class, fare_type, fare_code, end_date)
-        assert False
         assert resp.quotes[0].policies[0].rate[0].value > 0
 
     def test_create(self, client_connector, insureds, product_code, segments, pnr):
