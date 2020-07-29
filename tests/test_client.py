@@ -23,6 +23,10 @@ class TestBasic:
 
 @pytest.mark.incremental
 class TestMainFlow:
+    @pytest.fixture(autouse=True, scope='class')
+    def state(self):
+        yield {}
+
     def test_get_products(self, client_connector, product_code):
         products = client_connector.get_products(product_type='AIR')
         products_codes = [product.code for product in products]
@@ -38,10 +42,14 @@ class TestMainFlow:
                                       service_class, fare_type, fare_code, end_date)
         assert resp.quotes[0].policies[0].rate[0].value > 0
 
-    def test_create(self, client_connector, insureds, product_code, segments, pnr):
+    def test_create(self, state, client_connector, insureds, product_code, segments, pnr):
         product = InsuranceProduct(product_code)
         resp = client_connector.create(insureds,
                                        product=product, segments=segments, pnr=pnr)
-        ids = [policy.policy_id for policy in resp.policies]
-        assert len(ids) > 0
-        assert all(ids)
+        state['ids'] = [policy.policy_id for policy in resp.policies]
+        assert len(state['ids']) > 0
+        assert all(state['ids'])
+
+    def test_confirm(self, state, client_connector):
+        for policy_id in state['ids']:
+            assert client_connector.confirm(policy_id)
