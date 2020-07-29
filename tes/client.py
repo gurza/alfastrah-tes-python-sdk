@@ -20,7 +20,7 @@ from .models import (
 
 DEFAULT_CURRENCY = 'RUB'
 DEFAULT_COUNTRY = 'RU'
-DEFAULT_MANAGER = 'AlfaInsTESClient'
+DEFAULT_MANAGER = 'AlfaStrahTESClient'
 
 
 class AlfaStrahTESClient:
