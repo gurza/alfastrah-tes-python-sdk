@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
+import random
+import string
 from decimal import Decimal
 import os
 
@@ -22,11 +24,6 @@ def client_connector():
 
 
 @pytest.fixture
-def product_code():
-    yield os.getenv('ALFAINS_TES_PRODUCT_CODE')
-
-
-@pytest.fixture
 def insureds():
     yield [
         Person(
@@ -46,6 +43,18 @@ def insureds():
             nationality='RU'
         )
     ]
+
+
+@pytest.fixture
+def product_code():
+    yield os.getenv('ALFAINS_TES_PRODUCT_CODE')
+
+
+@pytest.fixture
+def pnr():
+    letters = string.ascii_uppercase
+    record_locator = ''.join(random.choice(letters) for i in range(6))
+    yield record_locator
 
 
 @pytest.fixture

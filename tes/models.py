@@ -777,6 +777,26 @@ class Declaration:
     pass
 
 
+class Quote(BaseModel):
+    """Quote/Calculating."""
+
+    __attrs__ = {
+        'policies': typing.List[Policy], 'error': str,
+    }
+
+    def __init__(self, policies=None, error=None):
+        """Init.
+
+        :param policies: List of policies.
+        :type policies: list[Policy]
+        :param error: Policy calculating error.
+        :type error: str or None
+        """
+        BaseModel.__init__(self)
+        self.policies = policies if policies is not None else []
+        self.error = error
+
+
 class QuoteRequest(BaseModel, ApiRequest):
     """Request for calculating one or more insurance policies."""
 
@@ -853,26 +873,6 @@ class QuoteRequest(BaseModel, ApiRequest):
         self.acquisition_channel = acquisition_channel
 
 
-class Quote(BaseModel):
-    """Quote/Calculating."""
-
-    __attrs__ = {
-        'policies': typing.List[Policy], 'error': str,
-    }
-
-    def __init__(self, policies=None, error=None):
-        """Init.
-
-        :param policies: List of policies.
-        :type policies: list[Policy]
-        :param error: Policy calculating error.
-        :type error: str or None
-        """
-        BaseModel.__init__(self)
-        self.policies = policies if policies is not None else []
-        self.error = error
-
-
 class QuoteResponse(BaseModel):
     """Quote response."""
 
@@ -893,12 +893,138 @@ class QuoteResponse(BaseModel):
         self.quotes = quotes if quotes is not None else []
 
 
-class CreateRequest(ApiRequest):
-    pass
+class CreateRequest(BaseModel, ApiRequest):
+    """Request for creating one or more insurance policies."""
+
+    __attrs__ = {
+        'insureds': typing.List[Person], 'session_id': str, 'product': InsuranceProduct,
+        'insurer': Person, 'segments': typing.List[Segment],  'booking_price': Amount, 'currency': str,
+        'discounted_rate': typing.List[Amount], 'service_class': ServiceClass, 'pnr': str, 'customer_email': str,
+        'customer_phone': str, 'payment_type': str, 'sale_session': str, 'country': str,
+        'issuance_city': str, 'sport': typing.List[SportKind], 'fare_type': FareType, 'luggage_type': LuggageType,
+        'fare_code': str, 'manager_name': str, 'manager_code': str, 'begin_date': datetime.datetime,
+        'end_date': datetime.datetime, 'external_id': str, 'opt': Opt, 'selling_page': SellingPage,
+        'acquisition_channel': AcquisitionChannel,
+    }
+
+    def __init__(self, insureds, session_id=None, product=None,
+                 insurer=None, segments=None, booking_price=None, currency=None,
+                 discounted_rate=None, service_class=None, pnr=None, customer_email=None,
+                 customer_phone=None, payment_type=None, sale_session=None, country=None,
+                 issuance_city=None, sport=None, fare_type=None, luggage_type=None,
+                 fare_code=None, manager_name=None, manager_code=None, begin_date=None,
+                 end_date=None, external_id=None, opt=None, selling_page=None,
+                 acquisition_channel=None):
+        """Init.
+
+        :param insureds: List of insured persons.
+        :type insureds: list[Person]
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+        :param product: Insurance product.
+        :type product: InsuranceProduct or None
+        :param insurer: Insurer.
+        :type insurer: Person or None
+        :param segments: Travel segments.
+        :type segments: list[Segment] or None
+        :param booking_price: Total price of the booking.
+        :type booking_price: Amount or None
+        :param currency: Quote currency code, ISO 4217, e.g. 'RUB'.
+        :type currency: str or None
+        :param discounted_rate: Discounted rates in different currencies.
+        :type discounted_rate: list[Amount] or None
+        :param service_class: Service class.
+        :type service_class: ServiceClass or None
+        :param pnr: Booking number, e.g. 'TR097S'.
+        :type pnr: str or None
+        :param customer_email: Customer contact email, e.g. 'example@mail.com'.
+        :type customer_email: str or None
+        :param customer_phone: Customer contact phone, e.g. '+79876543210'.
+        :type customer_phone: str or None
+        :param payment_type: Form of payment, e.g. 'CARD'.
+        :type payment_type: str or None
+        :param sale_session: Sale session, e.g. 'PQGWIXCLPY4613323570'.
+        :type sale_session: str or None
+        :param country: Code of the country where the document was issued, ISO 3166-1, e.g. 'RU'.
+        :type country: str or None
+        :param issuance_city: City where the policy was issued, e.g. 'Moscow'.
+        :type issuance_city: str or None
+        :param sport: Insured sports kind.
+        :type sport: list[SportKind] or None
+        :param fare_type: Refundability.
+        :type fare_type: FareType or None
+        :param luggage_type: Luggage type.
+        :type luggage_type: LuggageType or None
+        :param fare_code: Fare code (fare basis), e.g. 'BPXOWRF'.
+        :type fare_code: str or None
+        :param manager_name: Manager (cashier) code, e.g. 'Ivanova A.A.'.
+        :type manager_name: str or None
+        :param manager_code: Manager (cashier) code, e.g. '1q2w3e4r'.
+        :type manager_code: str or None
+        :param begin_date: Start date of the policy.
+        :type begin_date: datetime.datetime or None
+        :param end_date: Expiry date of the policy.
+        :type end_date: datetime.datetime or None
+        :param external_id: Policy ID in partner system, e.g. 'FQU/12324264/546546654'.
+        :type external_id: str or None
+        :param opt: Option state.
+        :type opt: Opt or None
+        :param selling_page: Policy selling page.
+        :type selling_page: SellingPage or None
+        :param acquisition_channel: Acquisition (data collection) channel.
+        :type acquisition_channel: AcquisitionChannel or None
+        """
+        BaseModel.__init__(self)
+        self.insureds = insureds
+        self.session_id = session_id
+        self.product = product
+        self.insurer = insurer
+        self.segments = segments if segments is not None else []
+        self.booking_price = booking_price
+        self.currency = currency
+
+        # self.discounted_rate = discounted_rate if discounted_rate is not None else []
+        # "discounted_rate": []
+        # Invalid JSON. Cannot deserialize instance of `java.math.BigDecimal` out of START_ARRAY token
+        self.discounted_rate = discounted_rate
+
+        self.service_class = service_class
+        self.pnr = pnr
+        self.customer_email = customer_email
+        self.customer_phone = customer_phone
+        self.payment_type = payment_type
+        self.sale_session = sale_session
+        self.country = country
+        self.issuance_city = issuance_city
+        self.sport = sport if sport is not None else []
+        self.fare_type = fare_type
+        self.luggage_type = luggage_type
+        self.fare_code = fare_code
+        self.manager_name = manager_name
+        self.manager_code = manager_code
+        self.begin_date = begin_date
+        self.end_date = end_date
+        self.external_id = external_id
+        self.opt = opt
+        self.selling_page = selling_page
+        self.acquisition_channel = acquisition_channel
 
 
-class CreateResponse:
-    pass
+class CreateResponse(BaseModel):
+    """Create response."""
+
+    __attrs__ = {
+        'policies': typing.List[Policy],
+    }
+
+    def __init__(self, policies=None):
+        """Init.
+
+        :param policies: List of policies.
+        :type policies: list[Policy]
+        """
+        BaseModel.__init__(self)
+        self.policies = policies if policies is not None else []
 
 
 class UpdateRequest(ApiRequest):

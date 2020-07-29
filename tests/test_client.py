@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import pytest
 
+from tes import (
+    InsuranceProduct,
+)
 from tes import TESException
 
 
@@ -33,3 +36,11 @@ class TestApi:
         resp = client_connector.quote(product_code, insureds, segments, booking_price,
                                       service_class, fare_type, fare_code, end_date)
         assert resp.quotes[0].policies[0].rate[0].value > 0
+
+    def test_create(self, client_connector, insureds, product_code, segments, pnr):
+        product = InsuranceProduct(product_code)
+        resp = client_connector.create(insureds,
+                                       product=product, segments=segments, pnr=pnr)
+        ids = [policy.policy_id for policy in resp.policies]
+        assert len(ids) > 0
+        assert all(ids)
