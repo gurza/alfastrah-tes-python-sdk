@@ -155,7 +155,7 @@ class AlfaInsTESClient:
         resp = self.request('POST', path, data=quote_request, resp_cls=QuoteResponse)
         return resp
 
-    def create(self, insureds, product_code=None,
+    def create(self, product_code, insureds,
                insurer=None, segments=None, booking_price=None, currency=DEFAULT_CURRENCY,
                discounted_rate=None, service_class=None, pnr=None, customer_email=None,
                customer_phone=None, payment_type=None, sale_session=None, country=DEFAULT_COUNTRY,
@@ -165,12 +165,10 @@ class AlfaInsTESClient:
                acquisition_channel=None):
         """Creates one or more insurance policies.
 
+        :param product_code: Insurance product code.
+        :type product_code: str
         :param insureds: List of insured persons.
         :type insureds: list[Person]
-        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
-        :type session_id: str or None
-        :param product_code: Insurance product code.
-        :type product_code: str or None
         :param insurer: Insurer.
         :type insurer: Person or None
         :param segments: Travel segments.
