@@ -221,6 +221,9 @@ class AlfaInsTESClient:
         :type selling_page: SellingPage or None
         :param acquisition_channel: Acquisition (data collection) channel.
         :type acquisition_channel: AcquisitionChannel or None
+
+        :returns: List of created insurance policies.
+        :rtype: CreateResponse
         """
         path = '/policies'
         create_request = CreateRequest(
