@@ -893,8 +893,18 @@ class QuoteResponse(BaseModel):
         self.quotes = quotes if quotes is not None else []
 
 
-class CreateRequest(ApiRequest):
-    pass
+class CreateRequest(BaseModel, ApiRequest):
+    """Request for creating one or more insurance policies."""
+
+    def __init__(self, insureds, session_id=None, product=None,
+                 insurer=None, segments=None, booking_price=None, currency=None,
+                 discounted_rate=None, service_class=None, pnr=None, customer_email=None,
+                 customer_phone=None, payment_type=None, sale_session=None, country=None,
+                 issuance_city=None, sport=None, fare_type=None, luggage_type=None,
+                 fare_code=None, manager_name=None, manager_code=None, begin_date=None,
+                 end_date=None, external_id=None, opt=None, selling_page=None,
+                 acquisition_channel=None):
+        BaseModel.__init__(self)
 
 
 class CreateResponse:
