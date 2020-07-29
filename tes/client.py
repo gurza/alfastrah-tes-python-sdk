@@ -155,20 +155,22 @@ class AlfaInsTESClient:
         resp = self.request('POST', path, data=quote_request, resp_cls=QuoteResponse)
         return resp
 
-    def create(self, product_code, insureds,
-               insurer=None, segments=None, booking_price=None, currency=DEFAULT_CURRENCY,
+    def create(self, insureds, session_id=None, product=None,
+               insurer=None, segments=None, booking_price=None, currency=None,
                discounted_rate=None, service_class=None, pnr=None, customer_email=None,
-               customer_phone=None, payment_type=None, sale_session=None, country=DEFAULT_COUNTRY,
+               customer_phone=None, payment_type=None, sale_session=None, country=None,
                issuance_city=None, sport=None, fare_type=None, luggage_type=None,
-               fare_code=None, manager_name=DEFAULT_MANAGER, manager_code=DEFAULT_MANAGER, begin_date=None,
-               end_date=None, external_id=None, opt=Opt.OPT_IN, selling_page=AcquisitionChannel.CROSS_SALE,
+               fare_code=None, manager_name=None, manager_code=None, begin_date=None,
+               end_date=None, external_id=None, opt=None, selling_page=None,
                acquisition_channel=None):
         """Creates one or more insurance policies.
 
-        :param product_code: Insurance product code.
-        :type product_code: str
         :param insureds: List of insured persons.
         :type insureds: list[Person]
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+        :param product: Insurance product.
+        :type product: InsuranceProduct or None
         :param insurer: Insurer.
         :type insurer: Person or None
         :param segments: Travel segments.
@@ -219,13 +221,10 @@ class AlfaInsTESClient:
         :type selling_page: SellingPage or None
         :param acquisition_channel: Acquisition (data collection) channel.
         :type acquisition_channel: AcquisitionChannel or None
-
-        :return:
         """
         path = '/policies'
-        session_id = self.generate_session_id()
         create_request = CreateRequest(
-            insureds, session_id=session_id, product=InsuranceProduct(product_code), insurer=insurer,
+            insureds, session_id=session_id, product=product, insurer=insurer,
             segments=segments, booking_price=booking_price, currency=currency, discounted_rate=discounted_rate,
             service_class=service_class, pnr=pnr, customer_email=customer_email, customer_phone=customer_phone,
             payment_type=payment_type, sale_session=sale_session, country=country, issuance_city=issuance_city,
