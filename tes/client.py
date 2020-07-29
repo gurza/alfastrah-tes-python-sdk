@@ -239,18 +239,20 @@ class AlfaInsTESClient:
         resp = self.request('POST', path, data=create_request, resp_cls=CreateResponse)
         return resp
 
-    def confirm(self, session_id=None):
+    def confirm(self, policy_id, session_id=None):
         """Confirms insurance policy.
 
+        :param policy_id: Policy Id, e.g. 21684956.
+        :type policy_id: int
         :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
         :type session_id: str or None
 
         :return: True in case of success.
         :rtype: bool
         """
-        path = ''
+        path = '/policies/{policy_id}/confirm'.format(policy_id=policy_id)
         confirm_request = ConfirmRequest(session_id=session_id)
-        resp = self.request('PUT', path, data=confirm_request)
+        _ = self.request('PUT', path, data=confirm_request)
         return True
 
 
