@@ -17,13 +17,14 @@ from .models import (
     QuoteRequest, QuoteResponse, CreateRequest, CreateResponse,
 )
 
+DEFAULT_CURRENCY = 'RUB'
+DEFAULT_COUNTRY = 'RU'
+DEFAULT_MANAGER = 'AlfaInsTESClient'
+
 
 class AlfaInsTESClient:
     api_host = 'https://uat-tes.alfastrah.ru'
     base_path = '/travel-ext-services/api/v2'
-    default_currency = 'RUB'
-    default_country = 'RU'
-    default_manager = 'AlfaInsTESClient'
 
     def __init__(self, api_key, verify_ssl=True):
         self.api_key = api_key
@@ -94,8 +95,8 @@ class AlfaInsTESClient:
     def quote(self, product_code, insureds, segments,
               booking_price, service_class, fare_type, fare_code,
               end_date,
-              currency=None, country=None, sport=None, manager_name=None,
-              manager_code=None, opt=None, acquisition_channel=None):
+              currency=DEFAULT_CURRENCY, country=DEFAULT_COUNTRY, sport=None, manager_name=DEFAULT_MANAGER,
+              manager_code=DEFAULT_MANAGER, opt=Opt.OPT_IN, acquisition_channel=AcquisitionChannel.CROSS_SALE):
         """Calculates the cost of one or more insurance policies.
 
         :param product_code: Insurance product code.
@@ -136,13 +137,6 @@ class AlfaInsTESClient:
         """
         path = '/policies/quote'
 
-        currency = currency if currency is not None else self.default_currency
-        country = country if country is not None else self.default_country
-        manager_name = manager_name if manager_name is not None else self.default_manager
-        manager_code = manager_code if manager_code is not None else self.default_manager
-        opt = opt if opt is not None else Opt.OPT_IN
-        acquisition_channel = acquisition_channel if acquisition_channel is not None else AcquisitionChannel.CROSS_SALE
-
         product = InsuranceProduct(product_code)
         quote_request = QuoteRequest(
             session_id=str(uuid.uuid4()), product=product, insureds=insureds, segments=segments,
@@ -154,12 +148,12 @@ class AlfaInsTESClient:
         return resp
 
     def create(self, insureds, session_id=None, product=None,
-               insurer=None, segments=None, booking_price=None, currency=None,
+               insurer=None, segments=None, booking_price=None, currency=DEFAULT_CURRENCY,
                discounted_rate=None, service_class=None, pnr=None, customer_email=None,
-               customer_phone=None, payment_type=None, sale_session=None, country=None,
+               customer_phone=None, payment_type=None, sale_session=None, country=DEFAULT_COUNTRY,
                issuance_city=None, sport=None, fare_type=None, luggage_type=None,
-               fare_code=None, manager_name=None, manager_code=None, begin_date=None,
-               end_date=None, external_id=None, opt=None, selling_page=None,
+               fare_code=None, manager_name=DEFAULT_MANAGER, manager_code=DEFAULT_MANAGER, begin_date=None,
+               end_date=None, external_id=None, opt=Opt.OPT_IN, selling_page=AcquisitionChannel.CROSS_SALE,
                acquisition_channel=None):
         """Creates one or more insurance policies.
 
