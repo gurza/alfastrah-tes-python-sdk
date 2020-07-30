@@ -15,10 +15,12 @@ from tes import (
 )
 from tes import TESException
 
+api_key = os.getenv('ALFASTRAH_TES_KEY')
+product_code = os.getenv('ALFASTRAH_TES_PRODUCT_CODE')
+
 
 @pytest.fixture(scope='class')
 def client_connector():
-    api_key = os.getenv('ALFASTRAH_TES_KEY')
     client = AlfaStrahTESClient(api_key)
     client.api_host = 'https://uat-tes.alfastrah.ru'
     yield client
@@ -76,7 +78,6 @@ class TestApiIntegration:
 
     @pytest.fixture
     def product(self):
-        product_code = os.getenv('ALFASTRAH_TES_PRODUCT_CODE')
         yield InsuranceProduct(product_code)
 
     @pytest.fixture
