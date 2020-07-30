@@ -24,6 +24,13 @@ def client_connector():
     yield client
 
 
+def random_pnr():
+    """Returns random PNR number."""
+    letters = string.ascii_uppercase
+    pnr_number = ''.join(random.choice(letters) for _ in range(6))
+    return pnr_number
+
+
 def random_ticket_number():
     """Returns random Air France ticket number."""
     return '057-' + ''.join(str(random.choice(range(10))) for _ in range(10))
@@ -73,12 +80,6 @@ class TestApiIntegration:
         yield InsuranceProduct(product_code)
 
     @pytest.fixture
-    def pnr(self):
-        letters = string.ascii_uppercase
-        record_locator = ''.join(random.choice(letters) for i in range(6))
-        yield record_locator
-
-    @pytest.fixture
     def segments(self):
         outbound_datetime = datetime.datetime.now() + datetime.timedelta(days=30)
         inbound_datetime = datetime.datetime.now() + datetime.timedelta(days=39)
@@ -107,9 +108,9 @@ class TestApiIntegration:
         resp = client_connector.quote(product=product, segments=segments)
         assert resp.quotes[0].policies[0].rate[0].value > 0
 
-    def test_issue(self, client_connector, insureds, product, segments, pnr):
+    def test_issue(self, client_connector, insureds, product, segments):
         resp = client_connector.create(insureds,
-                                       product=product, segments=segments, pnr=pnr)
+                                       product=product, segments=segments, pnr=random_pnr())
         ids = [policy.policy_id for policy in resp.policies]
         assert len(ids) == len(insureds)
         for policy_id in ids:
