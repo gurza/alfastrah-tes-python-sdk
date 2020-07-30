@@ -10,8 +10,9 @@ import requests
 from .exceptions import TESException, AuthErrorException
 from .models import (
     ApiRequest, ApiProblem, InsuranceProduct,
-    Person, Segment, Amount, ServiceClass,
-    SportKind, FareType, Opt, AcquisitionChannel,
+    Person, Policy, Segment, Amount,
+    ServiceClass, SportKind, FareType, Opt,
+    AcquisitionChannel,
 )
 from .models import (
     ConfirmRequest, CreateRequest, CreateResponse, QuoteRequest,
@@ -254,6 +255,19 @@ class AlfaStrahTESClient:
         confirm_request = ConfirmRequest(session_id=session_id)
         _ = self.request('PUT', path, data=confirm_request)
         return True
+
+    def get_policy(self, policy_id):
+        """Retrieves insurance policy info by the given id.
+
+        :param policy_id: Policy Id, e.g. 21684956.
+        :type policy_id: int
+
+        :return: Policy.
+        :rtype: Policy
+        """
+        path = '/policies/{policy_id}'.format(policy_id=policy_id)
+        policy = self.request('GET', path, resp_cls=Policy)
+        return policy
 
 
 class MultiJSONEncoder(json.JSONEncoder):
