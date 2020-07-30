@@ -138,7 +138,8 @@ class AlfaStrahTESClient:
         :param acquisition_channel: Acquisition (data collection) channel.
         :type acquisition_channel: AcquisitionChannel or None
 
-        :return:
+        :return: List of quotes.
+        :rtype: QuoteResponse
         """
         path = '/policies/quote'
         quote_request = QuoteRequest(
