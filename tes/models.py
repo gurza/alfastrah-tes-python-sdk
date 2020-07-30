@@ -9,7 +9,6 @@ import datetime
 import numbers
 import sys
 import typing
-import uuid
 from enum import Enum
 from decimal import Decimal
 
@@ -1005,7 +1004,7 @@ class QuoteRequest(BaseModel, ApiRequest):
         :type acquisition_channel: AcquisitionChannel or None
         """
         BaseModel.__init__(self)
-        self.session_id = session_id if session_id is not None else str(uuid.uuid4())
+        self.session_id = session_id
         self.product = product
         self.insureds = insureds if insureds is not None else []
         self.segments = segments if segments is not None else []

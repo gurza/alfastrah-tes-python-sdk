@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime
-from decimal import Decimal
 import os
 import random
 import string
@@ -9,19 +8,33 @@ import pytest
 
 from tes import AlfaStrahTESClient
 from tes import (
-    Amount, Document, DocumentType, FareType,
-    Gender, InsuranceProduct, Person, Point,
-    PolicyStatus, Segment, ServiceClass,
+    Document, DocumentType, Gender, InsuranceProduct,
+    Person, Point, PolicyStatus, Segment,
+    Ticket,
 )
 from tes import TESException
+
+api_key = os.getenv('ALFASTRAH_TES_KEY')
+product_code = os.getenv('ALFASTRAH_TES_PRODUCT_CODE')
 
 
 @pytest.fixture(scope='class')
 def client_connector():
-    api_key = os.getenv('ALFASTRAH_TES_KEY')
     client = AlfaStrahTESClient(api_key)
     client.api_host = 'https://uat-tes.alfastrah.ru'
     yield client
+
+
+def random_pnr():
+    """Returns random PNR number."""
+    letters = string.ascii_uppercase
+    pnr_number = ''.join(random.choice(letters) for _ in range(6))
+    return pnr_number
+
+
+def random_ticket_number():
+    """Returns random Air France ticket number."""
+    return '057-' + ''.join(str(random.choice(range(10))) for _ in range(10))
 
 
 class TestBasic:
@@ -48,7 +61,8 @@ class TestApiIntegration:
                 gender=Gender.MALE,
                 birth_date=datetime.date(1979, 5, 22),
                 document=Document(type=DocumentType.PASSPORT, number='4509511410'),
-                nationality='RU'
+                nationality='RU',
+                ticket=Ticket(number=random_ticket_number())
             ),
             Person(
                 first_name='Louisa',
@@ -56,20 +70,14 @@ class TestApiIntegration:
                 gender=Gender.FEMALE,
                 birth_date=datetime.date(1977, 4, 10),
                 document=Document(type=DocumentType.PASSPORT, number='3809468921'),
-                nationality='RU'
+                nationality='RU',
+                ticket=Ticket(number=random_ticket_number())
             )
         ]
 
     @pytest.fixture
     def product(self):
-        product_code = os.getenv('ALFASTRAH_TES_PRODUCT_CODE')
         yield InsuranceProduct(product_code)
-
-    @pytest.fixture
-    def pnr(self):
-        letters = string.ascii_uppercase
-        record_locator = ''.join(random.choice(letters) for i in range(6))
-        yield record_locator
 
     @pytest.fixture
     def segments(self):
@@ -91,33 +99,18 @@ class TestApiIntegration:
             ),
         ]
 
-    @pytest.fixture
-    def trip_additional_data(self):
-        yield {
-            'booking_price': Amount(Decimal(115000), currency='RUB'),
-            'service_class': ServiceClass.BUSINESS,
-            'fare_type': FareType.REFUNDABLE,
-            'fare_code': 'CRT',
-        }
-
     def test_get_products(self, client_connector, product):
         products = client_connector.get_products(product_type='AIR')
         products_codes = [product.code for product in products]
         assert product.code in products_codes
 
-    def test_quote(self, client_connector, product, insureds, segments, trip_additional_data):
-        booking_price = trip_additional_data.get('booking_price')
-        service_class = trip_additional_data.get('service_class')
-        fare_type = trip_additional_data.get('fare_type')
-        fare_code = trip_additional_data.get('fare_code')
-        end_date = segments[-1].arrival.date
-        resp = client_connector.quote(product.code, insureds, segments, booking_price,
-                                      service_class, fare_type, fare_code, end_date)
+    def test_quote(self, client_connector, product, segments):
+        resp = client_connector.quote(product=product, segments=segments)
         assert resp.quotes[0].policies[0].rate[0].value > 0
 
-    def test_issue(self, client_connector, insureds, product, segments, pnr):
+    def test_issue(self, client_connector, insureds, product, segments):
         resp = client_connector.create(insureds,
-                                       product=product, segments=segments, pnr=pnr)
+                                       product=product, segments=segments, pnr=random_pnr())
         ids = [policy.policy_id for policy in resp.policies]
         assert len(ids) == len(insureds)
         for policy_id in ids:
