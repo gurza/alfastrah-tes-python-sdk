@@ -119,8 +119,7 @@ class TestApiIntegration:
         resp = client_connector.create(insureds,
                                        product=product, segments=segments, pnr=pnr)
         ids = [policy.policy_id for policy in resp.policies]
-        if not ids:
-            assert False
+        assert len(ids) == len(insureds)
         for policy_id in ids:
             _ = client_connector.confirm(policy_id)
             policy = client_connector.get_policy(policy_id)
