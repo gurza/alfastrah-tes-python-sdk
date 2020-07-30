@@ -3,7 +3,6 @@ import datetime
 from decimal import Decimal
 from enum import Enum
 import json
-import uuid
 
 import requests
 
