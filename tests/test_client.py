@@ -11,7 +11,7 @@ from tes import AlfaStrahTESClient
 from tes import (
     Amount, Document, DocumentType, FareType,
     Gender, InsuranceProduct, Person, Point,
-    PolicyStatus, Segment, ServiceClass,
+    PolicyStatus, Segment, ServiceClass, Ticket,
 )
 from tes import TESException
 
@@ -22,6 +22,11 @@ def client_connector():
     client = AlfaStrahTESClient(api_key)
     client.api_host = 'https://uat-tes.alfastrah.ru'
     yield client
+
+
+def random_ticket_number():
+    """Returns random Air France ticket number."""
+    return '057-' + ''.join(str(random.choice(range(10))) for _ in range(10))
 
 
 class TestBasic:
@@ -48,7 +53,8 @@ class TestApiIntegration:
                 gender=Gender.MALE,
                 birth_date=datetime.date(1979, 5, 22),
                 document=Document(type=DocumentType.PASSPORT, number='4509511410'),
-                nationality='RU'
+                nationality='RU',
+                ticket=Ticket(number=random_ticket_number())
             ),
             Person(
                 first_name='Louisa',
@@ -56,7 +62,8 @@ class TestApiIntegration:
                 gender=Gender.FEMALE,
                 birth_date=datetime.date(1977, 4, 10),
                 document=Document(type=DocumentType.PASSPORT, number='3809468921'),
-                nationality='RU'
+                nationality='RU',
+                ticket=Ticket(number=random_ticket_number())
             )
         ]
 
