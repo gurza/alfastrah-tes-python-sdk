@@ -91,15 +91,6 @@ class TestApiIntegration:
             ),
         ]
 
-    @pytest.fixture
-    def trip_additional_data(self):
-        yield {
-            'booking_price': Amount(Decimal(115000), currency='RUB'),
-            'service_class': ServiceClass.BUSINESS,
-            'fare_type': FareType.REFUNDABLE,
-            'fare_code': 'CRT',
-        }
-
     def test_get_products(self, client_connector, product):
         products = client_connector.get_products(product_type='AIR')
         products_codes = [product.code for product in products]
