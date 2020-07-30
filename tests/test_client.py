@@ -105,14 +105,8 @@ class TestApiIntegration:
         products_codes = [product.code for product in products]
         assert product.code in products_codes
 
-    def test_quote(self, client_connector, product, insureds, segments, trip_additional_data):
-        booking_price = trip_additional_data.get('booking_price')
-        service_class = trip_additional_data.get('service_class')
-        fare_type = trip_additional_data.get('fare_type')
-        fare_code = trip_additional_data.get('fare_code')
-        end_date = segments[-1].arrival.date
-        resp = client_connector.quote(product.code, insureds, segments, booking_price,
-                                      service_class, fare_type, fare_code, end_date)
+    def test_quote(self, client_connector, product, segments):
+        resp = client_connector.quote(product=product, segments=segments)
         assert resp.quotes[0].policies[0].rate[0].value > 0
 
     def test_issue(self, client_connector, insureds, product, segments, pnr):
