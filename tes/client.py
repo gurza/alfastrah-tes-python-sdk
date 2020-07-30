@@ -33,15 +33,6 @@ class AlfaStrahTESClient:
         self.verify_ssl = verify_ssl
         self.req = self.resp = self.status_code = None
 
-    @staticmethod
-    def generate_session_id():
-        """Generates unique session id.
-
-        :returns: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
-        :rtype: str
-        """
-        return str(uuid.uuid4())
-
     def raise_for_error(self):
         """Raises stored :class:`TESException`, if one occurred."""
         if self.status_code is None or self.status_code == 200:
