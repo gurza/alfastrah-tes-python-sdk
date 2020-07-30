@@ -9,9 +9,9 @@ import pytest
 
 from tes import AlfaStrahTESClient
 from tes import (
-    Amount, Document, DocumentType, FareType,
-    Gender, InsuranceProduct, Person, Point,
-    PolicyStatus, Segment, ServiceClass, Ticket,
+    Document, DocumentType, Gender, InsuranceProduct,
+    Person, Point, PolicyStatus, Segment,
+    Ticket,
 )
 from tes import TESException
 
