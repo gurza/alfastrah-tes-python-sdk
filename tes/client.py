@@ -103,56 +103,59 @@ class AlfaStrahTESClient:
         products = self.request('GET', path, resp_cls=InsuranceProduct)
         return products
 
-    def quote(self, product_code, insureds, segments,
-              booking_price, service_class, fare_type, fare_code,
-              end_date,
-              currency=DEFAULT_CURRENCY, country=DEFAULT_COUNTRY, sport=None, manager_name=DEFAULT_MANAGER,
-              manager_code=DEFAULT_MANAGER, opt=Opt.OPT_IN, acquisition_channel=AcquisitionChannel.CROSS_SALE):
+    def quote(self, session_id=None, product=None, insureds=None,
+              segments=None, booking_price=None, currency=None, service_class=None,
+              country=None, sport=None, fare_type=None, luggage_type=None,
+              fare_code=None, manager_name=None, manager_code=None, opt=None,
+              selling_page=None, end_date=None, acquisition_channel=None):
         """Calculates the cost of one or more insurance policies.
 
-        :param product_code: Insurance product code.
-        :type product_code: str
+        :param session_id: Session id, e.g. '88c70099-8e11-4325-9239-9c027195c069'.
+        :type session_id: str or None
+        :param product: Insurance product.
+        :type product: InsuranceProduct or None
         :param insureds: List of insured persons.
-        :type insureds: list[Person]
+        :type insureds: list[Person] or None
         :param segments: List of travel segments, e.g. list of flights.
-        :type segments: list[Segment]
+        :type segments: list[Segment] or None
         :param booking_price: Total price of the booking.
-        :type booking_price: Amount
-        :param service_class: Service class.
-        :type service_class: ServiceClass
-        :param fare_type: Refundability.
-        :type fare_type: FareType
-        :param fare_code: Fare code (fare basis), e.g. 'BPXOWRF'.
-        :type fare_code: str
-        :param end_date: Expiry date of the policy.
-        :type end_date: datetime.datetime
-
-        :param currency: Quote currency code, ISO 4217, default is ``self.default_currency``.
+        :type booking_price: Amount or None
+        :param currency: Quote currency code, ISO 4217, e.g. 'RUB'.
         :type currency: str or None
-        :param country: Country code where the insurance policy will be paid for, ISO 3166-1,
-            default is ``self.default_country``.
+        :param service_class: Service class.
+        :type service_class: ServiceClass or None
+        :param country: Country code where the insurance policy will be paid for, ISO 3166-1, e.g. 'RU'.
         :type country: str or None
-        :param sport: Insured sports kind, default is None.
+        :param sport: Insured sports kind.
         :type sport: list[SportKind] or None
-        :param manager_name: Manager (cashier) code, default is ``self.default_manager``.
+        :param fare_type: Refundability.
+        :type fare_type: FareType or None
+        :param luggage_type: Luggage type.
+        :type luggage_type: LuggageType or None
+        :param fare_code: Fare code (fare basis), e.g. 'BPXOWRF'.
+        :type fare_code: str or None
+        :param manager_name: Manager (cashier) code, e.g. 'Ivanova A.A.'.
         :type manager_name: str or None
-        :param manager_code: Manager (cashier) code, default is ``self.default_manager``.
+        :param manager_code: Manager (cashier) code, e.g. '1q2w3e4r'.
         :type manager_code: str or None
-        :param opt: Option state, default is ``Opt.OPT_IN``.
+        :param opt: Option state.
         :type opt: Opt or None
-        :param acquisition_channel: Acquisition (data collection) channel,
-            default is ``AcquisitionChannel.CROSS_SALE``.
+        :param selling_page: Policy selling page.
+        :type selling_page: SellingPage or None
+        :param end_date: Expiry date of the policy.
+        :type end_date: datetime.datetime or None
+        :param acquisition_channel: Acquisition (data collection) channel.
         :type acquisition_channel: AcquisitionChannel or None
 
         :return:
         """
         path = '/policies/quote'
-        session_id = self.generate_session_id()
         quote_request = QuoteRequest(
-            session_id=session_id, product=InsuranceProduct(product_code), insureds=insureds, segments=segments,
-            booking_price=booking_price, currency=currency, service_class=service_class, country=country,
-            sport=sport, fare_type=fare_type, fare_code=fare_code, manager_name=manager_name,
-            manager_code=manager_code, opt=opt, end_date=end_date, acquisition_channel=acquisition_channel
+            session_id=session_id, product=product, insureds=insureds,
+            segments=segments, booking_price=booking_price, currency=currency, service_class=service_class,
+            country=country, sport=sport, fare_type=fare_type, luggage_type=luggage_type,
+            fare_code=fare_code, manager_name=manager_name, manager_code=manager_code, opt=opt,
+            selling_page=selling_page, end_date=end_date, acquisition_channel=acquisition_channel
         )
         resp = self.request('POST', path, data=quote_request, resp_cls=QuoteResponse)
         return resp
