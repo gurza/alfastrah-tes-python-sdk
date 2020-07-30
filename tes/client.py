@@ -257,12 +257,12 @@ class AlfaStrahTESClient:
         return True
 
     def get_policy(self, policy_id):
-        """Get policy info.
+        """Retrieves insurance policy info by the given id.
 
         :param policy_id: Policy Id, e.g. 21684956.
         :type policy_id: int
 
-        :return: Policy info.
+        :return: Policy.
         :rtype: Policy
         """
         path = '/policies/{policy_id}'.format(policy_id=policy_id)
