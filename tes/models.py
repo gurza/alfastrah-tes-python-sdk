@@ -813,7 +813,6 @@ class ConfirmRequest(BaseModel, ApiRequest):
         self.session_id = session_id
 
 
-
 class CreateRequest(BaseModel, ApiRequest):
     """Request for creating one or more insurance policies."""
 
