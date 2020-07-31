@@ -151,7 +151,7 @@ class BaseModel(object):
     def __init__(self, *args, **kwargs):
         pass
 
-    def to_json(self):
+    def encode(self):
         json = dict()
 
         if not hasattr(self, '__attrs__') or not isinstance(self.__attrs__, dict):
