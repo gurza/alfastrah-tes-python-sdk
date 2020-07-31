@@ -146,12 +146,19 @@ class TravelType(Enum):
 
 
 class BaseModel(object):
+    """Base model."""
+
     __attrs__ = {}
 
     def __init__(self, *args, **kwargs):
         pass
 
     def encode(self):
+        """Translates a class instance into a string in JSON format.
+
+        :return: JSON representation of a class instance.
+        :rtype: str
+        """
         json = dict()
 
         if not hasattr(self, '__attrs__') or not isinstance(self.__attrs__, dict):
@@ -169,6 +176,12 @@ class BaseModel(object):
 
     @classmethod
     def decode(cls, dct):
+        """Makes a class instance from the given dict.
+
+        :param dct: JSON representation of a class instance.
+        :type dct: dict
+        :return: Class instance.
+        """
         def cast(json_value, target_type):
             if json_value is None:
                 return None
