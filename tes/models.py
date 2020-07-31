@@ -154,7 +154,7 @@ class BaseModel:
     def to_json(self):
         json = dict()
 
-        if not hasattr(self, '__attrs__') or not isinstance(self.__getattribute__('__attrs__'), dict):
+        if not hasattr(self, '__attrs__') or not isinstance(self.__attrs__, dict):
             return json
 
         for attr in self.__attrs__.keys():
