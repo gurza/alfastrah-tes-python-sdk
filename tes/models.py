@@ -145,7 +145,7 @@ class TravelType(Enum):
     MULTIPLE = 2
 
 
-class BaseModel:
+class BaseModel(object):
     __attrs__ = {}
 
     def __init__(self, *args, **kwargs):
