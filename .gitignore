@@ -4,3 +4,6 @@
 # Development environment
 .idea/
 .ve/
+
+# Other
+.DS_Store
