@@ -275,8 +275,8 @@ class MultiJSONEncoder(json.JSONEncoder):
         if isinstance(o, datetime.date):
             return o.strftime('%Y-%m-%d')
 
-        if hasattr(o, 'to_json') and callable(o.to_json):
-            return o.to_json()
+        if hasattr(o, 'encode') and callable(o.encode):
+            return o.encode()
 
         # Let the base class default raise the TypeError
         return json.JSONEncoder.default(self, o)
