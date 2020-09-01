@@ -42,14 +42,17 @@ class AlfaStrahTESClient:
         else:
             raise TESException(api_problem.detail or 'Unknown problem')
 
-    def request(self, method, path, data=None, resp_cls=None):
+    def request(self, method, path,
+                query=None, data=None, resp_cls=None):
         """Constructs and sends a request to API Gateway.
 
         :param method: HTTP method, e.g. 'GET', 'POST', 'PUT', 'DELETE'.
         :type method: str
         :param path: API path, e.g. '/products'.
         :type path: str
-        :param data: (optional) Request body.
+        :param query: Query parameters to send in query string.
+        :type query: Dict or None
+        :param data: Request body.
         :type data: ApiRequest or None
         :param resp_cls: Response class.
             This class must contain a static "decode()" method
@@ -66,7 +69,7 @@ class AlfaStrahTESClient:
             'Content-Type': 'application/json',
         }
         r = requests.request(method, url,
-                             headers=headers, data=self.req, verify=self.verify_ssl)
+                             headers=headers, params=query, data=self.req, verify=self.verify_ssl)
         try:
             self.resp = r.json()
         except ValueError:
