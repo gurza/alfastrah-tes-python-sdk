@@ -24,6 +24,13 @@ class AcquisitionChannel(Enum):
     CROSS_SALE = 4
 
 
+class CancelationType(Enum):
+    """Cancelation type."""
+    TRIP_CANCELLATION = 1
+    TECH_CANCELLATION = 2
+    INSURANCE_CANCELLATION = 3
+
+
 class DocumentType(Enum):
     """Document type."""
 
