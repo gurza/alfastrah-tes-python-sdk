@@ -43,15 +43,15 @@ class AlfaStrahTESClient:
             raise TESException(api_problem.detail or 'Unknown problem')
 
     def request(self, method, path,
-                query=None, data=None, resp_cls=None):
+                params=None, data=None, resp_cls=None):
         """Constructs and sends a request to API Gateway.
 
         :param method: HTTP method, e.g. 'GET', 'POST', 'PUT', 'DELETE'.
         :type method: str
         :param path: API path, e.g. '/products'.
         :type path: str
-        :param query: Query parameters to send in query string.
-        :type query: Dict or None
+        :param params: Query parameters to send in query string.
+        :type params: Dict or None
         :param data: Request body.
         :type data: ApiRequest or None
         :param resp_cls: Response class.
