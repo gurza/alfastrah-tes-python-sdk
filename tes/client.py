@@ -69,7 +69,7 @@ class AlfaStrahTESClient:
             'Content-Type': 'application/json',
         }
         r = requests.request(method, url,
-                             headers=headers, params=query, data=self.req, verify=self.verify_ssl)
+                             headers=headers, params=params, data=self.req, verify=self.verify_ssl)
         try:
             self.resp = r.json()
         except ValueError:
