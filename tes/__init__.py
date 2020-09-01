@@ -17,6 +17,7 @@ from .models import (
     QuoteRequest, QuoteResponse, Quote, CreateRequest,
     CreateResponse, UpdateRequest, UpdateResponse, ConfirmRequest,
     SaleWithoutInsuranceRequest, SaleWithoutInsuranceResponse, ServiceClass, SportKind,
+    CancellationType,
 )
 from .exceptions import TESException, AuthErrorException
 
