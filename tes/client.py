@@ -11,7 +11,7 @@ from .models import (
     ApiRequest, ApiProblem, InsuranceProduct,
     Person, Policy, Segment, Amount,
     ServiceClass, SportKind, FareType, Opt,
-    AcquisitionChannel,
+    AcquisitionChannel, CancellationType, Declaration,
 )
 from .models import (
     ConfirmRequest, CreateRequest, CreateResponse, QuoteRequest,
@@ -252,6 +252,37 @@ class AlfaStrahTESClient:
         confirm_request = ConfirmRequest(session_id=session_id)
         _ = self.request('PUT', path, data=confirm_request)
         return True
+
+    def cancel(self, policy_id,
+               type=None, is_ext_id=None, local_date_time=None, body=None):
+        """Cancel insurance policy.
+
+        :param policy_id: Policy Id, e.g. 21684956.
+        :type policy_id: int
+
+        :param type: Cancellation type.
+        :type type: CancellationType or None
+        :param is_ext_id: True if the given `policy_id` is an external identifier, default: false.
+        :type is_ext_id: bool or None
+        :param local_date_time: Use the given datetime as operation date.
+            The parameter is processed by the system only by agreement.
+        :type: datetime.datetime or None
+        :param body: Client's application info.
+        :type body: Declaration or None
+
+        :return:
+        :rtype: Amount
+        """
+        params = dict()
+        if type is not None:
+            params['type'] = type.name
+        if is_ext_id is not None:
+            params['is_ext_id'] = is_ext_id
+        if local_date_time is not None:
+            params['local_date_time'] = local_date_time.strftime('%Y-%m-%dT%H:%M:%S')
+        path = '/policies/{policy_id}'.format(policy_id=policy_id)
+        resp = self.request('DELETE', path, data=body, params=params, resp_cls=Amount)
+        return resp
 
     def get_policy(self, policy_id):
         """Retrieves insurance policy info by the given id.
