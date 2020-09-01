@@ -793,7 +793,22 @@ class Policy(BaseModel):
 
 
 class Declaration:
-    pass
+    """Information about the client's application."""
+
+    __attrs__ = {
+        'number': str, 'date': datetime.datetime,
+    }
+
+    def __init__(self, number, date):
+        """Init.
+
+        :param number: Client's application number.
+        :type number: str
+        :param date: Application date.
+        :type date: datetime.datetime
+        """
+        self.number = number
+        self.date = date
 
 
 class Quote(BaseModel):
