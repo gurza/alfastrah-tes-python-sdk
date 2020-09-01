@@ -793,7 +793,7 @@ class Policy(BaseModel):
 
 
 class Declaration:
-    """Information about the client's application."""
+    """Client's application information."""
 
     __attrs__ = {
         'number': str, 'date': datetime.datetime,
