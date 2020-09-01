@@ -24,6 +24,13 @@ class AcquisitionChannel(Enum):
     CROSS_SALE = 4
 
 
+class CancellationType(Enum):
+    """Cancellation type."""
+    TRIP_CANCELLATION = 1
+    TECH_CANCELLATION = 2
+    INSURANCE_CANCELLATION = 3
+
+
 class DocumentType(Enum):
     """Document type."""
 
@@ -786,7 +793,22 @@ class Policy(BaseModel):
 
 
 class Declaration:
-    pass
+    """Client's application information."""
+
+    __attrs__ = {
+        'number': str, 'date': datetime.datetime,
+    }
+
+    def __init__(self, number, date):
+        """Init.
+
+        :param number: Client's application number.
+        :type number: str
+        :param date: Application date.
+        :type date: datetime.datetime
+        """
+        self.number = number
+        self.date = date
 
 
 class Quote(BaseModel):

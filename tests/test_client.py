@@ -8,7 +8,7 @@ import pytest
 
 from tes import AlfaStrahTESClient
 from tes import (
-    Document, DocumentType, Gender, InsuranceProduct,
+    CancellationType, Document, DocumentType, Gender, InsuranceProduct,
     Person, Point, PolicyStatus, Segment,
     Ticket,
 )
@@ -108,7 +108,7 @@ class TestApiIntegration:
         resp = client_connector.quote(product=product, segments=segments)
         assert resp.quotes[0].policies[0].rate[0].value > 0
 
-    def test_issue(self, client_connector, insureds, product, segments):
+    def test_main_flow(self, client_connector, insureds, product, segments):
         resp = client_connector.create(insureds,
                                        product=product, segments=segments, pnr=random_pnr())
         ids = [policy.policy_id for policy in resp.policies]
@@ -116,4 +116,10 @@ class TestApiIntegration:
         for policy_id in ids:
             _ = client_connector.confirm(policy_id)
             policy = client_connector.get_policy(policy_id)
+            amount = policy.rate[0]
             assert policy.status == PolicyStatus.CONFIRMED
+
+            cancel_amount = client_connector.cancel(policy_id, type=CancellationType.TECH_CANCELLATION)
+            policy = client_connector.get_policy(policy_id)
+            assert amount.value == cancel_amount.value
+            assert policy.status == PolicyStatus.CANCELLED
