@@ -1,7 +1,7 @@
 __title__ = 'tes'
 __description__ = 'AlfaStrakhovanie TES API Python SDK'
 __url__ = ''
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 __author__ = 'Sergey Popinevskiy'
 __author_email__ = 'sergey.popinevskiy@gmail.com'
 __license__ = 'MIT'

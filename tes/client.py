@@ -24,7 +24,7 @@ DEFAULT_MANAGER = 'AlfaStrahTESClient'
 
 
 class AlfaStrahTESClient:
-    api_host = 'https://uat-tes.alfastrah.ru'
+    api_host = 'https://vesta.alfastrah.ru'
     base_path = '/travel-ext-services/api/v2'
 
     def __init__(self, api_key, verify_ssl=True):
