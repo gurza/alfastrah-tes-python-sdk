@@ -7,17 +7,20 @@ if sys.version_info[0] < 3:
 
 here = os.path.abspath(os.path.dirname(__file__))
 
-packages = ['alfastrah']
+packages = ['tes']
 
 requires = [
     'requests>=2.21.0, <3',
 ]
+if sys.version_info[0] < 3:
+    requires.append('enum34>=1.0, <2')
+    requires.append('typing>=3.5, <4')
 test_requirements = [
     'pytest>=5.4',
 ]
 
 about = {}
-with open(os.path.join(here, 'alfastrah', '__version__.py'), encoding='utf-8') as f:
+with open(os.path.join(here, 'tes', '__version__.py'), encoding='utf-8') as f:
     exec(f.read(), about)
 
 with open('README.md', encoding='utf-8') as f:
@@ -35,7 +38,7 @@ setup(
     author_email=about['__author_email__'],
     url=about['__url__'],
     packages=packages,
-    package_dir={'alfastrah': 'alfastrah'},
+    package_dir={'tes': 'tes'},
     include_package_data=True,
     install_requires=requires,
     license=about['__license__'],
