@@ -270,7 +270,7 @@ class AlfaStrahTESClient:
         :param body: Client's application info.
         :type body: Declaration or None
 
-        :return:
+        :return: Cancellation amount.
         :rtype: Amount
         """
         params = dict()
