@@ -1,5 +1,6 @@
 # General things to ignore
 *.py[cod]
+tes.egg-info/
 
 # Development environment
 .idea/
